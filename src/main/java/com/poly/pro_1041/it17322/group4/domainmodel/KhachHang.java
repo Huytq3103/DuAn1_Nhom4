@@ -33,6 +33,9 @@ public class KhachHang {
     @GeneratedValue
     @Column(name = "Id")
     private UUID id;
+    
+    @Column(name = "Ma")
+    private String maKH;
 
     @Column(name = "HoTen")
     private String hoTen;
@@ -55,6 +58,12 @@ public class KhachHang {
     @Column(name = "NgayTao")
     private String ngayTao;
 
-    @Column(name = "NgayCapNhat")
-    private String ngayCapNhat;
+    @Column(name = "NguoiTao")
+    private String nguoiTao;
+
+    @Column(name = "NguoiChinhSua")
+    private String nguoiChinhSua;
+
+    @Column(name = "NgayChinhSua")
+    private String ngayChinhSua;
 }

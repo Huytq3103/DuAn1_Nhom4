@@ -34,7 +34,7 @@ import lombok.ToString;
 public class HoaDon {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     @Column(name = "Id")
     private UUID id;
 
@@ -49,6 +49,9 @@ public class HoaDon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdTT", referencedColumnName = "Id")
     private TrangThaiOrder trangThaiOrder;
+    
+    @Column(name = "Ten")
+    private String ten;
 
     @Column(name = "NgayTao")
     private String ngayTao;
@@ -56,6 +59,18 @@ public class HoaDon {
     @Column(name = "NgayThanhToan")
     private String ngayThanhToan;
 
+    @Column(name = "NgayShip")
+    private String ngayShip;
+
+    @Column(name = "NgayKhachNhan")
+    private String ngayKhachNhan;
+
     @Column(name = "TongTien")
     private BigDecimal tongTien;
+
+    @Column(name = "NgayChinhSua")
+    private String ngayChinhSua;
+
+    @Column(name = "NguoiChinhSua")
+    private String nguoiChinhSua;
 }

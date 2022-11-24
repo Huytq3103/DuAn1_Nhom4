@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.poly.pro_1041.it17322.group4.view; 
+package com.poly.pro_1041.it17322.group4.view;
 
 /**
  *
@@ -11,15 +11,17 @@ package com.poly.pro_1041.it17322.group4.view;
 import com.poly.pro_1041.it17322.group4.service.ViewLoginService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewLoginServiceImpl;
 import javax.swing.ImageIcon;
+
 public class ViewLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewLogin
      */
     private ViewLoginService vls = new ViewLoginServiceImpl();
+
     public ViewLogin() {
         initComponents();
-        
+
     }
 
     /**
@@ -157,9 +159,9 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         // TODO add your handling code here:
-        if(vls.getOne(txtUsername.getText(), txtPass.getText()).getId() != null){
+        if (vls.getOne(txtUsername.getText(), txtPass.getText()).getId() != null) {
             this.dispose();
-            TrangChu tc = new TrangChu();
+            TrangChu tc = new TrangChu(vls.getOne(txtUsername.getText(), txtPass.getText()));
             tc.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginMouseClicked

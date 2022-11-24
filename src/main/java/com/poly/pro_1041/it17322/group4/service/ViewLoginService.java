@@ -11,5 +11,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
  * @author Huy PC
  */
 public interface ViewLoginService {
-    Account getOne(String username,String pass);
+
+    Account getOne(String username, String pass);
 }
