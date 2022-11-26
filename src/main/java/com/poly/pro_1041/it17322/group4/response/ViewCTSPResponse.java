@@ -55,6 +55,9 @@ public class ViewCTSPResponse {
     public Object[] toDataRow() {
         return new Object[]{sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
     }
+    
+    
+    
     public static void main(String[] args) {
         for(ViewCTSPResponse vctspr : new ViewHoaDonServiceImpl().getAllSP()){
             System.out.println(vctspr.toString());
