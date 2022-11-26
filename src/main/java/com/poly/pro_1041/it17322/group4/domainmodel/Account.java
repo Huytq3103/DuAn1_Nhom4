@@ -72,6 +72,12 @@ public class Account {
     @Column(name = "NgayTao")
     private String ngayTao;
 
+    @Column(name = "NguoiTao")
+    private String nguoiTao;
+
+    @Column(name = "NguoiChinhSua")
+    private String nguoiChinhSua;
+
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;
 }

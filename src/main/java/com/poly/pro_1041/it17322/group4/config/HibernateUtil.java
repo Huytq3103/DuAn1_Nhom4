@@ -8,8 +8,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChucVuAccount;
-import com.poly.pro_1041.it17322.group4.domainmodel.GioHang;
-import com.poly.pro_1041.it17322.group4.domainmodel.GioHangChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
@@ -67,8 +65,6 @@ public class HibernateUtil {
         conf.addAnnotatedClass(TrangThaiAccount.class);
         conf.addAnnotatedClass(TrangThaiKM.class);
         conf.addAnnotatedClass(TrangThaiOrder.class);
-        conf.addAnnotatedClass(GioHang.class);
-        conf.addAnnotatedClass(GioHangChiTiet.class);
         conf.addAnnotatedClass(HoaDonTra.class);
         conf.addAnnotatedClass(HoaDonTraChiTiet.class);
         conf.setProperties(properties);
