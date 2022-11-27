@@ -5,41 +5,43 @@
 package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
-import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
+import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
+import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 /**
  *
- * @author Dell
+ * @author DELL
  */
-public class ChatLieuRepository {
+public class KhachHangRepository {
 
-    private String fromTable = "FROM ChatLieu";
+    private Session session = HibernateUtil.getFACTORY().openSession();
+    private String fromtable = " FROM KhachHang ";
 
-    public List<ChatLieu> getAll() {
-        Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, ChatLieu.class);
-        List<ChatLieu> listChatLieu = query.getResultList();
-        return listChatLieu;
+    public List<KhachHang> getAll() {
+        Query query = session.createQuery(fromtable, KhachHang.class);
+        List<KhachHang> lists = query.getResultList();
+        return lists;
     }
 
-    public ChatLieu getOne(int id) {
-        Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "WHERE id =: id";
-        Query query = session.createQuery(sql, ChatLieu.class);
+    public KhachHang getOne(UUID id) {
+        String sql = fromtable + " WHERE id = :id";
+        Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("id", id);
-        ChatLieu chatLieu = (ChatLieu) query.getSingleResult();
-        return chatLieu;
+        KhachHang kh = (KhachHang) query.getSingleResult();
+        return kh;
     }
 
-    public Boolean add(ChatLieu chatLieu) {
+    public Boolean add(KhachHang kh) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            session.save(chatLieu);
+            session.save(kh);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -48,11 +50,11 @@ public class ChatLieuRepository {
         return null;
     }
 
-    public Boolean update(ChatLieu chatLieu) {
+    public Boolean update(KhachHang kh) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(chatLieu);
+            session.saveOrUpdate(kh);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -61,11 +63,11 @@ public class ChatLieuRepository {
         return null;
     }
 
-    public Boolean delete(ChatLieu chatLieu) {
+    public Boolean delete(KhachHang kh) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(chatLieu);
+            session.delete(kh);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -75,10 +77,6 @@ public class ChatLieuRepository {
     }
 
     public static void main(String[] args) {
-//        List<ChatLieu> lists = new ChatLieuRepository().getAll();
-//        for (ChatLieu cl : lists) {
-//            System.out.println(cl.toString());
-//        }
-
+        new KhachHangRepository().getAll().forEach(s -> System.out.println(s.toString()));
     }
 }

@@ -18,15 +18,16 @@ import org.hibernate.Transaction;
 public class HangSPRepository {
 
     private String fromtable = " FROM Hang";
-    private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<Hang> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromtable, Hang.class);
         List<Hang> listHang = query.getResultList();
         return listHang;
     }
 
     public Hang getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " Where id = :id";
         Query query = session.createQuery(sql, Hang.class);
         query.setParameter("id", id);

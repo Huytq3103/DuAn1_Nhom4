@@ -22,12 +22,15 @@ public class KichCoRepository {
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<KichCo> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, KichCo.class);
         List<KichCo> listKichCo = query.getResultList();
         return listKichCo;
     }
 
     public KichCo getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+
         String sql = fromTable + " WHERE id =: id";
         Query query = session.createQuery(sql, KichCo.class);
         query.setParameter("id", id);
