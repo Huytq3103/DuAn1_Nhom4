@@ -36,6 +36,15 @@ public class MauSacRepository {
         return mauSac;
     }
 
+    public MauSac getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " Where ma = :ma";
+        Query query = session.createQuery(sql, MauSac.class);
+        query.setParameter("ma", ma);
+        MauSac mauSac = (MauSac) query.getSingleResult();
+        return mauSac;
+    }
+
     public Boolean add(MauSac mauSac) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
