@@ -5,55 +5,41 @@
 package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
-import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
-import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
+import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import java.util.List;
-import java.util.UUID;
-import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
- * @author Huy PC
+ * @author Lenovo
  */
-public class ChiTietSanPhamRepository {
-
-
-
-    private String fromTable = " FROM ChiTietSanPham ";
-
-    public List<ChiTietSanPham> getAll() {
-        Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, ChiTietSanPham.class);
-        List<ChiTietSanPham> list = query.getResultList();
-        return list;
-    }
-
+public class KhuyenMaiRepository {
     
-    public List<ViewCTSPResponse> getOneLoai(int idLoai) {
+    
+    private String fromTable = "FROM KhuyenMai";
+    public List<KhuyenMai> getAll(){
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + " WHERE IdLoai=:idLoai ";
-        javax.persistence.Query query = session.createQuery(sql, ChiTietSanPham.class);
-        query.setParameter("IdLoai", idLoai);
-        List<ViewCTSPResponse> chiTietSP = query.getResultList();
-        return chiTietSP;
+        Query query = session.createQuery(fromTable, KhuyenMai.class);
+        List<KhuyenMai> khuyenMai = query.getResultList();
+        return khuyenMai;
     }
     
-    public ChiTietSanPham getOne(UUID id) {
+    public KhuyenMai getOne(String id) {
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "Where Id=:id";
-        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        String sql = fromTable + "WHERE Id =: Id";
+        javax.persistence.Query query = session.createQuery(sql, KhuyenMai.class);
         query.setParameter("Id", id);
-        ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
-        return ctsp;
+        KhuyenMai khuyenMai =  (KhuyenMai) query.getSingleResult();
+        return khuyenMai;
     }
-
-    public Boolean add(ChiTietSanPham chitietsanPham) {
+    
+    public Boolean add(KhuyenMai khuyenMai) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.save(chitietsanPham);
+            session.save(khuyenMai);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -61,12 +47,12 @@ public class ChiTietSanPhamRepository {
         }
         return null;
     }
-
-    public Boolean update(ChiTietSanPham chitietsanPham) {
+    
+    public Boolean update(KhuyenMai khuyenMai) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(chitietsanPham);
+            session.saveOrUpdate(khuyenMai);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -74,12 +60,12 @@ public class ChiTietSanPhamRepository {
         }
         return null;
     }
-
-    public Boolean delete(ChiTietSanPham chitietsanPham) {
+    
+    public Boolean delete(KhuyenMai khuyenMai) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.delete(chitietsanPham);
+            session.delete(khuyenMai);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -87,5 +73,11 @@ public class ChiTietSanPhamRepository {
         }
         return null;
     }
-
+    
+    public static void main(String[] args) {
+        List<KhuyenMai> lists = new KhuyenMaiRepository().getAll();
+        for (KhuyenMai x : lists) {
+            System.out.println(x.toString());
+        }
+    }
 }
