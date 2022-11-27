@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -47,4 +48,6 @@ public interface ViewHoaDonService {
     boolean updateHD(ViewHoaDonResponse vhdr);
 
     boolean deleteHDCT(ViewHDCTResponse vhdctr);
+
+    void taoFilePDF(ViewHoaDonResponse hd, List<ViewHDCTResponse> list, Account a) throws FileNotFoundException;
 }
