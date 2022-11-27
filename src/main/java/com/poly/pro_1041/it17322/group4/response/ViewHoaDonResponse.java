@@ -30,6 +30,8 @@ public class ViewHoaDonResponse {
     private String ten;
     private String ngaoTao;
     private String ngayThanhToan;
+    private String ngayShip;
+    private String ngayNhan;
     private BigDecimal TongTien;
 
     public ViewHoaDonResponse() {
