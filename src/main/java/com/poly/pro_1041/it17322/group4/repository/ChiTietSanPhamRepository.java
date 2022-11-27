@@ -7,8 +7,10 @@ package com.poly.pro_1041.it17322.group4.repository;
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -16,17 +18,67 @@ import org.hibernate.Session;
  */
 public class ChiTietSanPhamRepository {
 
-    private Session session = HibernateUtil.getFACTORY().openSession();
+
 
     private String fromTable = " FROM ChiTietSanPham ";
 
     public List<ChiTietSanPham> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, ChiTietSanPham.class);
         List<ChiTietSanPham> list = query.getResultList();
         return list;
     }
+
+    public ChiTietSanPham getOne(UUID id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "Where Id=:id";
+        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("Id", id);
+        ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
+        return ctsp;
+    }
+
+    public Boolean add(ChiTietSanPham chitietsanPham) {
+        Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.save(chitietsanPham);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Boolean update(ChiTietSanPham chitietsanPham) {
+        Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(chitietsanPham);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Boolean delete(ChiTietSanPham chitietsanPham) {
+        Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.delete(chitietsanPham);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        for(ChiTietSanPham ctsp : new ChiTietSanPhamRepository().getAll()){
+        for (ChiTietSanPham ctsp : new ChiTietSanPhamRepository().getAll()) {
             System.out.println(ctsp.toString());
         }
     }

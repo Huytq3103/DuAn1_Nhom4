@@ -6,6 +6,7 @@ package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
+import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -13,34 +14,33 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author DELL
+ * @author Acer
  */
-public class LoaiSPRepository {
+public class MauSacRepository {
 
-    private String fromtable = " FROM Loai";
-    private Session session = HibernateUtil.getFACTORY().openSession();
+    private String fromtable = " FROM MauSac";
 
-    public List<Loai> getAll() {
+    public List<MauSac> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromtable, Loai.class);
-        List<Loai> listLoai = query.getResultList();
-        return listLoai;
+        Query query = session.createQuery(fromtable, MauSac.class);
+        List<MauSac> listMauSac = query.getResultList();
+        return listMauSac;
     }
 
-    public Loai getOne(int id) {
+    public MauSac getOne(int id) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " Where id = :id";
-        Query query = session.createQuery(sql, Loai.class);
+        Query query = session.createQuery(sql, MauSac.class);
         query.setParameter("id", id);
-        Loai loai = (Loai) query.getSingleResult();
-        return loai;
+        MauSac mauSac = (MauSac) query.getSingleResult();
+        return mauSac;
     }
 
-    public Boolean add(Loai loai) {
+    public Boolean add(MauSac mauSac) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.save(loai);
+            session.save(mauSac);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -49,11 +49,11 @@ public class LoaiSPRepository {
         return null;
     }
 
-    public Boolean update(Loai loai) {
+    public Boolean update(MauSac mauSac) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(loai);
+            session.saveOrUpdate(mauSac);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -62,11 +62,11 @@ public class LoaiSPRepository {
         return null;
     }
 
-    public Boolean delete(Loai loai) {
+    public Boolean delete(MauSac mauSac) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.delete(loai);
+            session.delete(mauSac);
             transaction.commit();
             return true;
         } catch (Exception e) {

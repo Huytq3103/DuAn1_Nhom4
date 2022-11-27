@@ -19,15 +19,15 @@ public class ChatLieuRepository {
 
     private String fromTable = "FROM ChatLieu";
 
-    private Session session = HibernateUtil.getFACTORY().openSession();
-
     public List<ChatLieu> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, ChatLieu.class);
         List<ChatLieu> listChatLieu = query.getResultList();
         return listChatLieu;
     }
 
     public ChatLieu getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE id =: id";
         Query query = session.createQuery(sql, ChatLieu.class);
         query.setParameter("id", id);
