@@ -40,6 +40,12 @@ public class LoaiSPRepository {
         return loai;
     }
 
+    public Loai getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " Where ma = :ma";
+        Query query = session.createQuery(sql, Loai.class);
+        query.setParameter("ma", ma);
+        
     public Loai getOneTen(String ten) {
         String sql = fromtable + " Where Ten = :ten";
         Query query = session.createQuery(sql, Loai.class);

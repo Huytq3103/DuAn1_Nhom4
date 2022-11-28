@@ -35,6 +35,15 @@ public class ChatLieuRepository {
         return chatLieu;
     }
 
+    public ChatLieu getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "WHERE ma =: ma";
+        Query query = session.createQuery(sql, ChatLieu.class);
+        query.setParameter("ma", ma);
+        ChatLieu chatLieu = (ChatLieu) query.getSingleResult();
+        return chatLieu;
+    }
+
     public Boolean add(ChatLieu chatLieu) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {

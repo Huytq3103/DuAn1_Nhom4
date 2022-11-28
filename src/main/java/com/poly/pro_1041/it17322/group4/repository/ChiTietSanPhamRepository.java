@@ -45,6 +45,15 @@ public class ChiTietSanPhamRepository {
         String sql = fromTable + "Where id=:id";
         Query query = session.createQuery(sql, ChiTietSanPham.class);
         query.setParameter("id", id);
+
+        ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
+        return ctsp;
+    }
+    public ChiTietSanPham getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "Where ma=:ma";
+        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("ma", ma);
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }

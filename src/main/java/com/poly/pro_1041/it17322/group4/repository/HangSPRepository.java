@@ -35,6 +35,15 @@ public class HangSPRepository {
         return loai;
     }
 
+    public Hang getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " Where ma = :ma";
+        Query query = session.createQuery(sql, Hang.class);
+        query.setParameter("ma", ma);
+        Hang loai = (Hang) query.getSingleResult();
+        return loai;
+    }
+
     public Boolean add(Hang hang) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
