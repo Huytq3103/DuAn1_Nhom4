@@ -14,10 +14,20 @@ public class TrangChu extends javax.swing.JFrame {
      * Creates new form ViewSanPham
      */
     private Account account = new Account();
-    
+
     public TrangChu(Account account) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.account = account;
+        String chucVu = account.getChucVuAccount().getId() == 1 ? "Chủ" : "Nhân viên";
+        String nhanVien = "Hello : " + account.getHoTen() + " ( " + chucVu + " )";
+        lbTenNV.setText(nhanVien);
+        ViewThongKe viewThongKe = new ViewThongKe(this.account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewThongKe);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
     }
 
     /**
@@ -43,6 +53,7 @@ public class TrangChu extends javax.swing.JFrame {
         btnDoiMK = new javax.swing.JButton();
         btnDangXuat = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        lbTenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,12 +103,22 @@ public class TrangChu extends javax.swing.JFrame {
         btnSanPham.setIcon(new ImageIcon
             ("src/main/icon/Product.png"));
         btnSanPham.setText("Sản phẩm");
+        btnSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSanPhamActionPerformed(evt);
+            }
+        });
 
         btnNhanVien.setBackground(new java.awt.Color(255, 255, 255));
         btnNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnNhanVien.setIcon(new ImageIcon
             ("src/main/icon/Staff.png"));
         btnNhanVien.setText("Nhân viên");
+        btnNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNhanVienActionPerformed(evt);
+            }
+        });
 
         btnHoaDon.setBackground(new java.awt.Color(255, 255, 255));
         btnHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -115,6 +136,11 @@ public class TrangChu extends javax.swing.JFrame {
         btnKH.setIcon(new ImageIcon
             ("src/main/icon/Customer.png"));
         btnKH.setText("Khách hàng");
+        btnKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKHActionPerformed(evt);
+            }
+        });
 
         btnLichSu.setBackground(new java.awt.Color(255, 255, 255));
         btnLichSu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -132,12 +158,22 @@ public class TrangChu extends javax.swing.JFrame {
         btnKM.setIcon(new ImageIcon
             ("src/main/icon/Dollar.png"));
         btnKM.setText("Khuyến mãi ");
+        btnKM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKMActionPerformed(evt);
+            }
+        });
 
         btnDoiMK.setBackground(new java.awt.Color(255, 255, 255));
         btnDoiMK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDoiMK.setIcon(new ImageIcon
             ("src/main/icon/Refresh.png"));
         btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,6 +229,10 @@ public class TrangChu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 3, 22)); // NOI18N
         jLabel3.setText("Shelby Company");
 
+        lbTenNV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbTenNV.setForeground(new java.awt.Color(255, 255, 255));
+        lbTenNV.setText("  ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -207,6 +247,8 @@ public class TrangChu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -219,7 +261,8 @@ public class TrangChu extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbTenNV))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,17 +298,17 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
-//        ViewLichSu viewLichSu = new ViewLichSu();
-//        panelTrangChu.removeAll();
-//        panelTrangChu.add(viewLichSu);
-//        panelTrangChu.setLayout(new FlowLayout());
-//        this.pack();
-//        panelTrangChu.setVisible(true);
+        ViewLichSu viewLichSu = new ViewLichSu();
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewLichSu);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
     }//GEN-LAST:event_btnLichSuActionPerformed
 
     private void btnThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMouseClicked
         // TODO add your handling code here:
-        ViewThongKe viewThongKe = new ViewThongKe();
+        ViewThongKe viewThongKe = new ViewThongKe(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewThongKe);
         panelTrangChu.setLayout(new FlowLayout());
@@ -278,6 +321,56 @@ public class TrangChu extends javax.swing.JFrame {
         this.dispose();
         new ViewLogin().setVisible(true);
     }//GEN-LAST:event_btnDangXuatActionPerformed
+
+    private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
+        // TODO add your handling code here:
+        ViewSanPham viewSanPham = new ViewSanPham(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewSanPham);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnSanPhamActionPerformed
+
+    private void btnKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKHActionPerformed
+        // TODO add your handling code here:
+        ViewKhachHang viewKhachHang = new ViewKhachHang(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewKhachHang);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnKHActionPerformed
+
+    private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
+        // TODO add your handling code here:
+        ViewAccount  viewAccount= new ViewAccount(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewAccount);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnNhanVienActionPerformed
+
+    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
+        // TODO add your handling code here:
+        ViewDoiMatKhau  viewDoiMatKhau= new ViewDoiMatKhau(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewDoiMatKhau);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnDoiMKActionPerformed
+
+    private void btnKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKMActionPerformed
+        // TODO add your handling code here:
+        ViewKhuyenMai viewKhuyenMai = new ViewKhuyenMai(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewKhuyenMai);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnKMActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,6 +423,7 @@ public class TrangChu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbTenNV;
     private javax.swing.JPanel panelTrangChu;
     // End of variables declaration//GEN-END:variables
 }

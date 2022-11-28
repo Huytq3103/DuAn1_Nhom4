@@ -21,15 +21,35 @@ public class LoaiSPRepository {
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<Loai> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromtable, Loai.class);
         List<Loai> listLoai = query.getResultList();
         return listLoai;
     }
 
     public Loai getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+
         String sql = fromtable + " Where id = :id";
         Query query = session.createQuery(sql, Loai.class);
         query.setParameter("id", id);
+        Loai loai = (Loai) query.getSingleResult();
+        return loai;
+    }
+
+    public Loai getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " Where ma = :ma";
+        Query query = session.createQuery(sql, Loai.class);
+        query.setParameter("ma", ma);
+        Loai loai = (Loai) query.getSingleResult();
+        return loai;
+    }
+
+    public Loai getOneTen(String ten) {
+        String sql = fromtable + " Where Ten = :ten";
+        Query query = session.createQuery(sql, Loai.class);
+        query.setParameter("Ten", ten);
         Loai loai = (Loai) query.getSingleResult();
         return loai;
     }

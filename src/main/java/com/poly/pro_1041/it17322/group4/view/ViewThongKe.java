@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.response.ViewThongKeResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewThongKeService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewThongKeServiceImpl;
@@ -38,7 +39,7 @@ public class ViewThongKe extends javax.swing.JPanel {
     /**
      * Creates new form ViewThongKe
      */
-    public ViewThongKe() {
+    public ViewThongKe(Account account) {
         initComponents();
         dtm = new DefaultTableModel();
         dtm2 = new DefaultTableModel();
@@ -76,6 +77,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         for (Integer i : listNam) {
             dcbm2.addElement(i);
         }
+        
         cbbNam.setSelectedIndex(0);
         showDataTableCTSP();
     }
@@ -123,12 +125,10 @@ public class ViewThongKe extends javax.swing.JPanel {
 
     private void showDataTableCTSP() {
         dtm2.setRowCount(0);
-        for (int i = 1; i <= listCTSP.size(); i++) {
-            for (ViewThongKeResponse x : listCTSP) {
-                int stt = 1;
-                dtm2.addRow(new Object[]{stt, x.getCtsp().getSanPham().getMa(), x.getCtsp().getSanPham().getTenSP(), x.getMauSac(), x.getHang(), x.getChatLieu(), x.getKichCo(), x.getLoai(), x.getSoLuong()});
-                stt++;
-            }
+        int stt = 1;
+        for (ViewThongKeResponse x : listCTSP) {
+            dtm2.addRow(new Object[]{stt, x.getCtsp().getSanPham().getMa(), x.getCtsp().getSanPham().getTenSP(), x.getMauSac(), x.getHang(), x.getChatLieu(), x.getKichCo(), x.getLoai(), x.getSoLuong()});
+            stt++;
         }
 
     }
@@ -665,10 +665,12 @@ public class ViewThongKe extends javax.swing.JPanel {
 
     private void cbbNamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbNamItemStateChanged
         // TODO add your handling code here:
+        if(cbbNam.getSelectedItem() != null){
         int nam = (int) cbbNam.getSelectedItem();
         listThang = viewThongKeService.getThang(nam);
         listGiaBan = viewThongKeService.getGiaBan(nam);
         showDataTableDoanhThu();
+        }
     }//GEN-LAST:event_cbbNamItemStateChanged
 
     private void btTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTimKiemActionPerformed

@@ -30,6 +30,8 @@ public class ViewHoaDonResponse {
     private String ten;
     private String ngaoTao;
     private String ngayThanhToan;
+    private String ngayShip;
+    private String ngayNhan;
     private BigDecimal TongTien;
 
     public ViewHoaDonResponse() {
@@ -71,4 +73,7 @@ public class ViewHoaDonResponse {
         return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
+    public Object[] toDataRowLS(int k) {
+        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+    }
 }

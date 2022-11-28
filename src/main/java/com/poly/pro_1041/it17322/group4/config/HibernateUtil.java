@@ -24,6 +24,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import java.util.Properties;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -37,6 +38,7 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 
     private static final SessionFactory FACTORY;
+    private static Session SESSION;
 
     static {
         Configuration conf = new Configuration();
@@ -76,6 +78,13 @@ public class HibernateUtil {
 
     public static SessionFactory getFACTORY() {
         return FACTORY;
+    }
+
+    public static Session getSession() {
+        if (SESSION == null || !SESSION.isConnected()) {
+            SESSION = FACTORY.openSession();
+        }
+        return SESSION;
     }
 
     public static void main(String[] args) {

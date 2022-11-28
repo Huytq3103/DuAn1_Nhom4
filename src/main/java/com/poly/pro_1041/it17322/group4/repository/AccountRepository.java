@@ -6,8 +6,10 @@ package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -17,14 +19,45 @@ public class AccountRepository {
 
     private String fromTable = " FROM Account ";
 
-    public Account getOne(String username, String pass) {
+    private Session session;
+
+    public List<Account> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
+        org.hibernate.query.Query query = session.createQuery(fromTable, Account.class);
+        List<Account> accs = query.getResultList();
+        return accs;
+    }
+
+    public Account getOne(String username, String pass) {
+        session = HibernateUtil.getSession();
         String sql = fromTable + " WHERE Username=:User AND Password=:Pass";
         Query query = session.createQuery(sql, Account.class);
         query.setParameter("User", username);
         query.setParameter("Pass", pass);
         Account account = (Account) query.getSingleResult();
         return account;
+    }
+
+    public Boolean add(Account acc) {
+        Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.save(acc);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Boolean update(Account account) {
+        Transaction transaction = null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(account);
+        transaction.commit();
+        return true;
     }
 
     public static void main(String[] args) {
