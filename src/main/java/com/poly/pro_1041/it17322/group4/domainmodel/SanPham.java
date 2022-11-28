@@ -33,13 +33,11 @@ public class SanPham {
     @GeneratedValue
     @Column(name = "Id")
     private UUID id;
-    
+
     @Column(name = "Ma")
     private String ma;
 
     @Column(name = "TenSP")
     private String tenSP;
-    
-    @Column(name = "NgayTao")
-    private String ngayTao;
+
 }

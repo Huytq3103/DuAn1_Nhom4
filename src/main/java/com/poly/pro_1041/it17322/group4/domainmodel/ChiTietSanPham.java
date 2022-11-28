@@ -66,6 +66,9 @@ public class ChiTietSanPham {
     @JoinColumn(name = "IdKM", referencedColumnName = "Id")
     private KhuyenMai khuyenMai;
 
+    @Column(name = "Ma")
+    private String ma;
+
     @Column(name = "SoLuongTon")
     private int soLuongTon;
 
@@ -77,7 +80,7 @@ public class ChiTietSanPham {
 
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;
-    
+
     @Column(name = "Hinh")
     private String Hinh;
 }

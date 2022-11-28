@@ -27,8 +27,11 @@ public class ViewHoaDonResponse {
     private Account account;
     private KhachHang khachHang;
     private TrangThaiOrder tto;
+    private String ten;
     private String ngaoTao;
     private String ngayThanhToan;
+    private String ngayShip;
+    private String ngayNhan;
     private BigDecimal TongTien;
 
     public ViewHoaDonResponse() {
@@ -39,13 +42,35 @@ public class ViewHoaDonResponse {
         this.account = hd.getAccount();
         this.khachHang = hd.getKhachHang();
         this.tto = hd.getTrangThaiOrder();
+        this.ten = hd.getTen();
         this.ngaoTao = hd.getNgayTao();
         this.ngayThanhToan = hd.getNgayThanhToan();
         this.TongTien = hd.getTongTien();
     }
 
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ten, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
+        this.id = id;
+        this.account = account;
+        this.khachHang = khachHang;
+        this.tto = tto;
+        this.ten = ten;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.TongTien = TongTien;
+    }
+
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
+        this.id = id;
+        this.account = account;
+        this.khachHang = khachHang;
+        this.tto = tto;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.TongTien = TongTien;
+    }
+
     public Object[] toDataRow() {
-        return new Object[]{account.getHoTen(), " ", tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
 }

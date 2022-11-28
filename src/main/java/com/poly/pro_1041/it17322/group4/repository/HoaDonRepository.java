@@ -17,23 +17,25 @@ import org.hibernate.query.Query;
  * @author DELL
  */
 public class HoaDonRepository {
-    private Session session = HibernateUtil.getFACTORY().openSession();
-    
+
     private String fromTable = "FROM HoaDon ";
-    public List<HoaDon> getAll(){
+
+    public List<HoaDon> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, HoaDon.class);
         List<HoaDon> hoadons = query.getResultList();
         return hoadons;
     }
-    
+
     public HoaDon getOne(UUID id) {
         String sql = fromTable + "WHERE Id =: Id";
+        Session session = HibernateUtil.getFACTORY().openSession();
         javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
         query.setParameter("Id", id);
-        HoaDon hoadon =  (HoaDon) query.getSingleResult();
+        HoaDon hoadon = (HoaDon) query.getSingleResult();
         return hoadon;
     }
-    
+
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
@@ -46,7 +48,7 @@ public class HoaDonRepository {
         }
         return null;
     }
-    
+
     public Boolean update(HoaDon hoadon) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
@@ -59,7 +61,7 @@ public class HoaDonRepository {
         }
         return null;
     }
-    
+
     public Boolean delete(HoaDon hoadon) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
@@ -72,12 +74,12 @@ public class HoaDonRepository {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         List<HoaDon> lists = new HoaDonRepository().getAll();
         for (HoaDon x : lists) {
             System.out.println(x.toString());
         }
     }
-    
+
 }

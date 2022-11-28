@@ -18,22 +18,32 @@ import org.hibernate.query.Query;
  */
 public class HoaDonChiTietRepository {
 
-    private Session session = HibernateUtil.getFACTORY().openSession();
-
     private String fromTable = "FROM HoaDonChiTiet";
 
     public List<HoaDonChiTiet> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, HoaDonChiTiet.class);
         List<HoaDonChiTiet> hoadonchitiets = query.getResultList();
         return hoadonchitiets;
     }
 
     public List<HoaDonChiTiet> getOneHD(UUID id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE IdHoaDon=:id ";
         javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
         query.setParameter("id", id);
         List<HoaDonChiTiet> hoadonchitiets = query.getResultList();
         return hoadonchitiets;
+    }
+
+    public HoaDonChiTiet getOneHDCT(UUID idHD, UUID idCTSP) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE IdHoaDon=:idHD AND IdCTSP=:idCTSP";
+        javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
+        query.setParameter("idHD", idHD);
+        query.setParameter("idCTSP", idCTSP);
+        HoaDonChiTiet hdct = (HoaDonChiTiet) query.getSingleResult();
+        return hdct;
     }
 
     public Boolean add(HoaDonChiTiet hoadonchitiet) {
@@ -75,10 +85,4 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
-    public static void main(String[] args) {
-        List<HoaDonChiTiet> lists = new HoaDonChiTietRepository().getAll();
-        for (HoaDonChiTiet x : lists) {
-            System.out.println(x.toString());
-        }
-    }
 }

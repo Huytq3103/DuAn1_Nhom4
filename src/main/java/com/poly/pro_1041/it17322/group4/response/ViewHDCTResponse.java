@@ -48,7 +48,19 @@ public class ViewHDCTResponse {
         this.gia = hdct.getDonGia();
     }
 
+    public ViewHDCTResponse(ChiTietSanPham ctsp, String hang, String ten, String mauSac, String loai, String kichCo, String chatLieu, int soLuong, BigDecimal gia) {
+        this.ctsp = ctsp;
+        this.hang = hang;
+        this.ten = ten;
+        this.mauSac = mauSac;
+        this.loai = loai;
+        this.kichCo = kichCo;
+        this.chatLieu = chatLieu;
+        this.soLuong = soLuong;
+        this.gia = gia;
+    }
+
     public Object[] toDataRow() {
-        return new Object[]{ctsp.getSanPham().getTenSP(), mauSac, hang, kichCo, chatLieu, loai, soLuong, gia};
+        return new Object[]{ten, mauSac, hang, kichCo, chatLieu, loai, soLuong, gia,soLuong*Double.valueOf(String.valueOf(gia))};
     }
 }

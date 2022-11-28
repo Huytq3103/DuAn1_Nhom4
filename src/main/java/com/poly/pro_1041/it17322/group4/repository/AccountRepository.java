@@ -19,12 +19,14 @@ public class AccountRepository {
 
     private String fromTable = " FROM Account ";
 
+
     public List<Account> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
         org.hibernate.query.Query query = session.createQuery(fromTable, Account.class);
         List<Account> accs = query.getResultList();
         return accs;
     }
+
 
     public Account getOne(String username, String pass) {
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -62,7 +64,9 @@ public class AccountRepository {
         return null;
     }
 
+
     public static void main(String[] args) {
-        System.out.println(new AccountRepository().getOne("nhanvien1", "12345678"));
+
+        System.out.println(new AccountRepository().getOne("nhanvien1", "12345678").toString());
     }
 }
