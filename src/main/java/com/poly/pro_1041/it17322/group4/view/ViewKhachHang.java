@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
@@ -30,8 +31,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private DefaultComboBoxModel dcbb = new DefaultComboBoxModel<>();
     private List<ViewKhachHangRepose> listKH = new ArrayList<>();
     private int index;
+    private Account acount = new Account();
 
-    public ViewKhachHang() {
+    public ViewKhachHang(Account a) {
         initComponents();
         tbHienThi.setModel(dtm);
         String headers[] = {"Mã", "Họ tên", "Ngày sinh", "Giới tính", "Sdt", "Email", "Địa chỉ", "Ngày tạo", "Ngày chỉnh sửa"};
@@ -424,6 +426,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+        index = tbHienThi.getSelectedRow();
+        boolean check = true;
+        ViewKhachHangRepose vkhr = listKH.get(index);
         UUID id = null;
         String ma = txtMa.getText();
         String ten = txtTenKhachHang.getText();
@@ -445,13 +450,10 @@ public class ViewKhachHang extends javax.swing.JPanel {
         String ngayTao = txtNgayTao.getText();
         String ngayChinhSua = year + "-" + month + "-" + day;
         String nguoiTao = txtNguoiTao.getText();
-        String nguoiChinhSua = "";
+        String nguoiChinhSua = "9FA4686A-1D6D-43D9-9A4A-29B71E36F456";
         ViewKhachHangRepose view = listKH.get(tbHienThi.getSelectedRow());
         ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, nguoiChinhSua);
-        String update = khService.update(viewkh);
-        JOptionPane.showMessageDialog(this, update);
-        listKH = khService.getAll();
-        showDetail(listKH);
+//       check = khService.update(viewkh);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -476,7 +478,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         int year = d.getYear() + 1900;
         String ngayTao = year + "-" + month + "-" + day;
         String ngayChinhSua = null;
-        String nguoiTao = txtNguoiTao.getText();
+        String nguoiTao = "8860C423-7858-EF41-846A-0B7C1C6707D9";
         String nguoiChinhSua = null;
         ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, nguoiChinhSua);
         String add = khService.add(viewkh);

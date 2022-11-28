@@ -14,7 +14,7 @@ public class TrangChu extends javax.swing.JFrame {
      * Creates new form ViewSanPham
      */
     private Account account = new Account();
-    
+
     public TrangChu(Account account) {
         initComponents();
         this.account = account;
@@ -115,6 +115,11 @@ public class TrangChu extends javax.swing.JFrame {
         btnKH.setIcon(new ImageIcon
             ("src/main/icon/Customer.png"));
         btnKH.setText("Khách hàng");
+        btnKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKHActionPerformed(evt);
+            }
+        });
 
         btnLichSu.setBackground(new java.awt.Color(255, 255, 255));
         btnLichSu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -278,6 +283,16 @@ public class TrangChu extends javax.swing.JFrame {
         this.dispose();
         new ViewLogin().setVisible(true);
     }//GEN-LAST:event_btnDangXuatActionPerformed
+
+    private void btnKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKHActionPerformed
+        // TODO add your handling code here:
+        ViewKhachHang viewKH = new ViewKhachHang(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewKH);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnKHActionPerformed
 
     /**
      * @param args the command line arguments
