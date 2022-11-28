@@ -106,6 +106,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         txtTenNV.setText(vhdr.getAccount().getHoTen());
         txtMaKH.setText(vhdr.getKhachHang() == null ? "" : vhdr.getKhachHang().getMaKH());
         txtTenHD.setText(vhdr.getTen());
+        btnRemoveHDCT.setEnabled(true);
 
         cbbTrangThai.setSelectedItem(vhdr.getTto().getTen());
         lbTongTien.setText(String.valueOf(vhdr.getTongTien()));
@@ -115,6 +116,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
             txtTienKhachDua.setEnabled(false);
             btnAddHDCT.setEnabled(false);
             btnHuy.setEnabled(false);
+            btnRemoveHDCT.setEnabled(false);
         }
     }
 
@@ -959,10 +961,12 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
-        int row = tbHoaDon.getSelectedRow();
-        ViewHoaDonResponse vhdr = listHD.get(row);
-        showDataTableHDCT(vhds.getOneHD(vhdr.getId()));
-        fillData(vhdr);
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
+            ViewHoaDonResponse vhdr = listHD.get(row);
+            showDataTableHDCT(vhds.getOneHD(vhdr.getId()));
+            fillData(vhdr);
+        }
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
     private void tbSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMouseClicked
@@ -993,9 +997,11 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void txtTienKhachDuaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienKhachDuaKeyReleased
         // TODO add your handling code here:
-        int row = tbHoaDon.getSelectedRow();
-        ViewHoaDonResponse vhdr = listHD.get(row);
-        lbTienThua.setText(vhds.tienThua(vhdr.getTongTien(), txtTienKhachDua));
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
+            ViewHoaDonResponse vhdr = listHD.get(row);
+            lbTienThua.setText(vhds.tienThua(vhdr.getTongTien(), txtTienKhachDua));
+        }
     }//GEN-LAST:event_txtTienKhachDuaKeyReleased
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
@@ -1072,47 +1078,58 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void btnChoTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoTTActionPerformed
         // TODO add your handling code here:
-        int row = tbHoaDon.getSelectedRow();
-        ViewHoaDonResponse vhdr = listHD.get(row);
-        vhdr.setTto(listTTO.get(1));
-        if (vhds.updateHD(vhdr)) {
-            JOptionPane.showMessageDialog(TBPaneHD, "Thành công");
-            listHD = vhds.getAllHD();
-            showDataTableHoaDon(listHD);
-        } else {
-            JOptionPane.showMessageDialog(TBPaneHD, "Thất bại");
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
+            ViewHoaDonResponse vhdr = listHD.get(row);
+            vhdr.setTto(listTTO.get(1));
+            if (vhds.updateHD(vhdr)) {
+                JOptionPane.showMessageDialog(TBPaneHD, "Thành công");
+                listHD = vhds.getAllHD();
+                showDataTableHoaDon(listHD);
+            } else {
+                JOptionPane.showMessageDialog(TBPaneHD, "Thất bại");
+            }
         }
-
-
     }//GEN-LAST:event_btnChoTTActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-        int row = tbHoaDon.getSelectedRow();
-        ViewHoaDonResponse vhdr = listHD.get(row);
-        Date d = new Date();
-        int day = d.getDate();
-        int month = d.getMonth() + 1;
-        int year = d.getYear() + 1900;
-        String ngayThanhToan = month + "/" + day + "/" + year;
-        vhdr.setNgayThanhToan(ngayThanhToan);
-        BigDecimal tongTien = vhdr.getTongTien();
-        JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(tongTien, txtTienKhachDua, vhdr));
-        listHD = vhds.getAllHD();
-        showDataTableHoaDon(listHD);
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
+            ViewHoaDonResponse vhdr = listHD.get(row);
+            Date d = new Date();
+            int day = d.getDate();
+            int month = d.getMonth() + 1;
+            int year = d.getYear() + 1900;
+            String ngayThanhToan = month + "/" + day + "/" + year;
+            vhdr.setNgayThanhToan(ngayThanhToan);
+            BigDecimal tongTien = vhdr.getTongTien();
+            if (vhds.checkSoLuongTonVoiSoLuong(vhds.getOneHD(vhdr.getId()))) {
+                if (vhds.updateSoLuongTon(vhds.getOneHD(vhdr.getId()))) {
+                    JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(tongTien, txtTienKhachDua, vhdr));
+                    listHD = vhds.getAllHD();
+                    showDataTableHoaDon(listHD);
+                    listVCTSP = vhds.getAllSP();
+                    showDataTableSanPham(listVCTSP);
+                }
+
+            }
+        }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
-        int row = tbHoaDon.getSelectedRow();
-        ViewHoaDonResponse vhdr = listHD.get(row);
-        vhdr.setTto(listTTO.get(2));
-        if (vhds.updateHD(vhdr)) {
-            JOptionPane.showMessageDialog(TBPaneHD, "Thành công");
-            listHD = vhds.getAllHD();
-            showDataTableHoaDon(listHD);
-        } else {
-            JOptionPane.showMessageDialog(TBPaneHD, "Thất bại");
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
+            ViewHoaDonResponse vhdr = listHD.get(row);
+            vhdr.setTto(listTTO.get(2));
+            if (vhds.updateHD(vhdr)) {
+                JOptionPane.showMessageDialog(TBPaneHD, "Thành công");
+                listHD = vhds.getAllHD();
+                showDataTableHoaDon(listHD);
+            } else {
+                JOptionPane.showMessageDialog(TBPaneHD, "Thất bại");
+            }
         }
     }//GEN-LAST:event_btnHuyActionPerformed
 
@@ -1122,12 +1139,16 @@ public class ViewHoaDon extends javax.swing.JPanel {
             boolean check = true;
             int row = tbHoaDon.getSelectedRow();
             ViewHoaDonResponse vhdr = listHD.get(row);
+            vhdr.setTongTien(BigDecimal.valueOf(0.0));
+            vhds.updateHD(vhdr);
             for (ViewHDCTResponse vhdctr : vhds.getOneHD(vhdr.getId())) {
                 check = vhds.deleteHDCT(vhdctr);
                 if (check == false) {
                     JOptionPane.showMessageDialog(TBPaneHD, "Thất bại");
                     break;
                 }
+                listHD = vhds.getAllHD();
+                showDataTableHoaDon(listHD);
             }
             if (check == true) {
                 JOptionPane.showMessageDialog(TBPaneHD, "Thành công");
@@ -1137,8 +1158,9 @@ public class ViewHoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRemoveHDCTActionPerformed
 
     private void btnTaoPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPDFActionPerformed
-        int row = tbHoaDon.getSelectedRow();
-        if (row > -1) {
+
+        if (tbHoaDon.getSelectedRow() > -1) {
+            int row = tbHoaDon.getSelectedRow();
             try {
                 ViewHoaDonResponse vhdr = listHD.get(row);
                 List<ViewHDCTResponse> listHDCT = vhds.getOneHD(vhdr.getId());

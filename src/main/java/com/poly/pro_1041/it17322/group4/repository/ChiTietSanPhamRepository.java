@@ -42,9 +42,9 @@ public class ChiTietSanPhamRepository {
     
     public ChiTietSanPham getOne(UUID id) {
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "Where Id=:id";
+        String sql = fromTable + "Where id=:id";
         Query query = session.createQuery(sql, ChiTietSanPham.class);
-        query.setParameter("Id", id);
+        query.setParameter("id", id);
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }

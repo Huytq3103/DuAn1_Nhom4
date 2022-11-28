@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
@@ -30,9 +31,11 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private DefaultComboBoxModel dcbb = new DefaultComboBoxModel<>();
     private List<ViewKhachHangRepose> listKH = new ArrayList<>();
     private int index;
+    private Account account = new Account();
 
-    public ViewKhachHang() {
+    public ViewKhachHang(Account a) {
         initComponents();
+        this.account = a;
         tbHienThi.setModel(dtm);
         String headers[] = {"Mã", "Họ tên", "Ngày sinh", "Giới tính", "Sdt", "Email", "Địa chỉ", "Ngày tạo", "Ngày chỉnh sửa"};
         dtm.setColumnIdentifiers(headers);
@@ -258,7 +261,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
                         .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(18, 18, 18)
                         .addComponent(txtNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -402,14 +405,16 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void tbHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiMouseClicked
         // TODO add your handling code here:
-        index = tbHienThi.getSelectedRow();
-        fillIndex();
-        btnThem.setEnabled(false);
-        btnSua.setEnabled(true);
-        btnXoa.setEnabled(true);
-        txtNgayTao.setEditable(true);
-        txtNgayChinhSua.setEditable(false);
-        txtNgayTao.setEditable(true);
+        if (tbHienThi.getSelectedRow() > -1) {
+            index = tbHienThi.getSelectedRow();
+            fillIndex();
+            btnThem.setEnabled(false);
+            btnSua.setEnabled(true);
+            btnXoa.setEnabled(true);
+            txtNgayTao.setEditable(true);
+            txtNgayChinhSua.setEditable(false);
+            txtNgayTao.setEditable(true);
+        }
     }//GEN-LAST:event_tbHienThiMouseClicked
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -476,7 +481,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         int year = d.getYear() + 1900;
         String ngayTao = year + "-" + month + "-" + day;
         String ngayChinhSua = null;
-        String nguoiTao = txtNguoiTao.getText();
+        String nguoiTao = account.getHoTen();
         String nguoiChinhSua = null;
         ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, nguoiChinhSua);
         String add = khService.add(viewkh);
@@ -484,7 +489,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
         listKH = khService.getAll();
         showDetail(listKH);
     }//GEN-LAST:event_btnThemActionPerformed
-
+    private String getDate() {
+        java.util.Date d = new java.util.Date();
+        int day = d.getDate();
+        int month = d.getMonth() + 1;
+        int year = d.getYear() + 1900;
+        String ngayThanhToan = month + "/" + day + "/" + year;
+        return ngayThanhToan;
+    }
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
         clearForm();

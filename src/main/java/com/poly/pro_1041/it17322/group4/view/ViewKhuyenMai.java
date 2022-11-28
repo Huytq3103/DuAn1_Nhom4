@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
@@ -49,7 +50,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     
     int index;
     
-    public ViewKhuyenMai() {
+    public ViewKhuyenMai(Account a) {
         initComponents();
         
         tbSanPham.setModel(tbsp);
