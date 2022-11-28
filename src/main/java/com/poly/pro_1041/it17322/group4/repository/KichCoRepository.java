@@ -30,10 +30,18 @@ public class KichCoRepository {
 
     public KichCo getOne(int id) {
         Session session = HibernateUtil.getFACTORY().openSession();
-
         String sql = fromTable + " WHERE id =: id";
         Query query = session.createQuery(sql, KichCo.class);
         query.setParameter("id", id);
+        KichCo kichCo = (KichCo) query.getSingleResult();
+        return kichCo;
+    }
+
+    public KichCo getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE ma =: ma";
+        Query query = session.createQuery(sql, KichCo.class);
+        query.setParameter("ma", ma);
         KichCo kichCo = (KichCo) query.getSingleResult();
         return kichCo;
     }

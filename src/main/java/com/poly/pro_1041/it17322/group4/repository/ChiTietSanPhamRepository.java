@@ -19,9 +19,9 @@ import org.hibernate.Transaction;
  */
 public class ChiTietSanPhamRepository {
 
-
-
     private String fromTable = " FROM ChiTietSanPham ";
+
+    private Session session;
 
     public List<ChiTietSanPham> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -30,7 +30,6 @@ public class ChiTietSanPhamRepository {
         return list;
     }
 
-    
     public List<ViewCTSPResponse> getOneLoai(int idLoai) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE IdLoai=:idLoai ";
@@ -39,12 +38,29 @@ public class ChiTietSanPhamRepository {
         List<ViewCTSPResponse> chiTietSP = query.getResultList();
         return chiTietSP;
     }
-    
+
     public ChiTietSanPham getOne(UUID id) {
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "Where Id=:id";
+        String sql = fromTable + "Where id=:id";
         Query query = session.createQuery(sql, ChiTietSanPham.class);
-        query.setParameter("Id", id);
+        query.setParameter("id", id);
+        ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
+        return ctsp;
+    }
+    public ChiTietSanPham getOneUpdateHoaDon(UUID id) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + "Where id=:id";
+        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("id", id);
+        ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
+        return ctsp;
+    }
+
+    public ChiTietSanPham getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "Where ma=:ma";
+        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("ma", ma);
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }
@@ -62,17 +78,13 @@ public class ChiTietSanPhamRepository {
         return null;
     }
 
-    public Boolean update(ChiTietSanPham chitietsanPham) {
+    public Boolean update(ChiTietSanPham ctsp) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(chitietsanPham);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(ctsp);
+        transaction.commit();
+        return true;
     }
 
     public Boolean delete(ChiTietSanPham chitietsanPham) {

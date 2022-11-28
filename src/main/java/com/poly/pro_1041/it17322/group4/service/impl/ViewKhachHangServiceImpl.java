@@ -27,7 +27,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String add(ViewKhachHangRepose vkhr) {
-        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(),vkhr.getNgayChinhSua(), vkhr.getNguoiChinhSua());
+        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua());
         boolean add = khRepository.add(kh);
         if (add) {
             return "Add thanh cong";
@@ -38,7 +38,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String update(ViewKhachHangRepose vkhr) {
-        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNgayChinhSua(), vkhr.getNguoiChinhSua());
+        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua());
         boolean update = khRepository.update(kh);
         if (update) {
             return "Update thanh cong";
@@ -49,7 +49,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String delete(ViewKhachHangRepose vkhr) {
-        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNgayChinhSua(), vkhr.getNguoiChinhSua());
+        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua());
         boolean delete = khRepository.delete(kh);
         if (delete) {
             return "Delete thanh cong";

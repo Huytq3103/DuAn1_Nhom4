@@ -4,11 +4,11 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
-import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewLoaiKMResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewTrangThaiKMResponse;
@@ -19,7 +19,6 @@ import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewKhuyenMaiServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewLoaiServiceImpl;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -49,7 +48,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     
     int index;
     
-    public ViewKhuyenMai() {
+    public ViewKhuyenMai(Account a) {
         initComponents();
         
         tbSanPham.setModel(tbsp);

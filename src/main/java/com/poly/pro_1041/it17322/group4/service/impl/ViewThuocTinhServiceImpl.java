@@ -64,6 +64,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddSanPham(SanPham sanPham) {
+
+        if (sanPham.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (sanPham.getTenSP().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (spr.add(sanPham)) {
             return "Thành công";
         } else {
@@ -73,6 +80,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddMauSac(MauSac mauSac) {
+
+        if (mauSac.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (mauSac.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (msr.add(mauSac)) {
             return "Thành công";
         } else {
@@ -82,6 +96,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddLoai(Loai loai) {
+
+        if (loai.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (loai.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (lspr.add(loai)) {
             return "Thành công";
         } else {
@@ -91,6 +112,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddKichCo(KichCo kichCo) {
+
+        if (kichCo.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (kichCo.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (kcr.add(kichCo)) {
             return "Thành công";
         } else {
@@ -100,6 +128,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddHang(Hang hang) {
+
+        if (hang.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (hang.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (hspr.add(hang)) {
             return "Thành công";
         } else {
@@ -109,6 +144,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddChatLieu(ChatLieu chatLieu) {
+
+        if (chatLieu.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (chatLieu.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (clr.add(chatLieu)) {
             return "Thành công";
         } else {
@@ -118,6 +160,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateMauSac(MauSac mauSac) {
+
+        if (mauSac.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (mauSac.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (msr.update(mauSac)) {
             return "Thành công";
         } else {
@@ -127,6 +176,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateSanPham(SanPham sanPham) {
+
+        if (sanPham.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (sanPham.getTenSP().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (spr.update(sanPham)) {
             return "Thành công";
         } else {
@@ -136,6 +192,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateLoai(Loai loai) {
+
+        if (loai.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (loai.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (lspr.update(loai)) {
             return "Thành công";
         } else {
@@ -145,6 +208,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateKichCo(KichCo kichCo) {
+
+        if (kichCo.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (kichCo.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (kcr.update(kichCo)) {
             return "Thành công";
         } else {
@@ -154,6 +224,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateHang(Hang hang) {
+
+        if (hang.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (hang.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (hspr.update(hang)) {
             return "Thành công";
         } else {
@@ -163,6 +240,13 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String UpdateChatLieu(ChatLieu chatLieu) {
+
+        if (chatLieu.getMa().isEmpty()) {
+            return "Mã không được trống";
+        }
+        if (chatLieu.getTen().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (clr.update(chatLieu)) {
             return "Thành công";
         } else {

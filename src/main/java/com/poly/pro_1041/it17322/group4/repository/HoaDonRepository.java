@@ -18,6 +18,8 @@ import org.hibernate.query.Query;
  */
 public class HoaDonRepository {
 
+    private Session session;
+
     private String fromTable = "FROM HoaDon ";
 
     public List<HoaDon> getAll() {
@@ -38,22 +40,18 @@ public class HoaDonRepository {
 
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = (Transaction) session.beginTransaction();
-            session.save(hoadon);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.save(hoadon);
+        transaction.commit();
+        return true;
     }
 
-    public Boolean update(HoaDon hoadon) {
+    public Boolean update(HoaDon hd) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(hoadon);
+            session.saveOrUpdate(hd);
             transaction.commit();
             return true;
         } catch (Exception e) {

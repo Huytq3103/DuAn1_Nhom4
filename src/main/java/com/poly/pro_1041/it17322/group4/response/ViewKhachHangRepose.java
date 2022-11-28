@@ -4,12 +4,9 @@
  */
 package com.poly.pro_1041.it17322.group4.response;
 
-import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -34,8 +31,8 @@ public class ViewKhachHangRepose {
     private String diaChi;
     private String ngayTao;
     private String ngayChinhSua;
-    private String nguoiTao;
-    private String nguoiChinhSua;
+    private UUID nguoiTao;
+    private UUID nguoiChinhSua;
 
     public ViewKhachHangRepose() {
     }
@@ -55,7 +52,7 @@ public class ViewKhachHangRepose {
         this.nguoiChinhSua = kh.getNguoiChinhSua();
     }
 
-    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, String nguoiTao, String nguoiChinhSua) {
+    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, UUID nguoiTao, UUID nguoiChinhSua) {
         this.ma = ma;
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
@@ -69,8 +66,6 @@ public class ViewKhachHangRepose {
         this.nguoiChinhSua = nguoiChinhSua;
     }
 
-    
-    
     public Object[] toDataRow() {
         return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua};
     }
