@@ -171,12 +171,12 @@ public class ViewSanPham extends javax.swing.JPanel {
 
     private void fill(int row) {
         txtMa.setText(listVCTSP.get(row).getMa());
-        cbbTenSP.setSelectedIndex(row);
-        cbbMauSac.setSelectedIndex(row);
-        cbbLoaiSP.setSelectedIndex(row);
-        cbbKichCo.setSelectedIndex(row);
-        cbbHang.setSelectedIndex(row);
-        cbbChatLieu.setSelectedIndex(row);
+        cbbTenSP.setSelectedItem(row);
+        cbbMauSac.setSelectedItem(row);
+        cbbLoaiSP.setSelectedItem(row);
+        cbbKichCo.setSelectedItem(row);
+        cbbHang.setSelectedItem(row);
+        cbbChatLieu.setSelectedItem(row);
         txtGiaBan.setText(String.valueOf(listVCTSP.get(row).getGia()));
         txtNgayNhap.setText(String.valueOf(listVCTSP.get(row).getNgayNhap()));
         txtSoLuong.setText(String.valueOf(listVCTSP.get(row).getSoLuongTon()));
