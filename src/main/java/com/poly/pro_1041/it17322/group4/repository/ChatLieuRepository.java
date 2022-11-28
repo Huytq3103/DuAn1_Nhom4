@@ -19,6 +19,8 @@ public class ChatLieuRepository {
 
     private String fromTable = "FROM ChatLieu";
 
+    private Session session;
+
     public List<ChatLieu> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, ChatLieu.class);
@@ -59,15 +61,11 @@ public class ChatLieuRepository {
 
     public Boolean update(ChatLieu chatLieu) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(chatLieu);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(chatLieu);
+        transaction.commit();
+        return true;
     }
 
     public Boolean delete(ChatLieu chatLieu) {

@@ -61,6 +61,10 @@ public class ViewHDCTResponse {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{ten, mauSac, hang, kichCo, chatLieu, loai, soLuong, gia,soLuong*Double.valueOf(String.valueOf(gia))};
+        return new Object[]{ten, mauSac, hang, kichCo, chatLieu, loai, soLuong, gia, soLuong * Double.valueOf(String.valueOf(gia))};
+    }
+
+    public Object[] toDataRowLS(int k) {
+        return new Object[]{k + 1, ten, mauSac, hang, kichCo, chatLieu, loai, soLuong, gia, soLuong * Double.valueOf(String.valueOf(gia))};
     }
 }

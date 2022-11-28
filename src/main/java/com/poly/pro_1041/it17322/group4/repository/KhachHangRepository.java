@@ -20,16 +20,17 @@ import org.hibernate.Transaction;
  */
 public class KhachHangRepository {
 
-    private Session session = HibernateUtil.getFACTORY().openSession();
     private String fromtable = " FROM KhachHang ";
 
     public List<KhachHang> getAll() {
+        Session session = HibernateUtil.getFACTORY().openSession();
         Query query = session.createQuery(fromtable, KhachHang.class);
         List<KhachHang> lists = query.getResultList();
         return lists;
     }
 
     public KhachHang getOne(UUID id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " WHERE id = :id";
         Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("id", id);

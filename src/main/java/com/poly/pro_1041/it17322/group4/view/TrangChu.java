@@ -17,6 +17,7 @@ public class TrangChu extends javax.swing.JFrame {
 
     public TrangChu(Account account) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.account = account;
         String chucVu = account.getChucVuAccount().getId() == 1 ? "Chủ" : "Nhân viên";
         String nhanVien = "Hello : " + account.getHoTen() + " ( " + chucVu + " )";
@@ -113,6 +114,11 @@ public class TrangChu extends javax.swing.JFrame {
         btnNhanVien.setIcon(new ImageIcon
             ("src/main/icon/Staff.png"));
         btnNhanVien.setText("Nhân viên");
+        btnNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNhanVienActionPerformed(evt);
+            }
+        });
 
         btnHoaDon.setBackground(new java.awt.Color(255, 255, 255));
         btnHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -152,12 +158,22 @@ public class TrangChu extends javax.swing.JFrame {
         btnKM.setIcon(new ImageIcon
             ("src/main/icon/Dollar.png"));
         btnKM.setText("Khuyến mãi ");
+        btnKM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKMActionPerformed(evt);
+            }
+        });
 
         btnDoiMK.setBackground(new java.awt.Color(255, 255, 255));
         btnDoiMK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDoiMK.setIcon(new ImageIcon
             ("src/main/icon/Refresh.png"));
         btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -282,12 +298,12 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
-//        ViewLichSu viewLichSu = new ViewLichSu();
-//        panelTrangChu.removeAll();
-//        panelTrangChu.add(viewLichSu);
-//        panelTrangChu.setLayout(new FlowLayout());
-//        this.pack();
-//        panelTrangChu.setVisible(true);
+        ViewLichSu viewLichSu = new ViewLichSu();
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewLichSu);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
     }//GEN-LAST:event_btnLichSuActionPerformed
 
     private void btnThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMouseClicked
@@ -325,6 +341,36 @@ public class TrangChu extends javax.swing.JFrame {
         this.pack();
         panelTrangChu.setVisible(true);
     }//GEN-LAST:event_btnKHActionPerformed
+
+    private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
+        // TODO add your handling code here:
+        ViewAccount  viewAccount= new ViewAccount(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewAccount);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnNhanVienActionPerformed
+
+    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
+        // TODO add your handling code here:
+        ViewDoiMatKhau  viewDoiMatKhau= new ViewDoiMatKhau(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewDoiMatKhau);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnDoiMKActionPerformed
+
+    private void btnKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKMActionPerformed
+        // TODO add your handling code here:
+        ViewKhuyenMai viewKhuyenMai = new ViewKhuyenMai(account);
+        panelTrangChu.removeAll();
+        panelTrangChu.add(viewKhuyenMai);
+        panelTrangChu.setLayout(new FlowLayout());
+        this.pack();
+        panelTrangChu.setVisible(true);
+    }//GEN-LAST:event_btnKMActionPerformed
 
     /**
      * @param args the command line arguments

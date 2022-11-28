@@ -27,9 +27,6 @@ public class LoaiSPRepository {
         return listLoai;
     }
 
-
-
-
     public Loai getOne(int id) {
         Session session = HibernateUtil.getFACTORY().openSession();
 
@@ -45,7 +42,10 @@ public class LoaiSPRepository {
         String sql = fromtable + " Where ma = :ma";
         Query query = session.createQuery(sql, Loai.class);
         query.setParameter("ma", ma);
-        
+        Loai loai = (Loai) query.getSingleResult();
+        return loai;
+    }
+
     public Loai getOneTen(String ten) {
         String sql = fromtable + " Where Ten = :ten";
         Query query = session.createQuery(sql, Loai.class);
@@ -56,7 +56,7 @@ public class LoaiSPRepository {
 
     public Boolean add(Loai loai) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(loai);
             transaction.commit();
@@ -69,7 +69,7 @@ public class LoaiSPRepository {
 
     public Boolean update(Loai loai) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.saveOrUpdate(loai);
             transaction.commit();
@@ -82,7 +82,7 @@ public class LoaiSPRepository {
 
     public Boolean delete(Loai loai) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.delete(loai);
             transaction.commit();

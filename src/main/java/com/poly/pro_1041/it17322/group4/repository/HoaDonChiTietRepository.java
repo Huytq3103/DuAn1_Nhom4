@@ -19,6 +19,8 @@ import org.hibernate.query.Query;
 public class HoaDonChiTietRepository {
 
     private String fromTable = "FROM HoaDonChiTiet";
+    
+    private Session session;
 
     public List<HoaDonChiTiet> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -59,17 +61,13 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
-    public Boolean update(HoaDonChiTiet hoadonchitiet) {
+    public Boolean update(HoaDonChiTiet hdct) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(hoadonchitiet);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(hdct);
+        transaction.commit();
+        return true;
     }
 
     public Boolean delete(HoaDonChiTiet hoadonchitiet) {

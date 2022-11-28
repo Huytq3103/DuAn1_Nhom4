@@ -34,6 +34,8 @@ public class ViewAccountReponse {
     private String username;
     private String password;
     private String ngayTao;
+    private UUID nguoiTao;
+    private UUID nguoiChinhSua;
     private String ngayChinhSua;
 
     public ViewAccountReponse() {
@@ -52,6 +54,7 @@ public class ViewAccountReponse {
         this.username = acc.getUsername();
         this.password = acc.getPassword();
         this.ngayTao = acc.getNgayTao();
+        this.nguoiTao = acc.getNguoiTao();
         this.ngayChinhSua = acc.getNgayChinhSua();
     }
 
