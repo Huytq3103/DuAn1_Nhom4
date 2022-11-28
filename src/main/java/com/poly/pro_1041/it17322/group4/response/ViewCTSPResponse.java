@@ -75,6 +75,7 @@ public class ViewCTSPResponse {
     public Object[] toDataRow() {
         return new Object[]{sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
     }
+
     public Object[] toDataRow1() {
         return new Object[]{ma, sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
     }
