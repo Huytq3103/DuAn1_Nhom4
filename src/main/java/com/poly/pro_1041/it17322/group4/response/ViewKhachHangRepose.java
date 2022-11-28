@@ -69,6 +69,8 @@ public class ViewKhachHangRepose {
         this.nguoiChinhSua = nguoiChinhSua;
     }
 
+    
+    
     public Object[] toDataRow() {
         return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua};
     }
