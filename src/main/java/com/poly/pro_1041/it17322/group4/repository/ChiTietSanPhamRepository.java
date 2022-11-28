@@ -45,6 +45,7 @@ public class ChiTietSanPhamRepository {
         String sql = fromTable + "Where id=:id";
         Query query = session.createQuery(sql, ChiTietSanPham.class);
         query.setParameter("id", id);
+
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }

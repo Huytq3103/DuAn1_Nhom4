@@ -191,6 +191,35 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
+    public boolean checkSoLuongTonVoiSoLuong(List<ViewHDCTResponse> list) {
+        boolean check = true;
+        for (ViewHDCTResponse vhdctr : list) {
+            int SoluongTon = ctspr.getOne(vhdctr.getCtsp().getId()).getSoLuongTon();
+            if (vhdctr.getSoLuong() > SoluongTon) {
+                check = false;
+                break;
+            }
+        }
+        return check;
+    }
+
+    @Override
+    public boolean updateSoLuongTon(List<ViewHDCTResponse> list) {
+        boolean check = true;
+        for (ViewHDCTResponse vhdctr : list) {
+            ChiTietSanPham ctsp = ctspr.getOne(vhdctr.getCtsp().getId());
+            int soLuongMoi = ctsp.getSoLuongTon() - vhdctr.getSoLuong();
+            ctsp.setSoLuongTon(soLuongMoi);
+            if (ctspr.update(ctsp)) {
+                check = true;
+            } else {
+                check = false;
+            }
+        }
+        return check;
+    }
+
+    @Override
     public void taoFilePDF(ViewHoaDonResponse hd, List<ViewHDCTResponse> list, Account a) throws FileNotFoundException {
         Date d = new Date();
         int day = d.getDate();
