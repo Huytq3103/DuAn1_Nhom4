@@ -31,7 +31,7 @@ public class ViewLichSu extends javax.swing.JPanel {
         listSanPham = new ArrayList<>();
         viewHoaDonService = new ViewHoaDonServiceImpl();
 
-        String[] headerHD = {"STT", "Tên NV", "Tên KH", "Trạng thái",
+        String[] headerHD = {"STT", "Tên NV", "Tên KH","Tên hóa đơn", "Trạng thái",
             "Ngày tạo", "Ngày thanh toán", "Tổng tiền"};
         dtmHD.setColumnIdentifiers(headerHD);
         String[] headerSP = {"Tên sản phẩm", "Màu sắc", "Hãng",
@@ -366,7 +366,7 @@ public class ViewLichSu extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        
+
     }//GEN-LAST:event_txtSearchKeyReleased
 
 

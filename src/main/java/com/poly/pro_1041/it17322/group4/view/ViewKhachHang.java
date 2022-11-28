@@ -5,7 +5,6 @@
 package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
-import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewKhachHangServiceImpl;
@@ -85,7 +84,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         txtNgayChinhSua.setText(kh.getNgayChinhSua());
         //    labelNguoiTao.setText(kh.getNguoiTao().toString());
         txtMa.setText(kh.getMa());
-        txtNguoiTao.setText(kh.getNguoiTao());
+        txtNguoiTao.setText(kh.getNgayTao());
         tbHienThi.setRowSelectionInterval(index, index);
         tbHienThi.setRowSelectionAllowed(true);
     }
@@ -429,34 +428,35 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        UUID id = null;
-        String ma = txtMa.getText();
-        String ten = txtTenKhachHang.getText();
-        String ngaySinh = txtNgaySinh.getText();
-        boolean isGioiTinh = radioNam.isSelected();
-        boolean gioiTinh;
-        if (isGioiTinh) {
-            gioiTinh = true;
-        } else {
-            gioiTinh = false;
+        if (tbHienThi.getSelectedRow() > -1) {           
+            String ma = txtMa.getText();
+            String ten = txtTenKhachHang.getText();
+            String ngaySinh = txtNgaySinh.getText();
+            boolean isGioiTinh = radioNam.isSelected();
+            boolean gioiTinh;
+            if (isGioiTinh) {
+                gioiTinh = true;
+            } else {
+                gioiTinh = false;
+            }
+            String sdt = txtSDT.getText();
+            String email = txtEmail.getText();
+            String diaChi = txtDiaChi.getText();
+            Date d = new Date();
+            int day = d.getDate();
+            int month = d.getMonth() + 1;
+            int year = d.getYear() + 1900;
+            String ngayTao = txtNgayTao.getText();
+            String ngayChinhSua = year + "-" + month + "-" + day;
+            UUID nguoiChinhSua = account.getId();
+            ViewKhachHangRepose view = listKH.get(tbHienThi.getSelectedRow());
+            ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, view.getNgayTao(), ngayChinhSua, view.getNguoiTao(), nguoiChinhSua);
+            viewkh.setId(view.getId());
+            String update = khService.update(viewkh);
+            JOptionPane.showMessageDialog(this, update);
+            listKH = khService.getAll();
+            showDetail(listKH);
         }
-        String sdt = txtSDT.getText();
-        String email = txtEmail.getText();
-        String diaChi = txtDiaChi.getText();
-        Date d = new Date();
-        int day = d.getDate();
-        int month = d.getMonth() + 1;
-        int year = d.getYear() + 1900;
-        String ngayTao = txtNgayTao.getText();
-        String ngayChinhSua = year + "-" + month + "-" + day;
-        String nguoiTao = txtNguoiTao.getText();
-        String nguoiChinhSua = "";
-        ViewKhachHangRepose view = listKH.get(tbHienThi.getSelectedRow());
-        ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, nguoiChinhSua);
-        String update = khService.update(viewkh);
-        JOptionPane.showMessageDialog(this, update);
-        listKH = khService.getAll();
-        showDetail(listKH);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -481,9 +481,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
         int year = d.getYear() + 1900;
         String ngayTao = year + "-" + month + "-" + day;
         String ngayChinhSua = null;
-        String nguoiTao = account.getHoTen();
+        UUID nguoiTao = account.getId();
         String nguoiChinhSua = null;
-        ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, nguoiChinhSua);
+        ViewKhachHangRepose viewkh = new ViewKhachHangRepose(ma, ten, ngaySinh, gioiTinh, sdt, email, diaChi, ngayTao, ngayChinhSua, nguoiTao, null);
         String add = khService.add(viewkh);
         JOptionPane.showMessageDialog(this, add);
         listKH = khService.getAll();

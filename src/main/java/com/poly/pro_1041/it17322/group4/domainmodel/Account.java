@@ -73,10 +73,10 @@ public class Account {
     private String ngayTao;
 
     @Column(name = "NguoiTao")
-    private String nguoiTao;
+    private UUID nguoiTao;
 
     @Column(name = "NguoiChinhSua")
-    private String nguoiChinhSua;
+    private UUID nguoiChinhSua;
 
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;

@@ -38,7 +38,7 @@ public class ViewAccountServiceImpl implements ViewAccountService {
 
     @Override
     public String add(ViewAccountReponse vaccr) {
-        Account acc = new Account(null, vaccr.getCvac(), vaccr.getTta(), vaccr.getHoTen(), vaccr.getNgaySinh(), vaccr.isGioiTinh(), vaccr.getSdt(), vaccr.getDiaChi(), vaccr.getEmail(), vaccr.getUsername(), vaccr.getPassword(), vaccr.getNgayTao(), "B15213A1-0B8C-41BF-B6AE-B9FCD2322F41", null, null);
+        Account acc = new Account(null, vaccr.getCvac(), vaccr.getTta(), vaccr.getHoTen(), vaccr.getNgaySinh(), vaccr.isGioiTinh(), vaccr.getSdt(), vaccr.getDiaChi(), vaccr.getEmail(), vaccr.getUsername(), vaccr.getPassword(), vaccr.getNgayTao(), vaccr.getNguoiTao(), null, null);
         boolean add = accrp.add(acc);
         if (add) {
             return "Thêm thành công!";
@@ -49,7 +49,7 @@ public class ViewAccountServiceImpl implements ViewAccountService {
 
     @Override
     public String update(ViewAccountReponse vaccr) {
-        Account acc = new Account(vaccr.getId(), vaccr.getCvac(), vaccr.getTta(), vaccr.getHoTen(), vaccr.getNgaySinh(), vaccr.isGioiTinh(), vaccr.getSdt(), vaccr.getDiaChi(), vaccr.getEmail(), vaccr.getUsername(), vaccr.getPassword(), vaccr.getNgayTao(), "B15213A1-0B8C-41BF-B6AE-B9FCD2322F41", null, null);
+        Account acc = new Account(vaccr.getId(), vaccr.getCvac(), vaccr.getTta(), vaccr.getHoTen(), vaccr.getNgaySinh(), vaccr.isGioiTinh(), vaccr.getSdt(), vaccr.getDiaChi(), vaccr.getEmail(), vaccr.getUsername(), vaccr.getPassword(), vaccr.getNgayTao(), vaccr.getNguoiTao(), vaccr.getNguoiChinhSua(), vaccr.getNgayChinhSua());
         boolean update = accrp.update(acc);
         if (update) {
             return "Sửa thành công!";

@@ -8,11 +8,10 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChucVuAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiAccount;
 import com.poly.pro_1041.it17322.group4.response.ViewAccountReponse;
-import com.poly.pro_1041.it17322.group4.response.ViewChucVuReponse;
-import com.poly.pro_1041.it17322.group4.response.ViewTrangThaiAccountReponse;
 import com.poly.pro_1041.it17322.group4.service.ViewAccountService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewAccountServiceImpl;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
@@ -30,9 +29,11 @@ public class ViewAccount extends javax.swing.JPanel {
     private ViewAccountService vaccsv = new ViewAccountServiceImpl();
     private DefaultTableModel model = new DefaultTableModel();
     private List<ViewAccountReponse> listVAcc = new ArrayList<>();
+    private Account account = new Account();
     int index;
 
-    public ViewAccount() {
+    public ViewAccount(Account account) {
+        this.account = account;
         initComponents();
         tblNhanVien.setModel(model);
         String[] header = {"STT", "Tên", "Ngày sinh", "SDT", "Email", "Ngày tạo", "Địa chỉ", "Chức vụ", "Giới tính", "Trạng thái"};
@@ -451,7 +452,7 @@ public class ViewAccount extends javax.swing.JPanel {
         if (viewacc == null) {
             return;
         }
-
+        viewacc.setNguoiTao(account.getId());
         String add = vaccsv.add(viewacc);
         JOptionPane.showMessageDialog(this, add);
         listVAcc = vaccsv.getAll();
@@ -468,8 +469,12 @@ public class ViewAccount extends javax.swing.JPanel {
         }
 
         ViewAccountReponse viewacc = getFormData();
-        UUID id = listVAcc.get(index).getId();
-        viewacc.setId(id);
+        ViewAccountReponse var = listVAcc.get(index);
+        viewacc.setId(var.getId());
+        viewacc.setNgayChinhSua(viewacc.getNgayTao());
+        viewacc.setNgayTao(var.getNgayTao());
+        viewacc.setNguoiTao(var.getNguoiTao());
+        viewacc.setNguoiChinhSua(account.getId());
 
         String update = vaccsv.update(viewacc);
         JOptionPane.showMessageDialog(this, update);
@@ -488,7 +493,7 @@ public class ViewAccount extends javax.swing.JPanel {
         ViewAccountReponse var = listVAcc.get(tblNhanVien.getSelectedRow());
         if (var.getTta().getId() == 1) {
             rdoNghi.setSelected(true);
-        }else{
+        } else {
             return;
         }
         ViewAccountReponse viewacc = getFormData();
@@ -553,9 +558,12 @@ public class ViewAccount extends javax.swing.JPanel {
         String ngaySinh = txtNgaySinh.getText();
         String sdt = txtSdt.getText();
         String email = txtEmail.getText();
-        String ngayTao = txtNgayTao.getText();
         String diaChi = txtDiaChi.getText();
-
+        Date d = new Date();
+        int day = d.getDate();
+        int month = d.getMonth() + 1;
+        int year = d.getYear() + 1900;
+        String ngayTao = month + "/" + day + "/" + year;
         if (hoTen.equals("") || ngaySinh.equals("") || sdt.equals("") || email.equals("") || ngayTao.equals("")
                 || diaChi.equals("")) {
             JOptionPane.showMessageDialog(this, "Không được để trống!");
@@ -590,7 +598,7 @@ public class ViewAccount extends javax.swing.JPanel {
             trangThai1 = 2;
         }
 
-        String username = "nhanvien3";
+        String username = email;
         String password = "12345678";
 
         int chucVu = cboChucVu.getSelectedIndex() + 1;

@@ -1104,15 +1104,27 @@ public class ViewHoaDon extends javax.swing.JPanel {
             String ngayThanhToan = month + "/" + day + "/" + year;
             vhdr.setNgayThanhToan(ngayThanhToan);
             BigDecimal tongTien = vhdr.getTongTien();
-            if (vhds.checkSoLuongTonVoiSoLuong(vhds.getOneHD(vhdr.getId()))) {
-                if (vhds.updateSoLuongTon(vhds.getOneHD(vhdr.getId()))) {
-                    JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(tongTien, txtTienKhachDua, vhdr));
-                    listHD = vhds.getAllHD();
-                    showDataTableHoaDon(listHD);
-                    listVCTSP = vhds.getAllSP();
-                    showDataTableSanPham(listVCTSP);
-                }
+            if (txtTienKhachDua.getText().trim() == null) {
+                JOptionPane.showMessageDialog(TBPaneHD, "Không được để trống");
+            } else if (!txtTienKhachDua.getText().trim().matches(regexInt)) {
+                JOptionPane.showMessageDialog(TBPaneHD, "Tiền đưa phải là số");
+            } else if (Double.valueOf(String.valueOf(tongTien)) > Double.valueOf(txtTienKhachDua.getText())) {
+                JOptionPane.showMessageDialog(TBPaneHD, "Tiền khách đưa không đủ");
+            } else {
+                if (vhds.checkSoLuongTonVoiSoLuong(vhds.getOneHD(vhdr.getId()))) {
+                    if (vhds.updateSoLuongTon(vhds.getOneHD(vhdr.getId()))) {
+                        if (vhds.thanhToan(vhdr) == "Thanh toán thành công") {
+                            JOptionPane.showMessageDialog(TBPaneHD, "Thanh toán thành công");
+                            listHD = vhds.getAllHD();
+                            showDataTableHoaDon(listHD);
+                            listVCTSP = vhds.getAllSP();
+                            showDataTableSanPham(listVCTSP);
+                        }
+                    }
 
+                }else{
+                    JOptionPane.showMessageDialog(TBPaneHD, "Số lượng sản phẩm không đủ");
+                }
             }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed

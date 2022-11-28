@@ -19,6 +19,7 @@ public class AccountRepository {
 
     private String fromTable = " FROM Account ";
 
+    private Session session;
 
     public List<Account> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -27,9 +28,8 @@ public class AccountRepository {
         return accs;
     }
 
-
     public Account getOne(String username, String pass) {
-        Session session = HibernateUtil.getFACTORY().openSession();
+        session = HibernateUtil.getSession();
         String sql = fromTable + " WHERE Username=:User AND Password=:Pass";
         Query query = session.createQuery(sql, Account.class);
         query.setParameter("User", username);
@@ -51,19 +51,14 @@ public class AccountRepository {
         return null;
     }
 
-    public Boolean update(Account acc) {
+    public Boolean update(Account account) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(acc);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(account);
+        transaction.commit();
+        return true;
     }
-
 
     public static void main(String[] args) {
 

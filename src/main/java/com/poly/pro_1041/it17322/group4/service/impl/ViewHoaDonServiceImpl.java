@@ -93,19 +93,11 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
-    public String thanhToan(BigDecimal tongTien, JTextField tienKhachDua, ViewHoaDonResponse vhdr) {
-        if (tienKhachDua.getText().trim() == null) {
-            return "Không được để trống";
-        } else if (!tienKhachDua.getText().trim().matches(regexInt)) {
-            return "Tiền đưa phải là số";
-        } else if (Double.valueOf(String.valueOf(tongTien)) > Double.valueOf(tienKhachDua.getText())) {
-            return "Tiền khách đưa không đủ";
+    public String thanhToan(ViewHoaDonResponse vhdr) {
+        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), new TrangThaiOrder(1, "TTO1", "Đã TT"), vhdr.getTen(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien(), null, null))) {
+            return "Thanh toán thành công";
         } else {
-            if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), new TrangThaiOrder(1, "TTO1", "Đã TT"), vhdr.getTen(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien(), null, null))) {
-                return "Thanh toán thành công";
-            } else {
-                return "Thanh toán thất bại";
-            }
+            return "Thanh toán thất bại";
         }
     }
 
@@ -207,7 +199,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public boolean updateSoLuongTon(List<ViewHDCTResponse> list) {
         boolean check = true;
         for (ViewHDCTResponse vhdctr : list) {
-            ChiTietSanPham ctsp = ctspr.getOne(vhdctr.getCtsp().getId());
+            ChiTietSanPham ctsp = ctspr.getOneUpdateHoaDon(vhdctr.getCtsp().getId());
             int soLuongMoi = ctsp.getSoLuongTon() - vhdctr.getSoLuong();
             ctsp.setSoLuongTon(soLuongMoi);
             if (ctspr.update(ctsp)) {

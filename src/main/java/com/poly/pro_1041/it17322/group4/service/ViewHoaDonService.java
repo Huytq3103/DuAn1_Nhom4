@@ -31,7 +31,7 @@ public interface ViewHoaDonService {
 
     public List<TrangThaiOrder> getAllTTO();
 
-    String thanhToan(BigDecimal tongTien, JTextField tienKhachDua, ViewHoaDonResponse vhdr);
+    String thanhToan(ViewHoaDonResponse vhdr);
 
     public String tienThua(BigDecimal tongTien, JTextField tienKhachDua);
 
@@ -54,4 +54,5 @@ public interface ViewHoaDonService {
     boolean checkSoLuongTonVoiSoLuong(List<ViewHDCTResponse> list);
 
     boolean updateSoLuongTon(List<ViewHDCTResponse> list);
+
 }
