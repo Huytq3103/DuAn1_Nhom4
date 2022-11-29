@@ -8,6 +8,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.repository.ChiTietSanPhamRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewSanPhamService;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,13 +39,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
 
         }
         if (spMa != null) {
-            return "Mã không trùng";
-        } else if (ctsp.getMa().isEmpty()) {
-            return "không được trống";
-        } else if (ctsp.getNgayNhap().isEmpty()) {
-            return "không được trống";
-        } else if (ctsp.getSoLuongTon() < 0) {
-            return "Sô lượng tồn kho không được để trống và phải lớn hơn và bằng 0";
+            return "Mã trùng";
         } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null))) {
             return "Thành công";
         } else {
@@ -54,24 +49,6 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
 
     @Override
     public String update(ViewCTSPResponse ctsp, UUID id) {
-        ChiTietSanPham spId = chiTietSanPhamRepository.getOne(id);
-
-        if (!ctsp.getMa().equals(spId.getMa())) {
-            ChiTietSanPham spMa = chiTietSanPhamRepository.getOneMa(ctsp.getMa());
-            if (spMa != null) {
-                return "Mã trùng";
-            }
-            spId.setMa(ctsp.getMa());
-        }
-        if (ctsp.getMa().isEmpty()) {
-            return "không được trống";
-        }
-        if (ctsp.getNgayNhap().isEmpty()) {
-            return "không được trống";
-        }
-        if (ctsp.getSoLuongTon() < 0) {
-            return "Sô lượng tồn kho không được để trống và phải lớn hơn và bằng 0";
-        }
         if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null))) {
             return "Thành công";
         } else {
@@ -85,10 +62,10 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
     }
 
     @Override
-    public List<ViewCTSPResponse> Search(List<ViewCTSPResponse> lists, String ma) {
+    public List<ViewCTSPResponse> Search(List<ViewCTSPResponse> lists, String ten) {
         List<ViewCTSPResponse> list = new ArrayList<>();
         for (ViewCTSPResponse v : lists) {
-            if (v.getMa().equals(ma)) {
+            if (v.getSp().getTenSP().equals(ten)) {
                 list.add(v);
             }
         }
