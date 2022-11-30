@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.service;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import java.util.List;
@@ -24,5 +25,7 @@ public interface ViewKhachHangService {
     String update(ViewKhachHangRepose vkhr);
 
     String delete(ViewKhachHangRepose vkhr);
+
+    Account getOneNguoiTao(String id);
 
 }

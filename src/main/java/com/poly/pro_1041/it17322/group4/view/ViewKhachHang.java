@@ -85,7 +85,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         labelNgayChinhSua.setText(kh.getNgayChinhSua());
         //    labelNguoiTao.setText(kh.getNguoiTao().toString());
         txtMa.setText(kh.getMa());
-        labelNguoiTao.setText(kh.getNgayTao());
+        labelNguoiTao.setText(khService.getOneNguoiTao(String.valueOf(kh.getNguoiTao())).getHoTen());
         tbHienThi.setRowSelectionInterval(index, index);
         tbHienThi.setRowSelectionAllowed(true);
     }

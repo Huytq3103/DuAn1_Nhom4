@@ -7,6 +7,7 @@ package com.poly.pro_1041.it17322.group4.repository;
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,6 +35,14 @@ public class AccountRepository {
         Query query = session.createQuery(sql, Account.class);
         query.setParameter("User", username);
         query.setParameter("Pass", pass);
+        Account account = (Account) query.getSingleResult();
+        return account;
+    }
+    public Account getOneNguoiTao(String id) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + " WHERE id=:id";
+        Query query = session.createQuery(sql, Account.class);
+        query.setParameter("id", UUID.fromString(id));
         Account account = (Account) query.getSingleResult();
         return account;
     }
