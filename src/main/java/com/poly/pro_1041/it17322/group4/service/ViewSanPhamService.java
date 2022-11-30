@@ -23,6 +23,6 @@ public interface ViewSanPhamService {
 
     String update(ViewCTSPResponse ctsp, UUID id);
 
-    List<ViewCTSPResponse> Search(List<ViewCTSPResponse> lists, String ma);
+    List<ViewCTSPResponse> Search(List<ViewCTSPResponse> lists, String ten);
 
 }
