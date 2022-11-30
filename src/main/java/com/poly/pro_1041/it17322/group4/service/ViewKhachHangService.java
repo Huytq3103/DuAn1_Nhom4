@@ -17,7 +17,7 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> getAll();
 
-    KhachHang getOne(UUID id);
+    KhachHang getOne(String id);
 
     String add(ViewKhachHangRepose vkhr);
 

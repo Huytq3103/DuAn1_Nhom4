@@ -29,7 +29,7 @@ public class KhachHangRepository {
         return lists;
     }
 
-    public KhachHang getOne(UUID id) {
+    public KhachHang getOne(String id) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " WHERE id = :id";
         Query query = session.createQuery(sql, KhachHang.class);
