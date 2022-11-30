@@ -38,9 +38,18 @@ public class AccountRepository {
         return account;
     }
 
+    public Account checkEmail(String email) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + "WHERE Email =: Email";
+        Query query = session.createQuery(sql, Account.class);
+        query.setParameter("Email", email);
+        Account acc = (Account) query.getSingleResult();
+        return acc;
+    }
+
     public Boolean add(Account acc) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+        try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(acc);
             transaction.commit();
@@ -61,7 +70,7 @@ public class AccountRepository {
     }
 
     public static void main(String[] args) {
-
-        System.out.println(new AccountRepository().getOne("nhanvien1", "12345678").toString());
+//        System.out.println(new AccountRepository().getOne("nhanvien2", "abc").toString());
+        System.out.println(new AccountRepository().checkEmail("cuongnqph26071@fpt.edu.vn").toString());
     }
 }
