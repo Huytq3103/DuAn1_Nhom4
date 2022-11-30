@@ -130,14 +130,16 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     }
 
     @Override
-    public List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen) {
+    public List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String ten) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (ViewKhachHangRepose vkh : lists) {
-            if (vkh.getHoTen().equalsIgnoreCase(hoTen)) {
+            if (vkh.getHoTen().equalsIgnoreCase(ten)) {
                 list.add(vkh);
             }
         }
         return list;
     }
-
+    public static void main(String[] args) {
+        
+    }
 }

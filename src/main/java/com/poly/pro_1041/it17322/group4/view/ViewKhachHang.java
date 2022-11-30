@@ -31,7 +31,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private List<ViewKhachHangRepose> listKH = new ArrayList<>();
     private int index;
     private Account account = new Account();
-    
+
     public ViewKhachHang(Account a) {
         initComponents();
         this.account = a;
@@ -44,14 +44,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
         btnSua.setEnabled(false);
         btnXoa.setEnabled(false);
     }
-    
+
     private void showDetail(List<ViewKhachHangRepose> lists) {
         dtm.setRowCount(0);
         for (ViewKhachHangRepose viewKH : lists) {
             dtm.addRow(viewKH.toDataRow());
         }
     }
-    
+
     private void clearForm() {
         txtTenKhachHang.setText("");
         txtNgaySinh.setText("");
@@ -68,7 +68,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         labelNCS.setText("");
         labelNguoiTao.setText("");
     }
-    
+
     private void fillIndex() {
         ViewKhachHangRepose kh = listKH.get(index);
         txtTenKhachHang.setText(kh.getHoTen());
@@ -503,6 +503,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, add);
             listKH = khService.getAll();
             showDetail(listKH);
+
         }
     }//GEN-LAST:event_btnThemActionPerformed
     private String getDate() {
