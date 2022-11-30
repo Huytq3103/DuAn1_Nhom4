@@ -522,7 +522,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
         String search = txtTimKiem.getText();
-        List<ViewKhachHangRepose> listSearchs = new ViewKhachHangServiceImpl().searchByName(listKH, search);
+        List<ViewKhachHangRepose> listSearchs = new ViewKhachHangServiceImpl().search(listKH, search);
         showDetail(listSearchs);
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
