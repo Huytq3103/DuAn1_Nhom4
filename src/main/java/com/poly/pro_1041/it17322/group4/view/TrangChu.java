@@ -1,6 +1,7 @@
 package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 
@@ -42,6 +43,9 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         panelTrangChu = new javax.swing.JPanel();
+        btnDangXuat = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbTenNV = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnThongKe = new javax.swing.JButton();
         btnSanPham = new javax.swing.JButton();
@@ -51,18 +55,16 @@ public class TrangChu extends javax.swing.JFrame {
         btnLichSu = new javax.swing.JButton();
         btnKM = new javax.swing.JButton();
         btnDoiMK = new javax.swing.JButton();
-        btnDangXuat = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        lbTenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(124, 154, 167));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setMaximumSize(new java.awt.Dimension(1280, 720));
         jPanel1.setMinimumSize(new java.awt.Dimension(1280, 720));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 720));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setIcon(new ImageIcon
             ("src/main/icon/Boy.png"));
 
@@ -82,12 +84,31 @@ public class TrangChu extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(124, 154, 167));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDangXuat.setBackground(new java.awt.Color(255, 255, 255));
+        btnDangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDangXuat.setIcon(new ImageIcon
+            ("src/main/icon/Exit.png"));
+        btnDangXuat.setText("Đăng xuất");
+        btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangXuatActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Arial", 3, 22)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Shelby Company");
+
+        lbTenNV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbTenNV.setForeground(new java.awt.Color(255, 255, 255));
+        lbTenNV.setText("  ");
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setMaximumSize(new java.awt.Dimension(186, 652));
         jPanel2.setMinimumSize(new java.awt.Dimension(186, 652));
 
-        btnThongKe.setBackground(new java.awt.Color(211, 211, 211));
+        btnThongKe.setBackground(new java.awt.Color(255, 255, 255));
         btnThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThongKe.setIcon(new ImageIcon
             ("src/main/icon/Diagram.png"));
@@ -214,37 +235,19 @@ public class TrangChu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnDangXuat.setBackground(new java.awt.Color(255, 255, 255));
-        btnDangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDangXuat.setIcon(new ImageIcon
-            ("src/main/icon/Exit.png"));
-        btnDangXuat.setText("Đăng xuất");
-        btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDangXuatActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setFont(new java.awt.Font("Arial", 3, 22)); // NOI18N
-        jLabel3.setText("Shelby Company");
-
-        lbTenNV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbTenNV.setForeground(new java.awt.Color(255, 255, 255));
-        lbTenNV.setText("  ");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTrangChu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel13)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,20 +259,18 @@ public class TrangChu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbTenNV))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lbTenNV)))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(panelTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -289,31 +290,40 @@ public class TrangChu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
+        clearButtomSelection();
         ViewHoaDon viewHD = new ViewHoaDon(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewHD);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnHoaDon.setBackground(Color.BLACK);
+        btnHoaDon.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
+        clearButtomSelection();
         ViewLichSu viewLichSu = new ViewLichSu();
         panelTrangChu.removeAll();
         panelTrangChu.add(viewLichSu);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnLichSu.setBackground(Color.BLACK);
+        btnLichSu.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnLichSuActionPerformed
 
     private void btnThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMouseClicked
         // TODO add your handling code here:
+        clearButtomSelection();
         ViewThongKe viewThongKe = new ViewThongKe(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewThongKe);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnThongKe.setBackground(Color.BLACK);
+        btnThongKe.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnThongKeMouseClicked
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
@@ -324,54 +334,86 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
         // TODO add your handling code here:
+        clearButtomSelection();
         ViewSanPham viewSanPham = new ViewSanPham(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewSanPham);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnSanPham.setBackground(Color.BLACK);
+        btnSanPham.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnSanPhamActionPerformed
 
     private void btnKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKHActionPerformed
         // TODO add your handling code here:
+        clearButtomSelection();
         ViewKhachHang viewKhachHang = new ViewKhachHang(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewKhachHang);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnKH.setBackground(Color.BLACK);
+        btnKH.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnKHActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
         // TODO add your handling code here:
-        ViewAccount  viewAccount= new ViewAccount(account);
+        clearButtomSelection();
+        ViewAccount viewAccount = new ViewAccount(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewAccount);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnNhanVien.setBackground(Color.BLACK);
+        btnNhanVien.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
-        ViewDoiMatKhau  viewDoiMatKhau= new ViewDoiMatKhau(account);
+        clearButtomSelection();
+        ViewDoiMatKhau viewDoiMatKhau = new ViewDoiMatKhau(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewDoiMatKhau);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnDoiMK.setBackground(Color.BLACK);
+        btnDoiMK.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnDoiMKActionPerformed
 
     private void btnKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKMActionPerformed
         // TODO add your handling code here:
+        clearButtomSelection();
         ViewKhuyenMai viewKhuyenMai = new ViewKhuyenMai(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewKhuyenMai);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
+        btnKM.setBackground(Color.BLACK);
+        btnKM.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnKMActionPerformed
-
+    public void clearButtomSelection() {
+        btnDoiMK.setBackground(Color.WHITE);
+        btnDoiMK.setForeground(Color.BLACK);
+        btnHoaDon.setBackground(Color.WHITE);
+        btnHoaDon.setForeground(Color.BLACK);
+        btnKH.setBackground(Color.WHITE);
+        btnKH.setForeground(Color.BLACK);
+        btnKM.setBackground(Color.WHITE);
+        btnKM.setForeground(Color.BLACK);
+        btnLichSu.setBackground(Color.WHITE);
+        btnLichSu.setForeground(Color.BLACK);
+        btnNhanVien.setBackground(Color.WHITE);
+        btnNhanVien .setForeground(Color.BLACK);
+        btnSanPham.setBackground(Color.WHITE);
+        btnSanPham.setForeground(Color.BLACK);
+        btnThongKe.setBackground(Color.WHITE);
+        btnThongKe.setForeground(Color.BLACK);
+    }
     /**
      * @param args the command line arguments
      */
