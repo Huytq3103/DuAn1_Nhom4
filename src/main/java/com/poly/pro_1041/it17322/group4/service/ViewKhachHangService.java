@@ -28,4 +28,5 @@ public interface ViewKhachHangService {
 
     Account getOneNguoiTao(String id);
 
+    List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen);
 }

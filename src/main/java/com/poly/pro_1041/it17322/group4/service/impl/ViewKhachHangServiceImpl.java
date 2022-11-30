@@ -125,12 +125,19 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         return lists;
     }
 
-    public static void main(String[] args) {
-        new ViewKhachHangServiceImpl().getAll().forEach(s -> System.out.println(s.toString()));
-    }
-
     public Account getOneNguoiTao(String id) {
         return ar.getOneNguoiTao(id);
+    }
+
+    @Override
+    public List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen) {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+        for (ViewKhachHangRepose vkh : lists) {
+            if (vkh.getHoTen().equalsIgnoreCase(hoTen)) {
+                list.add(vkh);
+            }
+        }
+        return list;
     }
 
 }
