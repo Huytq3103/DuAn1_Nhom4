@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
+import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,17 +30,17 @@ public interface ViewHoaDonService {
 
     List<ViewHDCTResponse> getOneHD(UUID id);
 
-    public List<TrangThaiOrder> getAllTTO();
+    List<TrangThaiOrder> getAllTTO();
 
     String thanhToan(ViewHoaDonResponse vhdr);
 
-    public String tienThua(BigDecimal tongTien, JTextField tienKhachDua);
+    String tienThua(BigDecimal tongTien, JTextField tienKhachDua, JTextField tienTaiKhoan);
 
-    public String addHoaDon(ViewHoaDonResponse vhdr);
+    String addHoaDon(ViewHoaDonResponse vhdr);
 
-    public boolean addHDCT(ViewHDCTResponse vhdctr, UUID id);
+    boolean addHDCT(ViewHDCTResponse vhdctr, UUID id);
 
-    public ViewHDCTResponse getOneHDCT(UUID idHD, UUID idCTSP);
+    ViewHDCTResponse getOneHDCT(UUID idHD, UUID idCTSP);
 
     boolean updateHDCT(ViewHDCTResponse vhdctr);
 
@@ -51,8 +52,14 @@ public interface ViewHoaDonService {
 
     void taoFilePDF(ViewHoaDonResponse hd, List<ViewHDCTResponse> list, Account a) throws FileNotFoundException;
 
-    boolean checkSoLuongTonVoiSoLuong(List<ViewHDCTResponse> list);
+    ViewHoaDonResponse getOneHDByMa(String ma);
 
-    boolean updateSoLuongTon(List<ViewHDCTResponse> list);
+    boolean checkSoLuongTonVoiSoLuong(ViewHDCTResponse vhdctr);
+
+    boolean updateSoLuongTonKhiThem(ViewHDCTResponse vhdctr);
+
+    boolean updateSoLuongTonKhiXoa(ViewHDCTResponse vhdctr);
+
+    List<ViewKhachHangRepose> getAllKH();
 
 }

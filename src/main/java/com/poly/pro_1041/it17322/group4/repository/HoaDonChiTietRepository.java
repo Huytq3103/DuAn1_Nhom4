@@ -63,11 +63,15 @@ public class HoaDonChiTietRepository {
 
     public Boolean update(HoaDonChiTiet hdct) {
         Transaction transaction = null;
-        session = HibernateUtil.getSession();
-        transaction = (Transaction) session.beginTransaction();
-        session.saveOrUpdate(hdct);
-        transaction.commit();
-        return true;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(hdct);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     public Boolean delete(HoaDonChiTiet hoadonchitiet) {
