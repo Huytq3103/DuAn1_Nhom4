@@ -4,6 +4,8 @@
  */
 package com.poly.pro_1041.it17322.group4.service;
 
+import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
+import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewThongKeResponse;
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,4 +38,17 @@ public interface ViewThongKeService {
 
     List<ViewThongKeResponse> getChiTietSP();
 
+    Integer getTongDonHang_Ngay(String ngay);
+
+    Integer getDonHangThanhCong_Ngay(String ngay);
+
+    Integer getDonHangBiHuy_Ngay(String ngay);
+
+    List<BigDecimal> getGiaBan_Nam();
+
+    List<Integer> getNam_2();
+
+    List<ViewCTSPResponse> getAllSP();
+
+    List<ViewHDCTResponse> getAllHDCT();
 }

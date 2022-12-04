@@ -43,16 +43,22 @@ public class ViewCTSPResponse {
     public ViewCTSPResponse() {
     }
 
+    public ViewCTSPResponse(UUID id, SanPham sp, int soLuongTon) {
+        this.id = id;
+        this.sp = sp;
+        this.soLuongTon = soLuongTon;
+    }
+
     public ViewCTSPResponse(ChiTietSanPham ctsp) {
         this.id = ctsp.getId();
-        this.ma =ctsp.getMa();
+        this.ma = ctsp.getMa();
         this.sp = ctsp.getSanPham();
         this.hang = ctsp.getHang();
         this.loai = ctsp.getLoai();
         this.kichCo = ctsp.getKichCo();
         this.mauSac = ctsp.getMauSac();
         this.chatLieu = ctsp.getChatLieu();
-        this.ngayNhap=ctsp.getNgayNhap();
+        this.ngayNhap = ctsp.getNgayNhap();
         this.soLuongTon = ctsp.getSoLuongTon();
         this.gia = ctsp.getGia();
     }
@@ -69,8 +75,6 @@ public class ViewCTSPResponse {
         this.soLuongTon = soLuongTon;
         this.gia = gia;
     }
-    
-
 
     public Object[] toDataRow() {
         return new Object[]{sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
@@ -81,7 +85,7 @@ public class ViewCTSPResponse {
     }
 
     public static void main(String[] args) {
-        for(ViewCTSPResponse vctspr : new ViewHoaDonServiceImpl().getAllSP()){
+        for (ViewCTSPResponse vctspr : new ViewHoaDonServiceImpl().getAllSP()) {
             System.out.println(vctspr.toString());
         }
     }
