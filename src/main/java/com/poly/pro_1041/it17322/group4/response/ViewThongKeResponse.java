@@ -36,7 +36,6 @@ public class ViewThongKeResponse {
     }
 
     public ViewThongKeResponse(HoaDonChiTiet hdct) {
-        this.hd = hdct.getHoaDon();
         this.ctsp = hdct.getChiTietSanPham();
         this.hang = hdct.getHang();
         this.ten = hdct.getTenSP();
@@ -45,10 +44,24 @@ public class ViewThongKeResponse {
         this.kichCo = hdct.getKichCo();
         this.chatLieu = hdct.getChatLieu();
         this.soLuong = hdct.getSoLuong();
-        this.gia = hdct.getDonGia();
     }
 
-    public Object[] toDataRow() {
-        return new Object[]{ctsp.getSanPham().getId(), ctsp.getSanPham().getTenSP(), mauSac, hang, chatLieu, kichCo, loai, soLuong};
+    public ViewThongKeResponse(ViewCTSPResponse vctsp) {
+        ChiTietSanPham ctsp = new ChiTietSanPham();
+        ctsp.setId(vctsp.getId());
+        ctsp.setMa(vctsp.getMa());
+        this.ctsp = ctsp;
+        this.hang = vctsp.getHang().getTen();
+        this.ten = vctsp.getSp().getTenSP();
+        this.mauSac = vctsp.getMauSac().getTen();
+        this.loai = vctsp.getLoai().getTen();
+        this.kichCo = vctsp.getKichCo().getTen();
+        this.chatLieu = vctsp.getChatLieu().getTen();
+        this.soLuong = vctsp.getSoLuongTon();
+        this.gia = vctsp.getGia();
+    }
+
+    public Object[] toDataRow(int i) {
+        return new Object[]{i, ctsp.getMa(), ten, mauSac, hang, chatLieu, kichCo, loai, soLuong};
     }
 }

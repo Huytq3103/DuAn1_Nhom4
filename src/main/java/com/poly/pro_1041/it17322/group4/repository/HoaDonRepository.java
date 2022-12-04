@@ -29,6 +29,14 @@ public class HoaDonRepository {
         return hoadons;
     }
 
+    public List<HoaDon> getAllOrderByNgayTao() {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "ORDER BY NgayTao DESC";
+        Query query = session.createQuery(sql, HoaDon.class);
+        List<HoaDon> hoadons = query.getResultList();
+        return hoadons;
+    }
+
     public HoaDon getOne(UUID id) {
         String sql = fromTable + "WHERE Id =: Id";
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -38,13 +46,36 @@ public class HoaDonRepository {
         return hoadon;
     }
 
+    public List<HoaDon> getOneHDKH(UUID id) {
+        String sql = fromTable + "WHERE IdKH =: Id";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("Id", id);
+        List<HoaDon> listHD = query.getResultList();
+        return listHD;
+    }
+
+    public HoaDon getOne(String Ma) {
+        String sql = fromTable + "WHERE Ma =: Ma";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("Ma", Ma);
+        HoaDon hoadon = (HoaDon) query.getSingleResult();
+        return hoadon;
+
+    }
+
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
-        session = HibernateUtil.getSession();
-        transaction = (Transaction) session.beginTransaction();
-        session.save(hoadon);
-        transaction.commit();
-        return true;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.save(hoadon);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     public Boolean update(HoaDon hd) {

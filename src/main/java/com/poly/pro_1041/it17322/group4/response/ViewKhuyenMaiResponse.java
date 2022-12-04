@@ -31,7 +31,7 @@ public class ViewKhuyenMaiResponse {
     private Date ngayKetThuc;
     private Float giaKM;
     private int loaiSanPham;
-    
+
 
     public ViewKhuyenMaiResponse() {
     }
@@ -45,10 +45,10 @@ public class ViewKhuyenMaiResponse {
         this.ngayBatDau = khuyenMai.getNgayBatDau();
         this.ngayKetThuc = khuyenMai.getNgayKetThuc();
         this.giaKM = khuyenMai.getGiaKM();
-        this.loaiSanPham = khuyenMai.getLoaiSanPham();
     }
 
-    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {
+
+    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, String ngayBatDau, String ngayKetThuc, Float giaKM) {
         this.id = id;
         this.trangThaiKM = trangThaiKM;
         this.loaiKM = loaiKM;
@@ -57,7 +57,6 @@ public class ViewKhuyenMaiResponse {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.giaKM = giaKM;
-        this.loaiSanPham = loaiSanPham;
     }
 
     public ViewKhuyenMaiResponse(String ten, String ten0, String ma, String ten1, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {

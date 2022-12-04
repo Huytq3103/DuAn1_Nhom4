@@ -82,7 +82,8 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public String addKhuyenMai(ViewKhuyenMaiResponse vkmr) {
-        if (kmrp.add(new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM(), vkmr.getLoaiSanPham()))) {
+
+        if (kmrp.add(new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
             return "Add thành công";
         } else {
             return "Add thất bại";
@@ -92,7 +93,8 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     @Override
     public boolean deleteKhuyenMai(ViewKhuyenMaiResponse vkmr) {
         UUID id = vkmr.getId();
-        KhuyenMai km = new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM(), vkmr.getLoaiSanPham());
+
+        KhuyenMai km = new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM());
         km.setId(id);
         if (kmrp.delete(km)) {
             return true;
@@ -105,12 +107,15 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     @Override
     public boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr) {
 
-        if (kmrp.update(new KhuyenMai(vkmr.getId(), vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM(), vkmr.getLoaiSanPham()))) {
+
+        if (kmrp.update(new KhuyenMai(vkmr.getId(), vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
+
             return true;
         } else {
             return false;
         }
     }
+
 
     @Override
     public List<ViewKhuyenMaiResponse> getOneMaKM(String maKM) {

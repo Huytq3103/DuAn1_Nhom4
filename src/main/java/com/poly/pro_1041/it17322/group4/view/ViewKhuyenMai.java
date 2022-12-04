@@ -568,7 +568,11 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 return;
             }
             
+
             ViewKhuyenMaiResponse vkmr = checkForm();
+
+            ViewKhuyenMaiResponse vkmr = new ViewKhuyenMaiResponse(null,trangThaiKM,loaiKM,txtMaKM.getText(),txtTenCT.getText(),txtBatDau.getText(),txtKetThuc.getText(),Float.valueOf(txtGiamGia.getText()));
+
             JOptionPane.showMessageDialog(this, vkms.addKhuyenMai(vkmr));
             
             listVKM = vkms.getAllKM();
@@ -666,9 +670,13 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm,null,null);
             LoaiKM loaiKM = new LoaiKM(lkm,null,null);
             
+
+       
             
-            
-        vkmr = new ViewKhuyenMaiResponse(vkmr.getId(),trangThaiKM,loaiKM,txtMaKM.getText(),txtTenCT.getText(),txtBatDau.getDate(),txtKetThuc.getDate(),Float.valueOf(txtGiamGia.getText()),loaiSP);
+
+
+        vkmr = new ViewKhuyenMaiResponse(vkmr.getId(),trangThaiKM,loaiKM,txtMaKM.getText(),txtTenCT.getText(),txtBatDau.getText(),txtKetThuc.getText(),Float.valueOf(txtGiamGia.getText()));
+
             
         
         check = vkms.updateKhuyenMai(vkmr);
