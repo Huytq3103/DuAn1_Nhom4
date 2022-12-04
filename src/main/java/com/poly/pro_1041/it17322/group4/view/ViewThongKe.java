@@ -78,7 +78,6 @@ public class ViewThongKe extends javax.swing.JPanel {
             dcbm2.addElement(i);
         }
         
-        cbbNam.setSelectedIndex(0);
         showDataTableCTSP();
     }
 

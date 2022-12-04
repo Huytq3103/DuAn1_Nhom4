@@ -53,7 +53,9 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";
         } else {
+
             KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
             boolean add = khRepository.add(kh);
             if (add) {
                 return "Add thanh cong";
@@ -92,7 +94,10 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";
         } else {
+
             KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
+
             boolean update = khRepository.update(kh);
             if (update) {
                 return "Update thanh cong";
@@ -104,7 +109,9 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String delete(ViewKhachHangRepose vkhr) {
+
         KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
         boolean delete = khRepository.delete(kh);
         if (delete) {
             return "Delete thanh cong";

@@ -27,7 +27,7 @@ public class ViewHoaDonResponse {
     private Account account;
     private KhachHang khachHang;
     private TrangThaiOrder tto;
-    private String ten;
+    private String ma;
     private String ngaoTao;
     private String ngayThanhToan;
     private String ngayShip;
@@ -42,18 +42,18 @@ public class ViewHoaDonResponse {
         this.account = hd.getAccount();
         this.khachHang = hd.getKhachHang();
         this.tto = hd.getTrangThaiOrder();
-        this.ten = hd.getTen();
+        this.ma = hd.getMa();
         this.ngaoTao = hd.getNgayTao();
         this.ngayThanhToan = hd.getNgayThanhToan();
         this.TongTien = hd.getTongTien();
     }
 
-    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ten, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ma, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
         this.id = id;
         this.account = account;
         this.khachHang = khachHang;
         this.tto = tto;
-        this.ten = ten;
+        this.ma = ma;
         this.ngaoTao = ngaoTao;
         this.ngayThanhToan = ngayThanhToan;
         this.TongTien = TongTien;
@@ -80,11 +80,11 @@ public class ViewHoaDonResponse {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
     public Object[] toDataRowLS(int k) {
-        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
     public Object[] toDataRowHD(int stt) {

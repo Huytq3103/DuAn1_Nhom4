@@ -83,4 +83,7 @@ public class ChiTietSanPham {
 
     @Column(name = "Hinh")
     private String Hinh;
+
+    @Column(name = "TrangThai")
+    private int trangThai;
 }

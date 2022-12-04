@@ -838,7 +838,7 @@ public class ViewSanPham extends javax.swing.JPanel {
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
             ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan);
-            JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().add(viewCTSP));
+            JOptionPane.showMessageDialog(PanelDSSP, vsp.add(viewCTSP));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }
@@ -878,7 +878,7 @@ public class ViewSanPham extends javax.swing.JPanel {
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
             ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan);
-            JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().update(viewCTSP, id));
+            JOptionPane.showMessageDialog(PanelDSSP, vsp.update(viewCTSP, id));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }

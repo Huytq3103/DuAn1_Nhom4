@@ -30,7 +30,7 @@ public class AccountRepository {
     }
 
     public Account getOne(String username, String pass) {
-        session = HibernateUtil.getSession();
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE Username=:User AND Password=:Pass";
         Query query = session.createQuery(sql, Account.class);
         query.setParameter("User", username);
@@ -38,6 +38,7 @@ public class AccountRepository {
         Account account = (Account) query.getSingleResult();
         return account;
     }
+
     public Account getOneNguoiTao(String id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + " WHERE id=:id";

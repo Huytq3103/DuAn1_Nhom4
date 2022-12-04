@@ -72,4 +72,8 @@ public class ViewKhachHangRepose {
     public Object[] toDataRow() {
         return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua,diem};
     }
+
+    public Object[] toDataRowHoaDon() {
+        return new Object[]{ma, hoTen, gioiTinh == true ? "Nam" : "Nữ", sdt};
+    }
 }
