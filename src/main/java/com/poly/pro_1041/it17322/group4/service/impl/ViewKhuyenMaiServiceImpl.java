@@ -13,12 +13,10 @@ import com.poly.pro_1041.it17322.group4.repository.KhuyenMaiRepository;
 import com.poly.pro_1041.it17322.group4.repository.LoaiKMRepository;
 import com.poly.pro_1041.it17322.group4.repository.TrangThaiKMRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
-import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewLoaiKMResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewTrangThaiKMResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewKhuyenMaiService;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -129,7 +127,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         KhuyenMaiRepository khuyenMaiRepo = new KhuyenMaiRepository();
         for (KhuyenMai x : khuyenMaiRepo.getAll()) {
             if (x.getLoaiKM().getTen().toLowerCase().contains(loaiKM.toLowerCase())) {
-                lkm.add(new ViewKhuyenMaiResponse(x.getId(), x.getTrangThaiKM(), x.getLoaiKM(), x.getMa(), x.getTen(), x.getNgayBatDau(), x.getNgayKetThuc(), x.getGiaKM(), x.getLoaiSanPham()));
+                lkm.add(new ViewKhuyenMaiResponse(x.getId(), x.getTrangThaiKM(), x.getLoaiKM(), x.getMa(), x.getTen(), x.getNgayBatDau(), x.getNgayKetThuc(), x.getGiaKM()));
                 System.out.println(lkm + "ádsd");
             }
         }
@@ -138,7 +136,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public boolean updateCTSP(ViewCTSPResponse ctspr) {
-        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(),ctspr.getSp(),ctspr.getMauSac(),ctspr.getHang(), ctspr.getKichCo(),ctspr.getChatLieu(),ctspr.getLoai(),ctspr.getKm(),ctspr.getMa(),ctspr.getSoLuongTon(),ctspr.getGia(),ctspr.getNgayNhap(),null,null))) {
+        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(),ctspr.getSp(),ctspr.getMauSac(),ctspr.getHang(), ctspr.getKichCo(),ctspr.getChatLieu(),ctspr.getLoai(),ctspr.getKm(),ctspr.getMa(),ctspr.getSoLuongTon(),ctspr.getGia(),ctspr.getNgayNhap(),null,ctspr.getHinh(),ctspr.getTrangThai()))) {
             return true;
         } else {
             return false;

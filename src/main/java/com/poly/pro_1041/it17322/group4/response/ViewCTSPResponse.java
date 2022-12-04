@@ -82,8 +82,7 @@ public class ViewCTSPResponse {
         this.gia = gia;
         this.km = km;
 
-        this.hinh = ctsp.getHinh();
-        this.trangThai = ctsp.getTrangThai();
+
     }
 
     public ViewCTSPResponse(String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String hinh, int trangThai) {
