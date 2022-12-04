@@ -30,6 +30,15 @@ public class ChiTietSanPhamRepository {
         return list;
     }
 
+    public List<ViewCTSPResponse> getAllAn(int trangThai) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE  TrangThai:=trangthai";
+        javax.persistence.Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("TrangThai", trangThai);
+        List<ViewCTSPResponse> chiTietSP = query.getResultList();
+        return chiTietSP;
+    }
+
     public List<ViewCTSPResponse> getOneLoai(int idLoai) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE IdLoai=:idLoai ";
@@ -47,6 +56,7 @@ public class ChiTietSanPhamRepository {
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }
+
     public ChiTietSanPham getOneUpdateHoaDon(UUID id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + "Where id=:id";
