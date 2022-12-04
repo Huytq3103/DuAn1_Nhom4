@@ -20,15 +20,19 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
+import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.repository.AccountRepository;
 import com.poly.pro_1041.it17322.group4.repository.ChiTietSanPhamRepository;
 import com.poly.pro_1041.it17322.group4.repository.HoaDonChiTietRepository;
 import com.poly.pro_1041.it17322.group4.repository.HoaDonRepository;
+import com.poly.pro_1041.it17322.group4.repository.KhachHangRepository;
 import com.poly.pro_1041.it17322.group4.repository.TrangThaiOrderRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
+import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
+import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewHoaDonService;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -49,6 +53,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     private HoaDonChiTietRepository hdctr = new HoaDonChiTietRepository();
     private TrangThaiOrderRepository ttor = new TrangThaiOrderRepository();
     private AccountRepository ar = new AccountRepository();
+    private KhachHangRepository khr = new KhachHangRepository();
     private String regexInt = "[0-9]+";
 
     @Override
@@ -63,7 +68,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     @Override
     public List<ViewHoaDonResponse> getAllHD() {
         List<ViewHoaDonResponse> list = new ArrayList<>();
-        for (HoaDon hd : hdr.getAll()) {
+        for (HoaDon hd : hdr.getAllOrderByNgayTao()) {
             list.add(new ViewHoaDonResponse(hd));
         }
         return list;
@@ -88,13 +93,18 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
+    public ViewHoaDonResponse getOneHDByMa(String ma) {
+        return new ViewHoaDonResponse(hdr.getOne(ma));
+    }
+
+    @Override
     public List<TrangThaiOrder> getAllTTO() {
         return ttor.getAll();
     }
 
     @Override
     public String thanhToan(ViewHoaDonResponse vhdr) {
-        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), new TrangThaiOrder(1, "TTO1", "Đã TT"), vhdr.getTen(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien(), null, null))) {
+        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), new TrangThaiOrder(1, "TTO1", "Đã TT"), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien()))) {
             return "Thanh toán thành công";
         } else {
             return "Thanh toán thất bại";
@@ -102,19 +112,25 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
-    public String tienThua(BigDecimal tongTien, JTextField tienKhachDua) {
-        if (tienKhachDua.getText().trim() == null) {
+    public String tienThua(BigDecimal tongTien, JTextField tienKhachDua, JTextField tienTaiKhoan) {
+        if (tienKhachDua.getText().trim() == null && tienTaiKhoan.getText().trim() == null) {
             return "0";
-        } else if (!tienKhachDua.getText().trim().matches(regexInt)) {
+        } else if (!tienKhachDua.getText().trim().matches(regexInt) && !tienKhachDua.getText().trim().matches(regexInt)) {
             return "0";
+        } else if (tienKhachDua.getText().trim().isEmpty()) {
+            tienKhachDua.setText("0");
+            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
+        } else if (tienTaiKhoan.getText().trim().isEmpty()) {
+            tienTaiKhoan.setText("0");
+            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
         } else {
-            return String.valueOf(Double.valueOf(tienKhachDua.getText()) - Double.valueOf(String.valueOf(tongTien)));
+            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
         }
     }
 
     @Override
     public String addHoaDon(ViewHoaDonResponse vhdr) {
-        if (hdr.add(new HoaDon(null, vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getTen(), vhdr.getNgaoTao(), null, null, null, vhdr.getTongTien(), null, null))) {
+        if (hdr.add(new HoaDon(null, vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), null, null, null, vhdr.getTongTien()))) {
             return "Add thành công";
         } else {
             return "Add thất bại";
@@ -163,7 +179,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
 
     @Override
     public boolean updateHD(ViewHoaDonResponse vhdr) {
-        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getTen(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien(), null, null))) {
+        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien()))) {
             return true;
         } else {
             return false;
@@ -183,32 +199,50 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
-    public boolean checkSoLuongTonVoiSoLuong(List<ViewHDCTResponse> list) {
+    public boolean checkSoLuongTonVoiSoLuong(ViewHDCTResponse vhdctr) {
         boolean check = true;
-        for (ViewHDCTResponse vhdctr : list) {
-            int SoluongTon = ctspr.getOne(vhdctr.getCtsp().getId()).getSoLuongTon();
-            if (vhdctr.getSoLuong() > SoluongTon) {
-                check = false;
-                break;
-            }
+        int SoluongTon = ctspr.getOne(vhdctr.getCtsp().getId()).getSoLuongTon();
+        if (vhdctr.getSoLuong() > SoluongTon) {
+            check = false;
         }
         return check;
     }
 
     @Override
-    public boolean updateSoLuongTon(List<ViewHDCTResponse> list) {
+    public boolean updateSoLuongTonKhiThem(ViewHDCTResponse vhdctr) {
         boolean check = true;
-        for (ViewHDCTResponse vhdctr : list) {
-            ChiTietSanPham ctsp = ctspr.getOneUpdateHoaDon(vhdctr.getCtsp().getId());
-            int soLuongMoi = ctsp.getSoLuongTon() - vhdctr.getSoLuong();
-            ctsp.setSoLuongTon(soLuongMoi);
-            if (ctspr.update(ctsp)) {
-                check = true;
-            } else {
-                check = false;
-            }
+        ChiTietSanPham ctsp = ctspr.getOneUpdateHoaDon(vhdctr.getCtsp().getId());
+        int soLuongMoi = ctsp.getSoLuongTon() - vhdctr.getSoLuong();
+        ctsp.setSoLuongTon(soLuongMoi);
+        if (ctspr.updateTableHD(ctsp)) {
+            check = true;
+        } else {
+            check = false;
         }
         return check;
+    }
+
+    @Override
+    public boolean updateSoLuongTonKhiXoa(ViewHDCTResponse vhdctr) {
+        boolean check = true;
+        ChiTietSanPham ctsp = ctspr.getOneUpdateHoaDon(vhdctr.getCtsp().getId());
+        int soLuongMoi = ctsp.getSoLuongTon() + vhdctr.getSoLuong();
+        ctsp.setSoLuongTon(soLuongMoi);
+        if (ctspr.updateTableHD(ctsp)) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
+    }
+
+    @Override
+    public List<ViewKhachHangRepose> getAllKH() {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+        for (KhachHang kh : khr.getAll()) {
+            list.add(new ViewKhachHangRepose(kh));
+        }
+        return list;
     }
 
     @Override
@@ -258,7 +292,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         twoColTable2.addCell(getCell10fLeft("Company name", true));
         twoColTable2.addCell(getCell10fLeft("Buyer", true));
         twoColTable2.addCell(getCell10fLeft("Shelby Company", false));
-        twoColTable2.addCell(getCell10fLeft(hd.getTen().trim() == null ? hd.getKhachHang() == null ? " " : hd.getKhachHang().getHoTen() : " ", false));
+        twoColTable2.addCell(getCell10fLeft(hd.getMa().trim() == null ? hd.getKhachHang() == null ? " " : hd.getKhachHang().getHoTen() : " ", false));
         document.add(twoColTable2);
 
         Table twoColTable3 = new Table(twoColumnWidth);
@@ -335,5 +369,14 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     static Cell getCell10fLeft(String textValue, boolean isBold) {
         Cell myCell = new Cell().add(textValue).setFontSize(10f).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
         return isBold ? myCell.setBold() : myCell;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getOneHDKH(UUID id) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getOneHDKH(id)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
     }
 }

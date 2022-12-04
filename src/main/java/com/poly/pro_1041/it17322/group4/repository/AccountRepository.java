@@ -7,6 +7,7 @@ package com.poly.pro_1041.it17322.group4.repository;
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -29,7 +30,7 @@ public class AccountRepository {
     }
 
     public Account getOne(String username, String pass) {
-        session = HibernateUtil.getSession();
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE Username=:User AND Password=:Pass";
         Query query = session.createQuery(sql, Account.class);
         query.setParameter("User", username);
@@ -45,6 +46,15 @@ public class AccountRepository {
         query.setParameter("Email", email);
         Account acc = (Account) query.getSingleResult();
         return acc;
+
+    public Account getOneNguoiTao(String id) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + " WHERE id=:id";
+        Query query = session.createQuery(sql, Account.class);
+        query.setParameter("id", UUID.fromString(id));
+        Account account = (Account) query.getSingleResult();
+        return account;
+
     }
 
     public Boolean add(Account acc) {
