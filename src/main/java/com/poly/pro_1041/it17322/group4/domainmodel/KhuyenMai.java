@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.domainmodel;
 
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,10 +53,10 @@ public class KhuyenMai {
     private String ten;
 
     @Column(name = "NgayBatDau")
-    private String ngayBatDau;
+    private Date ngayBatDau;
 
     @Column(name = "NgayKetThuc")
-    private String ngayKetThuc;
+    private Date ngayKetThuc;
 
     @Column(name = "GiaKM")
     private Float giaKM;

@@ -25,7 +25,15 @@ public class LoaiKMRepository {
         List<LoaiKM> listLoaiKM = query.getResultList(); // List category
         return listLoaiKM;
     }
-
+    
+    public LoaiKM getOneLoaiKM(String Ten) {
+        String sql = fromTable + "WHERE Ten =: Ten";
+        Query query = session.createQuery(sql, LoaiKM.class);
+        query.setParameter("Ten", Ten);
+        LoaiKM loaiKM =  (LoaiKM) query.getSingleResult();
+        return loaiKM;
+    }
+    
     public LoaiKM getOne(Long id) {
         String sql = fromTable + "WHERE id =: id";
         Query query = session.createQuery(sql, LoaiKM.class);
