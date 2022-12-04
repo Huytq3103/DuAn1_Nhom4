@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.service.impl;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.repository.AccountRepository;
 import com.poly.pro_1041.it17322.group4.repository.KhachHangRepository;
@@ -12,6 +13,7 @@ import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -21,11 +23,6 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     private KhachHangRepository khRepository = new KhachHangRepository();
     private AccountRepository ar = new AccountRepository();
-
-    @Override
-    public KhachHang getOne(String id) {
-        return khRepository.getOne(id);
-    }
 
     @Override
     public String add(ViewKhachHangRepose vkhr) {
@@ -56,7 +53,9 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";
         } else {
-            KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(),1);
+
+            KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
             boolean add = khRepository.add(kh);
             if (add) {
                 return "Add thanh cong";
@@ -95,7 +94,10 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";
         } else {
-            KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(),1);
+
+            KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
+
             boolean update = khRepository.update(kh);
             if (update) {
                 return "Update thanh cong";
@@ -107,7 +109,9 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String delete(ViewKhachHangRepose vkhr) {
-        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(),1);
+
+        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
         boolean delete = khRepository.delete(kh);
         if (delete) {
             return "Delete thanh cong";
@@ -125,12 +129,27 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         return lists;
     }
 
-    public static void main(String[] args) {
-        new ViewKhachHangServiceImpl().getAll().forEach(s -> System.out.println(s.toString()));
-    }
-
     public Account getOneNguoiTao(String id) {
         return ar.getOneNguoiTao(id);
+    }
+
+    @Override
+    public List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen) {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+        for (ViewKhachHangRepose vkh : lists) {
+            if (vkh.getHoTen().equalsIgnoreCase(hoTen)) {
+                list.add(vkh);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<ViewKhachHangRepose> getOne(UUID id) {
+        return null;
+    }
+    public static void main(String[] args) {
+        System.out.println( new ViewKhachHangServiceImpl().getAll()); 
     }
 
 }
