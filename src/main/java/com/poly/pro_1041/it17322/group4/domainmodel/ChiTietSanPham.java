@@ -84,6 +84,6 @@ public class ChiTietSanPham {
     @Column(name = "Hinh")
     private String Hinh;
 
-    @Column(name = "TrangThai")
+    @Column(name = "TrangThaiSP")
     private int trangThai;
 }
