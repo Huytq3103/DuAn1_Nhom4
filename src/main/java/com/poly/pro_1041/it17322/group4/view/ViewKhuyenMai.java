@@ -55,36 +55,36 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     private List<Loai> listLoaiSP = new ArrayList<>();
     private LoaiKMRepository lkmrp = new LoaiKMRepository();
     int index;
-    
+
     public ViewKhuyenMai(Account a) {
         initComponents();
-        
+
 //        tbSanPham.setModel(tbsp);
         tbsp = (DefaultTableModel) tbSanPham.getModel();
         tbKhuyenMai.setModel(tbkm);
         cbbApDung.setModel(dcbmLoaiSP);
-        
-        String[] headerSanPham = {"Tên SP","Loại SP","Giá","Còn tồn","Chọn"};
+
+        String[] headerSanPham = {"Tên SP", "Loại SP", "Giá", "Còn tồn", "Chọn"};
         String[] headerKhuyenMai = {"STT", "Tên KM", "Ngày bắt đầu", "Ngày kết thúc", "% Khuyến mãi", "Loại khuyến mãi"};
         tbsp.setColumnIdentifiers(headerSanPham);
         tbkm.setColumnIdentifiers(headerKhuyenMai);
-        
+
         listVKM = vkms.getAllKM();
         listVLKM = vkms.getAllLKM();
         listVTTKM = vkms.getAllTTKM();
         listSanPham = vhds.getAllSP();
         listLoaiSP = vls.getAll();
-        
+
         showDataTableKhuyenMai(listVKM);
         showDataTableSanPham(listSanPham);
-        
+
         for (Loai loaiSP : listLoaiSP) {
             dcbmLoaiSP.addElement(loaiSP.getTen());
         }
         for (ViewLoaiKMResponse viewLoaiKMResponse : listVLKM) {
             dcbmLoaiKM.addElement(viewLoaiKMResponse.getTen());
         }
-        
+
     }
 
     /**
@@ -537,15 +537,15 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         txtBatDau.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 2).toString()));
         txtKetThuc.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 3).toString()));
         int loaiSP = listVKM.get(index).getLoaiSanPham();
-        if(loaiSP == 1){
+        if (loaiSP == 1) {
             cbbLoaiSP.setSelectedIndex(0);
-        }else{
+        } else {
             cbbLoaiSP.setSelectedIndex(1);
         }
-        if(tbKhuyenMai.getValueAt(index,5).toString().equalsIgnoreCase("Giảm theo %")){
+        if (tbKhuyenMai.getValueAt(index, 5).toString().equalsIgnoreCase("Giảm theo %")) {
             cbbLoaiKM.setSelectedIndex(0);
-            
-        }else{
+
+        } else {
             cbbLoaiKM.setSelectedIndex(1);
         }
         if (listVKM.get(index).getTrangThaiKM().getTen().equalsIgnoreCase("Able")) {
@@ -561,32 +561,28 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_tbSanPhamMouseClicked
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-            
-            
-            if(checkForm()== null){
 
-                return;
-            }
-            
+        if (checkForm() == null) {
 
-            ViewKhuyenMaiResponse vkmr = checkForm();
+            return;
+        }
 
-            ViewKhuyenMaiResponse vkmr = new ViewKhuyenMaiResponse(null,trangThaiKM,loaiKM,txtMaKM.getText(),txtTenCT.getText(),txtBatDau.getText(),txtKetThuc.getText(),Float.valueOf(txtGiamGia.getText()));
+        ViewKhuyenMaiResponse vkmr = checkForm();
 
-            JOptionPane.showMessageDialog(this, vkms.addKhuyenMai(vkmr));
-            
-            listVKM = vkms.getAllKM();
-            
-            showDataTableKhuyenMai(listVKM);
+        JOptionPane.showMessageDialog(this, vkms.addKhuyenMai(vkmr));
 
-            txtTenCT.setText(null);
-            txtGiamGia.setText(null);
-            txtBatDau.setDateFormatString(null);
-            txtKetThuc.setDateFormatString(null);
-            txtMaKM.setText(null);
-            txtBatDau.setCalendar(null);
-            txtKetThuc.setCalendar(null);
-            JOptionPane.showMessageDialog(this,"Lưu thành công");
+        listVKM = vkms.getAllKM();
+
+        showDataTableKhuyenMai(listVKM);
+
+        txtTenCT.setText(null);
+        txtGiamGia.setText(null);
+        txtBatDau.setDateFormatString(null);
+        txtKetThuc.setDateFormatString(null);
+        txtMaKM.setText(null);
+        txtBatDau.setCalendar(null);
+        txtKetThuc.setCalendar(null);
+        JOptionPane.showMessageDialog(this, "Lưu thành công");
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
@@ -604,7 +600,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void cbbApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbApDungActionPerformed
-        
+
     }//GEN-LAST:event_cbbApDungActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -613,28 +609,26 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Chưa chọn KM để xóa");
                 return;
             }
-            
+
             int hoi = JOptionPane.showConfirmDialog(this, "Muốn xóa KM ?");
             if (hoi != JOptionPane.YES_OPTION) {
                 return;
             }
             index = tbKhuyenMai.getSelectedRow();
-        boolean check = true;
-        ViewKhuyenMaiResponse vkmr = listVKM.get(index);
-        check = vkms.deleteKhuyenMai(vkmr);
-        
-        
-        
-        listVKM = vkms.getAllKM();
-        showDataTableKhuyenMai(listVKM);
-        txtTenCT.setText(null);
+            boolean check = true;
+            ViewKhuyenMaiResponse vkmr = listVKM.get(index);
+            check = vkms.deleteKhuyenMai(vkmr);
+
+            listVKM = vkms.getAllKM();
+            showDataTableKhuyenMai(listVKM);
+            txtTenCT.setText(null);
             txtGiamGia.setText(null);
             txtBatDau.setDateFormatString(null);
             txtKetThuc.setDateFormatString(null);
             txtMaKM.setText(null);
             txtBatDau.setCalendar(null);
             txtKetThuc.setCalendar(null);
-        JOptionPane.showMessageDialog(this,"Xóa thành công");
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -643,65 +637,55 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         index = tbKhuyenMai.getSelectedRow();
         int hoi = JOptionPane.showConfirmDialog(this, "Muốn cập nhật KM ?");
-            if (hoi != JOptionPane.YES_OPTION) {
-                return;
-            }
+        if (hoi != JOptionPane.YES_OPTION) {
+            return;
+        }
         boolean check = true;
         ViewKhuyenMaiResponse vkmr = listVKM.get(index);
-        
-        int loaiSP ;
-        if(cbbLoaiSP.getSelectedIndex()==0){
-            loaiSP =1;
-        }else{
-            loaiSP =2;
+
+        int loaiSP;
+        if (cbbLoaiSP.getSelectedIndex() == 0) {
+            loaiSP = 1;
+        } else {
+            loaiSP = 2;
         }
-        int ttkm ;
-            if(rdoHoatDong.isSelected()){
-                ttkm = 9;
-            }else{
-                ttkm = 10;
-            }
-            int lkm;
-            if(cbbLoaiKM.getSelectedIndex()==0){
-                lkm = 10;
-            }else{
-                lkm = 11;
-            }
-            TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm,null,null);
-            LoaiKM loaiKM = new LoaiKM(lkm,null,null);
-            
+        int ttkm;
+        if (rdoHoatDong.isSelected()) {
+            ttkm = 9;
+        } else {
+            ttkm = 10;
+        }
+        int lkm;
+        if (cbbLoaiKM.getSelectedIndex() == 0) {
+            lkm = 10;
+        } else {
+            lkm = 11;
+        }
+        TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm, null, null);
+        LoaiKM loaiKM = new LoaiKM(lkm, null, null);
 
-       
-            
+        vkmr = new ViewKhuyenMaiResponse(vkmr.getId(), trangThaiKM, loaiKM, txtMaKM.getText(), txtTenCT.getText(), txtBatDau.getDateFormatString(), txtKetThuc.getDateFormatString(), Float.valueOf(txtGiamGia.getText()));
 
-
-        vkmr = new ViewKhuyenMaiResponse(vkmr.getId(),trangThaiKM,loaiKM,txtMaKM.getText(),txtTenCT.getText(),txtBatDau.getText(),txtKetThuc.getText(),Float.valueOf(txtGiamGia.getText()));
-
-            
-        
         check = vkms.updateKhuyenMai(vkmr);
-        
-        
-        
-        
+
         listVKM = vkms.getAllKM();
         showDataTableKhuyenMai(listVKM);
         txtTenCT.setText(null);
-            txtGiamGia.setText(null);
-            txtBatDau.setDateFormatString(null);
-            txtKetThuc.setDateFormatString(null);
-            txtMaKM.setText(null);
-            txtBatDau.setCalendar(null);
-            txtKetThuc.setCalendar(null);
-        JOptionPane.showMessageDialog(this,"Update thành công");
+        txtGiamGia.setText(null);
+        txtBatDau.setDateFormatString(null);
+        txtKetThuc.setDateFormatString(null);
+        txtMaKM.setText(null);
+        txtBatDau.setCalendar(null);
+        txtKetThuc.setCalendar(null);
+        JOptionPane.showMessageDialog(this, "Update thành công");
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        
+
     }//GEN-LAST:event_txtSearchActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        
+
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
@@ -712,29 +696,29 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         index = tbKhuyenMai.getSelectedRow();
         int index2 = tbSanPham.getSelectedRow();
         int hoi = JOptionPane.showConfirmDialog(this, "Muốn áp dụng KM cho SP này ?");
-            if (hoi != JOptionPane.YES_OPTION) {
-                return;
-            }
+        if (hoi != JOptionPane.YES_OPTION) {
+            return;
+        }
         boolean check = true;
-        
+
         ViewKhuyenMaiResponse vkmr = listVKM.get(index);
-        
+
         ViewCTSPResponse vctspr = listSanPham.get(index2);
         KhuyenMai km = new KhuyenMai();
         km.setId(vkmr.getId());
         Double giaMoi;
-        if(cbbLoaiKM.getSelectedIndex()==0){
-            giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) * (100-Double.parseDouble(txtGiamGia.getText())) / 100 ;
-        }else{
+        if (cbbLoaiKM.getSelectedIndex() == 0) {
+            giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) * (100 - Double.parseDouble(txtGiamGia.getText())) / 100;
+        } else {
             giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) - Double.parseDouble(txtGiamGia.getText());
         }
-         
-        vctspr = new ViewCTSPResponse(vctspr.getId(),vctspr.getMa(),vctspr.getSp(),vctspr.getHang(),vctspr.getLoai(),vctspr.getKichCo(),vctspr.getMauSac(),vctspr.getChatLieu(),vctspr.getNgayNhap(),vctspr.getSoLuongTon(),BigDecimal.valueOf(giaMoi),km);
-        
+
+        vctspr = new ViewCTSPResponse(vctspr.getId(), vctspr.getMa(), vctspr.getSp(), vctspr.getHang(), vctspr.getLoai(), vctspr.getKichCo(), vctspr.getMauSac(), vctspr.getChatLieu(), vctspr.getNgayNhap(), vctspr.getSoLuongTon(), BigDecimal.valueOf(giaMoi), km);
+
         check = vkms.updateCTSP(vctspr);
-        JOptionPane.showMessageDialog(this,"Đã thêm KM cho sản phẩm");
-        
-        
+        JOptionPane.showMessageDialog(this, "Đã thêm KM cho sản phẩm");
+
+
     }//GEN-LAST:event_btnApDungActionPerformed
 
 
@@ -780,18 +764,18 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         tbkm.setRowCount(0);
         int i = 1;
         for (ViewKhuyenMaiResponse x : list) {
-            tbkm.addRow(new Object[]{i,x.getTen(),x.getNgayBatDau(),x.getNgayKetThuc(),x.getGiaKM(), x.getLoaiKM().getTen()});
+            tbkm.addRow(new Object[]{i, x.getTen(), x.getNgayBatDau(), x.getNgayKetThuc(), x.getGiaKM(), x.getLoaiKM().getTen()});
             i++;
         }
     }
-    
+
     private void showDataTableSanPham(List<ViewCTSPResponse> list) {
         tbsp.setRowCount(0);
-        
+
         for (ViewCTSPResponse view : list) {
 //            tbsp.addRow(view.toDataRowKM());
-                boolean chon = false;
-            tbsp.addRow(new Object[]{view.getSp().getTenSP(),view.getLoai().getTen(),view.getGia(),view.getSoLuongTon(),chon});
+            boolean chon = false;
+            tbsp.addRow(new Object[]{view.getSp().getTenSP(), view.getLoai().getTen(), view.getGia(), view.getSoLuongTon(), chon});
         }
     }
 
@@ -802,61 +786,57 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         Date ngayBatDau = txtBatDau.getDate();
         Date ngayKetThuc = txtKetThuc.getDate();
         String maKM = txtMaKM.getText().trim();
-        int loaiSP ;
-        if(cbbLoaiSP.getSelectedIndex()==0){
-            loaiSP =1;
-        }else{
-            loaiSP =2;
+        int loaiSP;
+        if (cbbLoaiSP.getSelectedIndex() == 0) {
+            loaiSP = 1;
+        } else {
+            loaiSP = 2;
         }
-        
+
         int lkm;
-            if(cbbLoaiKM.getSelectedIndex()==0){
-                lkm = 10;
-            }else{
-                lkm = 11;
-            }
-        int ttkm ;
-            if(rdoHoatDong.isSelected()){
-                ttkm = 9;
-            }else{
-                ttkm = 10;
-            }    
-        TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm,null,null);
-        LoaiKM loaiKM = new LoaiKM(lkm,null,null);    
-        
+        if (cbbLoaiKM.getSelectedIndex() == 0) {
+            lkm = 10;
+        } else {
+            lkm = 11;
+        }
+        int ttkm;
+        if (rdoHoatDong.isSelected()) {
+            ttkm = 9;
+        } else {
+            ttkm = 10;
+        }
+        TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm, null, null);
+        LoaiKM loaiKM = new LoaiKM(lkm, null, null);
+
 //        List<ViewKhuyenMaiResponse> list = vkms.getOneMaKM(maKM);
 //        if(list != null){
 //            
 //            JOptionPane.showMessageDialog(this, "Không được trùng mã KM");
 //            return null;
 //        }
-        
-            if(tenCT.isEmpty()
-                    || maKM.isEmpty()
-                    || giaKM.toString().isEmpty()
-                    || ngayBatDau.toString().isEmpty()
-                    || ngayKetThuc.toString().isEmpty()){
-                
-                JOptionPane.showMessageDialog(this, "Không được để trống ô nhập");
-                return null;
-            }
+        if (tenCT.isEmpty()
+                || maKM.isEmpty()
+                || giaKM.toString().isEmpty()
+                || ngayBatDau.toString().isEmpty()
+                || ngayKetThuc.toString().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Không được để trống ô nhập");
+            return null;
+        }
         try {
             Float giamGia = Float.valueOf(giaKM);
-            if(giamGia <0){
-                JOptionPane.showMessageDialog(this,"Giá hoặc % phải lớn hơn 0");
+            if (giamGia < 0) {
+                JOptionPane.showMessageDialog(this, "Giá hoặc % phải lớn hơn 0");
                 return null;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Giá hoặc % phải là số ");
+            JOptionPane.showMessageDialog(this, "Giá hoặc % phải là số ");
             return null;
         }
         Float giamGia = Float.valueOf(giaKM);
-        
-        return new ViewKhuyenMaiResponse(null,trangThaiKM, loaiKM,maKM, tenCT, ngayBatDau, ngayKetThuc, giamGia,loaiSP);
+
+//        return new ViewKhuyenMaiResponse(null, trangThaiKM, loaiKM, maKM, tenCT, ngayBatDau, ngayKetThuc, giamGia, loaiSP);
+        return null;
     }
 
-    
-
-    
-    
 }

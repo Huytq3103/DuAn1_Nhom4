@@ -22,16 +22,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ViewKhuyenMaiResponse {
+
     private UUID id;
     private TrangThaiKM trangThaiKM;
     private LoaiKM loaiKM;
     private String ma;
     private String ten;
-    private Date ngayBatDau;
-    private Date ngayKetThuc;
+    private String ngayBatDau;
+    private String ngayKetThuc;
     private Float giaKM;
     private int loaiSanPham;
-
 
     public ViewKhuyenMaiResponse() {
     }
@@ -46,7 +46,6 @@ public class ViewKhuyenMaiResponse {
         this.ngayKetThuc = khuyenMai.getNgayKetThuc();
         this.giaKM = khuyenMai.getGiaKM();
     }
-
 
     public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, String ngayBatDau, String ngayKetThuc, Float giaKM) {
         this.id = id;
@@ -63,16 +62,12 @@ public class ViewKhuyenMaiResponse {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
-
-
-    
-    
     public Object[] toDataRow(int i) {
-        return new Object[]{i,ten,ngayBatDau,ngayKetThuc,giaKM, loaiKM.getTen()};
+        return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
     }
+
     public Object[] toDataRow1(int i) {
-        return new Object[]{i,ten,ngayBatDau,ngayKetThuc,giaKM, loaiKM.getTen()};
+        return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
     }
-    
+
 }
