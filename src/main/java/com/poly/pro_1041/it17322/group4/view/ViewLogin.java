@@ -91,6 +91,11 @@ public class ViewLogin extends javax.swing.JFrame {
 
         lbQuenMK.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbQuenMK.setText("Quên mật khẩu ?");
+        lbQuenMK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbQuenMKMouseClicked(evt);
+            }
+        });
 
         btnLogin.setText("Đăng nhập");
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -176,6 +181,12 @@ public class ViewLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, validate);
         }
     }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void lbQuenMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuenMKMouseClicked
+        ViewQuenMatKhau quenMK = new ViewQuenMatKhau();
+        quenMK.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbQuenMKMouseClicked
 
     /**
      * @param args the command line arguments
