@@ -336,4 +336,13 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         Cell myCell = new Cell().add(textValue).setFontSize(10f).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
         return isBold ? myCell.setBold() : myCell;
     }
+
+    @Override
+    public List<ViewHoaDonResponse> getOneHDKH(UUID id) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getOneHDKH(id)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
 }

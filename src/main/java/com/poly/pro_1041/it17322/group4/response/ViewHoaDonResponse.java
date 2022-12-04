@@ -69,11 +69,25 @@ public class ViewHoaDonResponse {
         this.TongTien = TongTien;
     }
 
+    public ViewHoaDonResponse(Account account, String ten, String ngaoTao, String ngayThanhToan, String ngayShip, String ngayNhan, BigDecimal TongTien) {
+        this.account = account;
+        this.ten = ten;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.ngayShip = ngayShip;
+        this.ngayNhan = ngayNhan;
+        this.TongTien = TongTien;
+    }
+
     public Object[] toDataRow() {
         return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
     public Object[] toDataRowLS(int k) {
         return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ten, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+    }
+
+    public Object[] toDataRowHD(int stt) {
+        return new Object[]{stt, ten, ngaoTao, ngayThanhToan, ngayShip, ngayNhan, TongTien};
     }
 }

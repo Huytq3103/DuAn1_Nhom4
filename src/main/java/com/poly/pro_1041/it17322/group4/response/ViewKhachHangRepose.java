@@ -33,6 +33,7 @@ public class ViewKhachHangRepose {
     private String ngayChinhSua;
     private UUID nguoiTao;
     private UUID nguoiChinhSua;
+    private int diem;
 
     public ViewKhachHangRepose() {
     }
@@ -50,9 +51,10 @@ public class ViewKhachHangRepose {
         this.ngayChinhSua = kh.getNgayChinhSua();
         this.nguoiTao = kh.getNguoiTao();
         this.nguoiChinhSua = kh.getNguoiChinhSua();
+        this.diem = kh.getDiem();
     }
 
-    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, UUID nguoiTao, UUID nguoiChinhSua) {
+    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, UUID nguoiTao, UUID nguoiChinhSua,int diem) {
         this.ma = ma;
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
@@ -64,9 +66,10 @@ public class ViewKhachHangRepose {
         this.ngayChinhSua = ngayChinhSua;
         this.nguoiTao = nguoiTao;
         this.nguoiChinhSua = nguoiChinhSua;
+        this.diem = diem;
     }
 
     public Object[] toDataRow() {
-        return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua};
+        return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua,diem};
     }
 }

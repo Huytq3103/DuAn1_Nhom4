@@ -38,6 +38,15 @@ public class HoaDonRepository {
         return hoadon;
     }
 
+    public List<HoaDon> getOneHDKH(UUID id) {
+        String sql = fromTable + "WHERE IdKH =: Id";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("Id", id);
+        List<HoaDon> listHD =  query.getResultList();
+        return listHD;
+    }
+
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
         session = HibernateUtil.getSession();

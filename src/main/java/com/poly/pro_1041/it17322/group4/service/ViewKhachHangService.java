@@ -5,7 +5,10 @@
 package com.poly.pro_1041.it17322.group4.service;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
+import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
+import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +21,7 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> getAll();
 
-    KhachHang getOne(String id);
+    List<ViewKhachHangRepose> getOne(UUID id);
 
     String add(ViewKhachHangRepose vkhr);
 
@@ -28,5 +31,6 @@ public interface ViewKhachHangService {
 
     Account getOneNguoiTao(String id);
 
-    List<ViewKhachHangRepose> search(List<ViewKhachHangRepose> lists, String hoTen);
+    List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen);
+
 }

@@ -28,6 +28,8 @@ public interface ViewHoaDonService {
     List<ViewHDCTResponse> getAllHDCT();
 
     List<ViewHDCTResponse> getOneHD(UUID id);
+    
+    List<ViewHoaDonResponse>getOneHDKH(UUID id);
 
     public List<TrangThaiOrder> getAllTTO();
 
