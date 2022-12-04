@@ -64,7 +64,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddSanPham(SanPham sanPham) {
+        SanPham spMa = null;
+        try {
+            spMa = spr.getOneMa(sanPham.getMa());
+        } catch (Exception e) {
 
+        }
         if (sanPham.getMa().isEmpty()) {
             return "Mã không được trống";
         }
@@ -80,7 +85,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddMauSac(MauSac mauSac) {
+        MauSac spMa = null;
+        try {
+            spMa = msr.getOneMa(mauSac.getMa());
+        } catch (Exception e) {
 
+        }
         if (mauSac.getMa().isEmpty()) {
             return "Mã không được trống";
         }
@@ -96,6 +106,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddLoai(Loai loai) {
+        Loai spMa = null;
+        try {
+            spMa = lspr.getOneMa(loai.getMa());
+        } catch (Exception e) {
+
+        }
 
         if (loai.getMa().isEmpty()) {
             return "Mã không được trống";
@@ -112,7 +128,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddKichCo(KichCo kichCo) {
+        KichCo spMa = null;
+        try {
+            spMa = kcr.getOneMa(kichCo.getMa());
+        } catch (Exception e) {
 
+        }
         if (kichCo.getMa().isEmpty()) {
             return "Mã không được trống";
         }
@@ -128,7 +149,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddHang(Hang hang) {
+        Hang spMa = null;
+        try {
+            spMa = hspr.getOneMa(hang.getMa());
+        } catch (Exception e) {
 
+        }
         if (hang.getMa().isEmpty()) {
             return "Mã không được trống";
         }
@@ -144,7 +170,12 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddChatLieu(ChatLieu chatLieu) {
+        ChatLieu spMa = null;
+        try {
+            spMa = clr.getOneMa(chatLieu.getMa());
+        } catch (Exception e) {
 
+        }
         if (chatLieu.getMa().isEmpty()) {
             return "Mã không được trống";
         }

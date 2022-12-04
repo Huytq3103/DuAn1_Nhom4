@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.hibernate.Transaction;
 public class KhachHangRepository {
 
     private String fromtable = " FROM KhachHang ";
+    private String fromtableHD = "FROM HoaDon";
 
     public List<KhachHang> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -75,6 +77,15 @@ public class KhachHangRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public KhachHang getKhachHangLichSu(String id) {
+        String sql = fromtableHD + "WHERE id =:id";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("id", id);
+        KhachHang kh = (KhachHang) query.getSingleResult();
+        return kh;
     }
 
     public static void main(String[] args) {
