@@ -66,7 +66,7 @@ public class KhachHang {
 
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;
-    
+
     @Column(name = "Diem")
     private int Diem;
 }

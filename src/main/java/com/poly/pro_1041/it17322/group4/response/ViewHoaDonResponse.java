@@ -71,7 +71,7 @@ public class ViewHoaDonResponse {
 
     public ViewHoaDonResponse(Account account, String ten, String ngaoTao, String ngayThanhToan, String ngayShip, String ngayNhan, BigDecimal TongTien) {
         this.account = account;
-        this.ten = ten;
+        this.ma = ten;
         this.ngaoTao = ngaoTao;
         this.ngayThanhToan = ngayThanhToan;
         this.ngayShip = ngayShip;
@@ -88,6 +88,6 @@ public class ViewHoaDonResponse {
     }
 
     public Object[] toDataRowHD(int stt) {
-        return new Object[]{stt, ten, ngaoTao, ngayThanhToan, ngayShip, ngayNhan, TongTien};
+        return new Object[]{stt, ma, ngaoTao, ngayThanhToan, ngayShip, ngayNhan, TongTien};
     }
 }
