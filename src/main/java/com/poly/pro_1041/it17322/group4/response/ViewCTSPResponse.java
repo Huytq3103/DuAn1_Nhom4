@@ -7,6 +7,7 @@ package com.poly.pro_1041.it17322.group4.response;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
+import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
@@ -39,7 +40,9 @@ public class ViewCTSPResponse {
     private String ngayNhap;
     private int soLuongTon;
     private BigDecimal gia;
-
+    private KhuyenMai km;
+    
+    
     public ViewCTSPResponse() {
     }
 
@@ -55,6 +58,22 @@ public class ViewCTSPResponse {
         this.ngayNhap=ctsp.getNgayNhap();
         this.soLuongTon = ctsp.getSoLuongTon();
         this.gia = ctsp.getGia();
+        this.km = ctsp.getKhuyenMai();
+    }
+
+    public ViewCTSPResponse(UUID id, String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
+        this.id = id;
+        this.ma = ma;
+        this.sp = sp;
+        this.hang = hang;
+        this.loai = loai;
+        this.kichCo = kichCo;
+        this.mauSac = mauSac;
+        this.chatLieu = chatLieu;
+        this.ngayNhap = ngayNhap;
+        this.soLuongTon = soLuongTon;
+        this.gia = gia;
+        this.km = km;
     }
 
     public ViewCTSPResponse(String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia) {
@@ -69,11 +88,29 @@ public class ViewCTSPResponse {
         this.soLuongTon = soLuongTon;
         this.gia = gia;
     }
+
+    public ViewCTSPResponse( String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
+        
+        this.ma = ma;
+        this.sp = sp;
+        this.hang = hang;
+        this.loai = loai;
+        this.kichCo = kichCo;
+        this.mauSac = mauSac;
+        this.chatLieu = chatLieu;
+        this.ngayNhap = ngayNhap;
+        this.soLuongTon = soLuongTon;
+        this.gia = gia;
+        this.km = km;
+    }
     
 
 
     public Object[] toDataRow() {
         return new Object[]{sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
+    }
+    public Object[] toDataRowKM() {
+        return new Object[]{sp.getTenSP(),loai.getTen(),soLuongTon,false};
     }
 
     public Object[] toDataRow1() {

@@ -28,13 +28,24 @@ public class KhuyenMaiRepository {
     
     public KhuyenMai getOne(String id) {
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "WHERE Id =: Id";
+        String sql = fromTable + " WHERE Id =: Id";
         javax.persistence.Query query = session.createQuery(sql, KhuyenMai.class);
         query.setParameter("Id", id);
         KhuyenMai khuyenMai =  (KhuyenMai) query.getSingleResult();
         return khuyenMai;
     }
     
+    
+    
+    public KhuyenMai getOneMaKM(String maKM) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE Ma =: Ma";
+        javax.persistence.Query query = session.createQuery(sql, KhuyenMai.class);
+        query.setParameter("Ma", maKM);
+        KhuyenMai khuyenMai =  (KhuyenMai) query.getSingleResult();
+        return khuyenMai;
+    }
+
     public Boolean add(KhuyenMai khuyenMai) {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {

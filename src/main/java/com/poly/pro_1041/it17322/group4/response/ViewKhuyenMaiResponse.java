@@ -8,6 +8,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,10 +27,11 @@ public class ViewKhuyenMaiResponse {
     private LoaiKM loaiKM;
     private String ma;
     private String ten;
-    private String ngayBatDau;
-    private String ngayKetThuc;
+    private Date ngayBatDau;
+    private Date ngayKetThuc;
     private Float giaKM;
     private int loaiSanPham;
+    
 
     public ViewKhuyenMaiResponse() {
     }
@@ -46,7 +48,7 @@ public class ViewKhuyenMaiResponse {
         this.loaiSanPham = khuyenMai.getLoaiSanPham();
     }
 
-    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, String ngayBatDau, String ngayKetThuc, Float giaKM, int loaiSanPham) {
+    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {
         this.id = id;
         this.trangThaiKM = trangThaiKM;
         this.loaiKM = loaiKM;
@@ -58,12 +60,19 @@ public class ViewKhuyenMaiResponse {
         this.loaiSanPham = loaiSanPham;
     }
 
+    public ViewKhuyenMaiResponse(String ten, String ten0, String ma, String ten1, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
 
 
     
     
     public Object[] toDataRow(int i) {
+        return new Object[]{i,ten,ngayBatDau,ngayKetThuc,giaKM, loaiKM.getTen()};
+    }
+    public Object[] toDataRow1(int i) {
         return new Object[]{i,ten,ngayBatDau,ngayKetThuc,giaKM, loaiKM.getTen()};
     }
     
