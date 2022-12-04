@@ -5,6 +5,8 @@
 package com.poly.pro_1041.it17322.group4.service;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -13,4 +15,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 public interface ViewLoginService {
 
     Account getOne(String username, String pass);
+
+    String validateLogin(JTextField username, JPasswordField pass);
 }

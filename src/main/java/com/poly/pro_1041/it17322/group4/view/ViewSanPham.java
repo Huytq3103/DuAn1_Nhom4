@@ -75,6 +75,9 @@ public class ViewSanPham extends javax.swing.JPanel {
     private ViewThuocTinhService vtts = new ViewThuocTinhServiceImpl();
     public int index = -1;
 
+    private String regexINT = "[0-9 ]+";
+
+
     /**
      * Creates new form ViewSanPham
      */
@@ -1013,19 +1016,68 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtMa.setEditable(true);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
+
     private void btnSuaChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaChiTietSanPhamActionPerformed
         int row = tbSanPham.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
         } else if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
+
+    private void tbThuocTinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbThuocTinhMouseClicked
+        int row = tbThuocTinh.getSelectedRow();
+        txtMaThuocTinh.setEditable(false);
+        fill1(row);
+    }//GEN-LAST:event_tbThuocTinhMouseClicked
+
+    private void radioMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMauSacActionPerformed
+        listms = vtts.getAllMauSac();
+        showDataTableMauSac(listms);
+    }//GEN-LAST:event_radioMauSacActionPerformed
+
+    private void radioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioHangActionPerformed
+        listh = vtts.getAllHang();
+        showDataTableHang(listh);
+    }//GEN-LAST:event_radioHangActionPerformed
+
+    private void radioKichCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioKichCoActionPerformed
+        listkc = vtts.getAllKichCo();
+        showDataTableKichCo(listkc);
+    }//GEN-LAST:event_radioKichCoActionPerformed
+
+    private void radioChatLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioChatLieuActionPerformed
+        listcl = vtts.getAllChatLieu();
+        showDataTableChatLieu(listcl);
+    }//GEN-LAST:event_radioChatLieuActionPerformed
+
+    private void radioLoaiSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioLoaiSanPhamActionPerformed
+        listl = vtts.getAllLoai();
+        showDataTableLoai(listl);
+    }//GEN-LAST:event_radioLoaiSanPhamActionPerformed
+
+    private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTenSPActionPerformed
+        listSP = vtts.getAllSanPham();
+        showDataTableSanPham(listSP);
+    }//GEN-LAST:event_radioTenSPActionPerformed
+
+    private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemChiTietSanPhamActionPerformed
+        if (txtMa.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtSoLuong.getText().trim().isEmpty()) {
+
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
+
+        } else if ((!txtSoLuong.getText().matches(regexINT))) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải là số");
+
+        } else if (Integer.valueOf(String.valueOf(txtSoLuong.getText())) <= 0) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
+
+
+        } else if ((!txtSoLuong.getText().matches(regexINT))) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải là số");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
             JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải lớn hơn 0");
 
-        } else if (Integer.valueOf(txtSoLuong.getText()) <= 0) {
-            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
         } else {
             ViewCTSPResponse vctspr = listVCTSP.get(tbSanPham.getSelectedRow());
             UUID id = vctspr.getId();
@@ -1040,23 +1092,44 @@ public class ViewSanPham extends javax.swing.JPanel {
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
+
             int trangThai = 1;
             ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().update(viewCTSP, id));
+
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan);
+            JOptionPane.showMessageDialog(PanelDSSP, vsp.add(viewCTSP));
+
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }
     }//GEN-LAST:event_btnSuaChiTietSanPhamActionPerformed
 
+
     private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemChiTietSanPhamActionPerformed
         if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
+
+    private void btnSuaChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaChiTietSanPhamActionPerformed
+        int row = tbSanPham.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
+            return;
+        } else if (txtMa.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtSoLuong.getText().trim().isEmpty()) {
+
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
+
+        } else if ((!txtSoLuong.getText().matches(regexINT))) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải là số");
+
+        } else if (Integer.valueOf(String.valueOf(txtSoLuong.getText())) <= 0) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
+
+
+        } else if ((!txtSoLuong.getText().matches(regexINT))) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải là số");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
             JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải lớn hơn 0");
-
-        } else if (Integer.valueOf(txtSoLuong.getText()) <= 0) {
-            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
 
         } else {
             double gia = Double.valueOf(txtGiaBan.getText());
@@ -1070,10 +1143,15 @@ public class ViewSanPham extends javax.swing.JPanel {
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
+
             String anh = duongdananh;
             int trangThai = 1;
             ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().add(viewCTSP));
+
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan);
+            JOptionPane.showMessageDialog(PanelDSSP, vsp.update(viewCTSP, id));
+
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }

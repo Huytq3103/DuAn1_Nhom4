@@ -19,7 +19,7 @@ import org.hibernate.query.Query;
 public class HoaDonChiTietRepository {
 
     private String fromTable = "FROM HoaDonChiTiet";
-    
+
     private Session session;
 
     public List<HoaDonChiTiet> getAll() {
@@ -34,6 +34,15 @@ public class HoaDonChiTietRepository {
         String sql = fromTable + " WHERE IdHoaDon=:id ";
         javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
         query.setParameter("id", id);
+        List<HoaDonChiTiet> hoadonchitiets = query.getResultList();
+        return hoadonchitiets;
+    }
+
+    public List<HoaDonChiTiet> getOneHDCT(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE ma=:ma ";
+        javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
+        query.setParameter("ma", ma);
         List<HoaDonChiTiet> hoadonchitiets = query.getResultList();
         return hoadonchitiets;
     }
@@ -63,11 +72,15 @@ public class HoaDonChiTietRepository {
 
     public Boolean update(HoaDonChiTiet hdct) {
         Transaction transaction = null;
-        session = HibernateUtil.getSession();
-        transaction = (Transaction) session.beginTransaction();
-        session.saveOrUpdate(hdct);
-        transaction.commit();
-        return true;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(hdct);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     public Boolean delete(HoaDonChiTiet hoadonchitiet) {
@@ -83,4 +96,7 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
+    public static void main(String[] args) {
+        new HoaDonChiTietRepository().getAll();
+    }
 }

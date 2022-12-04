@@ -45,6 +45,12 @@ public class ViewCTSPResponse {
     public ViewCTSPResponse() {
     }
 
+    public ViewCTSPResponse(UUID id, SanPham sp, int soLuongTon) {
+        this.id = id;
+        this.sp = sp;
+        this.soLuongTon = soLuongTon;
+    }
+
     public ViewCTSPResponse(ChiTietSanPham ctsp) {
         this.id = ctsp.getId();
         this.ma = ctsp.getMa();

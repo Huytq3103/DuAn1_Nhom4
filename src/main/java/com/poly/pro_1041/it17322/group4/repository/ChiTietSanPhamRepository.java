@@ -88,7 +88,20 @@ public class ChiTietSanPhamRepository {
         return null;
     }
 
-    public Boolean update(ChiTietSanPham ctsp) {
+    public Boolean update(ChiTietSanPham chitietsanPham) {
+        Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(chitietsanPham);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Boolean updateTableHD(ChiTietSanPham ctsp) {
         Transaction transaction = null;
         session = HibernateUtil.getSession();
         transaction = (Transaction) session.beginTransaction();

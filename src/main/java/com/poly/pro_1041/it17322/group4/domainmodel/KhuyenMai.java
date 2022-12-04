@@ -60,6 +60,4 @@ public class KhuyenMai {
     @Column(name = "GiaKM")
     private Float giaKM;
 
-    @Column(name = "LoaiSanPham")
-    private int loaiSanPham;
 }

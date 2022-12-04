@@ -25,13 +25,13 @@ import java.util.UUID;
  *
  * @author Lenovo
  */
-public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService{
+public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     private KhuyenMaiRepository kmrp = new KhuyenMaiRepository();
     private LoaiKMRepository lkmrp = new LoaiKMRepository();
     private TrangThaiKMRepository ttkmrp = new TrangThaiKMRepository();
     private ChiTietSanPhamRepository ctsprp = new ChiTietSanPhamRepository();
-    
+
     @Override
     public List<ViewKhuyenMaiResponse> getAllKM() {
         List<ViewKhuyenMaiResponse> list = new ArrayList<>();
@@ -43,7 +43,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService{
 
     @Override
     public List<ViewLoaiKMResponse> getAllLKM() {
-       List<ViewLoaiKMResponse> list = new ArrayList<>();
+        List<ViewLoaiKMResponse> list = new ArrayList<>();
         for (LoaiKM loaiKM : lkmrp.getAll()) {
             list.add(new ViewLoaiKMResponse(loaiKM));
         }
@@ -59,15 +59,11 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService{
         return list;
     }
 
-    
 //    public static void main(String[] args) {
 //        for (ViewHoaDonResponse vhdr : new ViewHoaDonServiceImpl().getAllHD()) {
 //            System.out.println(vhdr.toString());
 //        }
 //    }
-
-    
-
     @Override
     public List<ViewCTSPResponse> getAllSP() {
         List<ViewCTSPResponse> list = new ArrayList<>();
@@ -84,7 +80,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService{
 
     @Override
     public String addKhuyenMai(ViewKhuyenMaiResponse vkmr) {
-        if (kmrp.add(new KhuyenMai(null,vkmr.getTrangThaiKM(),vkmr.getLoaiKM(),vkmr.getMa(),vkmr.getTen(),vkmr.getNgayBatDau(),vkmr.getNgayKetThuc(),vkmr.getGiaKM(),vkmr.getLoaiSanPham()))) {
+        if (kmrp.add(new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
             return "Add thành công";
         } else {
             return "Add thất bại";
@@ -94,26 +90,24 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService{
     @Override
     public boolean deleteKhuyenMai(ViewKhuyenMaiResponse vkmr) {
         UUID id = vkmr.getId();
-        KhuyenMai km = new KhuyenMai(null,vkmr.getTrangThaiKM(),vkmr.getLoaiKM(),vkmr.getMa(),vkmr.getTen(),vkmr.getNgayBatDau(),vkmr.getNgayKetThuc(),vkmr.getGiaKM(),vkmr.getLoaiSanPham());
+        KhuyenMai km = new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM());
         km.setId(id);
-        if(kmrp.delete(km)){
+        if (kmrp.delete(km)) {
             return true;
-        }else{
+        } else {
             return false;
         }
-        
+
     }
 
     @Override
     public boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr) {
-        
-        if (kmrp.update(new KhuyenMai(vkmr.getId(),vkmr.getTrangThaiKM(),vkmr.getLoaiKM(),vkmr.getMa(),vkmr.getTen(),vkmr.getNgayBatDau(),vkmr.getNgayKetThuc(),vkmr.getGiaKM(),vkmr.getLoaiSanPham()))) {
+
+        if (kmrp.update(new KhuyenMai(vkmr.getId(), vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
             return true;
         } else {
             return false;
         }
     }
-    
-    
-    
+
 }

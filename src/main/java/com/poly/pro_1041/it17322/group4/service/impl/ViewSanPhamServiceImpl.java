@@ -40,7 +40,9 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
         }
         if (spMa != null) {
             return "Mã trùng";
+
         } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, ctsp.getHinh(), ctsp.getTrangThai()))) {
+
             return "Thành công";
         } else {
             return "Không thành công";
@@ -50,6 +52,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
     @Override
     public String update(ViewCTSPResponse ctsp, UUID id) {
         if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, ctsp.getHinh(), ctsp.getTrangThai()))) {
+
             return "Thành công";
         } else {
             return "Không thành công";
