@@ -39,6 +39,8 @@ public class ViewCTSPResponse {
     private String ngayNhap;
     private int soLuongTon;
     private BigDecimal gia;
+    private String hinh;
+    private int trangThai;
 
     public ViewCTSPResponse() {
     }
@@ -61,9 +63,11 @@ public class ViewCTSPResponse {
         this.ngayNhap = ctsp.getNgayNhap();
         this.soLuongTon = ctsp.getSoLuongTon();
         this.gia = ctsp.getGia();
+        this.hinh = ctsp.getHinh();
+        this.trangThai = ctsp.getTrangThai();
     }
 
-    public ViewCTSPResponse(String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia) {
+    public ViewCTSPResponse(String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String hinh, int trangThai) {
         this.ma = ma;
         this.sp = sp;
         this.hang = hang;
@@ -74,6 +78,8 @@ public class ViewCTSPResponse {
         this.ngayNhap = ngayNhap;
         this.soLuongTon = soLuongTon;
         this.gia = gia;
+        this.hinh = hinh;
+        this.trangThai = trangThai;
     }
 
     public Object[] toDataRow() {
