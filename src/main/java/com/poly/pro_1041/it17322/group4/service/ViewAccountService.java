@@ -19,4 +19,5 @@ public interface ViewAccountService {
 
     String update(ViewAccountReponse vaccr);
 
+    List<ViewAccountReponse> searchByName(List<ViewAccountReponse> lists, String hoTen);
 }
