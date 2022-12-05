@@ -66,6 +66,7 @@ public class ViewCTSPResponse {
         this.soLuongTon = ctsp.getSoLuongTon();
         this.gia = ctsp.getGia();
         this.km = ctsp.getKhuyenMai();
+        this.hinh = ctsp.getHinh();
     }
 
     public ViewCTSPResponse(UUID id, String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {

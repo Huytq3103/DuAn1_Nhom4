@@ -118,11 +118,9 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         } else if (!tienKhachDua.getText().trim().matches(regexInt) && !tienKhachDua.getText().trim().matches(regexInt)) {
             return "0";
         } else if (tienKhachDua.getText().trim().isEmpty()) {
-            tienKhachDua.setText("0");
-            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
+            return String.valueOf(Double.valueOf(0.0 + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien))));
         } else if (tienTaiKhoan.getText().trim().isEmpty()) {
-            tienTaiKhoan.setText("0");
-            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
+            return String.valueOf(Double.valueOf(tienKhachDua.getText()) + 0.0 - Double.valueOf(String.valueOf(tongTien)));
         } else {
             return String.valueOf(Double.valueOf(tienKhachDua.getText()) + Double.valueOf(tienTaiKhoan.getText()) - Double.valueOf(String.valueOf(tongTien)));
         }

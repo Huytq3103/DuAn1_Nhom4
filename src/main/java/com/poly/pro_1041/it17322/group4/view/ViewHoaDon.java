@@ -1675,6 +1675,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (tbHoaDon.getSelectedRow() > -1) {
             ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
+            vhdr.setNgayThanhToan(getDate());
             vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
             if (cbbModelKhachHang.getSelectedItem() != " ") {
                 UUID idKH = listKH.get(cbbKhachHang.getSelectedIndex()).getId();

@@ -67,7 +67,7 @@ public class HoaDonRepository {
 
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(hoadon);
             transaction.commit();

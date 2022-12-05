@@ -24,14 +24,14 @@ public class ThongKeRepository {
 
     public Integer getTongDonHang() {
         int i = 0;
-        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE IdTT = 1 OR IdTT = 3");
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE IdTT = 1 OR IdTT = 3 OR IdTT = 5");
         i = (Integer) query.getSingleResult();
         return i;
     }
 
     public Integer getHoaDonThanhCong() {
         int i = 0;
-        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE IdTT = 1");
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE IdTT = 1 OR IdTT = 5");
         i = (Integer) query.getSingleResult();
         return i;
     }
@@ -45,7 +45,7 @@ public class ThongKeRepository {
 
     public Integer getTongDonHang_Ngay(String ngay) {
         int i = 0;
-        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND IdTT = 1 OR IdTT = 3");
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND (IdTT = 1 OR IdTT = 5)");
         query.setParameter("ngay", ngay);
         i = (Integer) query.getSingleResult();
         return i;
@@ -53,7 +53,7 @@ public class ThongKeRepository {
 
     public Integer getDonHangThanhCong_Ngay(String ngay) {
         int i = 0;
-        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND IdTT = 1");
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND (IdTT = 1 OR IdTT = 5)");
         query.setParameter("ngay", ngay);
         i = (Integer) query.getSingleResult();
         return i;
@@ -68,28 +68,28 @@ public class ThongKeRepository {
     }
 
     public List<Integer> getNam() {
-        Query query = session.createNativeQuery("SELECT DISTINCT YEAR(NgayThanhToan) FROM HoaDon WHERE IdTT = 1 ORDER BY YEAR(NgayThanhToan) DESC");
+        Query query = session.createNativeQuery("SELECT DISTINCT YEAR(NgayThanhToan) FROM HoaDon WHERE (IdTT = 1 OR IdTT = 5) ORDER BY YEAR(NgayThanhToan) DESC");
         List<Integer> listNam = query.getResultList();
         return listNam;
     }
 
     public BigDecimal getTongDoanhThuThang() {
         BigDecimal i;
-        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(GETDATE()) AND YEAR(NgayThanhToan) = YEAR(GETDATE()) AND IdTT = 1");
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(GETDATE()) AND YEAR(NgayThanhToan) = YEAR(GETDATE()) AND (IdTT = 1 OR IdTT = 5)");
         i = (BigDecimal) query.getSingleResult();
         return i;
     }
 
     public BigDecimal getTongDoanhThuNam() {
         BigDecimal i;
-        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE YEAR(NgayThanhToan) = YEAR(GETDATE()) AND IdTT = 1");
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE YEAR(NgayThanhToan) = YEAR(GETDATE()) AND (IdTT = 1 OR IdTT = 5)");
         i = (BigDecimal) query.getSingleResult();
         return i;
     }
 
     public BigDecimal getTongDoanhThuNgay(String ngay) {
         BigDecimal i;
-        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE NgayThanhToan=:ngay AND IdTT = 1");
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) FROM HoaDon WHERE NgayThanhToan=:ngay AND (IdTT = 1 OR IdTT = 5)");
         query.setParameter("ngay", ngay);
         i = (BigDecimal) query.getSingleResult();
         return i;
@@ -102,14 +102,14 @@ public class ThongKeRepository {
     }
 
     public List<BigDecimal> getGiaBan(int nam) {
-        Query query = session.createNativeQuery("SELECT SUM(TongTien) AS Tong FROM HoaDon WHERE IdTT = 1 AND YEAR(NgayThanhToan)=:nam GROUP BY MONTH(NgayThanhToan) ORDER BY MONTH(NgayThanhToan) ASC");
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) AS Tong FROM HoaDon WHERE  YEAR(NgayThanhToan)=:nam  AND (IdTT = 1 OR IdTT = 5) GROUP BY MONTH(NgayThanhToan) ORDER BY MONTH(NgayThanhToan) ASC");
         query.setParameter("nam", nam);
         List<BigDecimal> lists = query.getResultList();
         return lists;
     }
 
     public List<Integer> getThang(int nam) {
-        Query query = session.createNativeQuery("SELECT MONTH(NgayThanhToan) AS Thang FROM HoaDon WHERE IdTT = 1 AND YEAR(NgayThanhToan)=:nam GROUP BY MONTH(NgayThanhToan) ORDER BY MONTH(NgayThanhToan) ASC");
+        Query query = session.createNativeQuery("SELECT MONTH(NgayThanhToan) AS Thang FROM HoaDon WHERE  YEAR(NgayThanhToan)=:nam AND (IdTT = 1 OR IdTT = 5) GROUP BY MONTH(NgayThanhToan) ORDER BY MONTH(NgayThanhToan) ASC");
         query.setParameter("nam", nam);
         List<Integer> lists = query.getResultList();
         return lists;
@@ -125,13 +125,13 @@ public class ThongKeRepository {
     }
 
     public List<BigDecimal> getGiaBan_Nam() {
-        Query query = session.createNativeQuery("SELECT SUM(TongTien) AS Tong FROM HoaDon WHERE IdTT = 1 GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) AS Tong FROM HoaDon WHERE (IdTT = 1 OR IdTT = 5) GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
         List<BigDecimal> lists = query.getResultList();
         return lists;
     }
 
     public List<Integer> getNam_2() {
-        Query query = session.createNativeQuery("SELECT YEAR(NgayThanhToan) FROM HoaDon WHERE IdTT = 1 GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
+        Query query = session.createNativeQuery("SELECT YEAR(NgayThanhToan) FROM HoaDon WHERE (IdTT = 1 OR IdTT = 5) GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
         List<Integer> lists = query.getResultList();
         return lists;
     }
