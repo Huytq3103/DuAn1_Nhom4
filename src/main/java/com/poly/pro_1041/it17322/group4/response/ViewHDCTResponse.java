@@ -60,6 +60,7 @@ public class ViewHDCTResponse {
         this.gia = gia;
     }
 
+
     public Object[] toDataRow() {
         return new Object[]{ten, mauSac, hang, kichCo, chatLieu, loai, soLuong, gia, soLuong * Double.valueOf(String.valueOf(gia))};
     }

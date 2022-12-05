@@ -33,4 +33,5 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen);
 
+    List<ViewKhachHangRepose> searchByPhone(List<ViewKhachHangRepose> lists, String sdt);
 }

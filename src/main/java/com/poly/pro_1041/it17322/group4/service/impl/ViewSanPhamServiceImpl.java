@@ -5,7 +5,9 @@
 package com.poly.pro_1041.it17322.group4.service.impl;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
 import com.poly.pro_1041.it17322.group4.repository.ChiTietSanPhamRepository;
+import com.poly.pro_1041.it17322.group4.repository.HoaDonChiTietRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewSanPhamService;
 import java.math.BigDecimal;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class ViewSanPhamServiceImpl implements ViewSanPhamService {
 
     private ChiTietSanPhamRepository chiTietSanPhamRepository = new ChiTietSanPhamRepository();
+    private HoaDonChiTietRepository hdctr = new HoaDonChiTietRepository();
 
     @Override
     public List<ViewCTSPResponse> getAllSP() {
@@ -40,7 +43,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
         }
         if (spMa != null) {
             return "Mã trùng";
-        } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null,0))) {
+        } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null, 0))) {
             return "Thành công";
         } else {
             return "Không thành công";
@@ -49,7 +52,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
 
     @Override
     public String update(ViewCTSPResponse ctsp, UUID id) {
-        if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null,0))) {
+        if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getSp(), ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null, 0))) {
             return "Thành công";
         } else {
             return "Không thành công";
@@ -72,4 +75,27 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
         return list;
     }
 
+    @Override
+    public boolean updateSoLuongTonKhiThem(ViewCTSPResponse vctsp) {
+        boolean check = true;
+        HoaDonChiTiet hdct = hdctr.getOneUpdateHoaDon(vctsp.getId());
+        int soLuongMoi = hdct.getSoLuong() - vctsp.getSoLuongTon();
+        hdct.setSoLuong(soLuongMoi);
+        if (hdctr.updateTableHD(hdct)) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
+    }
+
+    @Override
+    public boolean checkSoLuongGioHangVoiSoLuongSP(ViewCTSPResponse vctspr) {
+        boolean check = true;
+        int soluong = hdctr.getOne(vctspr.getId()).getSoLuong();
+        if(vctspr.getSoLuongTon()<soluong){
+            check = false;
+        }
+        return true;
+    }
 }

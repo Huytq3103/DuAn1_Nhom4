@@ -43,7 +43,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private HoaDon hd = new HoaDon();
     private ViewHoaDonServiceImpl hdService = new ViewHoaDonServiceImpl();
     private List<ViewHoaDonResponse> listHD = new ArrayList<>();
-    
+
     public ViewKhachHang(Account a) {
         initComponents();
         this.account = a;
@@ -53,14 +53,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
         listKH = khService.getAll();
         showDetail(listKH);
     }
-    
+
     private void showDetail(List<ViewKhachHangRepose> lists) {
         dtm.setRowCount(0);
         for (ViewKhachHangRepose viewKH : lists) {
             dtm.addRow(viewKH.toDataRow());
         }
     }
-    
+
     private void clearForm() {
         txtTenKhachHang.setText("");
         txtNgaySinh.setText("");
@@ -77,7 +77,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         labelNCS.setText("");
         labelNguoiTao.setText("");
     }
-    
+
     private void fillIndex() {
         ViewKhachHangRepose kh = listKH.get(index);
         txtTenKhachHang.setText(kh.getHoTen());
@@ -150,6 +150,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
         btnVe = new javax.swing.JButton();
         btnTien = new javax.swing.JButton();
         btnCuoi = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtTimKiem = new javax.swing.JTextField();
+        btnTimKiem = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbHoaDon = new javax.swing.JTable();
@@ -400,23 +403,54 @@ public class ViewKhachHang extends javax.swing.JPanel {
         });
         jPanel3.add(btnCuoi);
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("Tìm kiếm");
+
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1027, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(267, 267, 267))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1027, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -583,7 +617,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, add);
             listKH = khService.getAll();
             showDetail(listKH);
-            
+
         }
     }//GEN-LAST:event_btnThemActionPerformed
     private String getDate() {
@@ -612,12 +646,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void btnDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDauActionPerformed
         // TODO add your handling code here:
-        try {
-            index = 0;
-            fillIndex();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Đang ở đầu rồi");
-        }
+        index = 0;
+        fillIndex();
+        JOptionPane.showMessageDialog(this, "Đang ở đầu rồi");
     }//GEN-LAST:event_btnDauActionPerformed
 
     private void btnVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVeActionPerformed
@@ -632,12 +663,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
         // TODO add your handling code here:
-        try {
-            index = listKH.size() - 1;
-            fillIndex();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Đang ở cuối rồi");
-        }
+        index = listKH.size() - 1;
+        fillIndex();
+        JOptionPane.showMessageDialog(this, "Đang ở cuối rồi");
     }//GEN-LAST:event_btnCuoiActionPerformed
 
     private void tbHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiMouseClicked
@@ -659,6 +687,20 @@ public class ViewKhachHang extends javax.swing.JPanel {
         System.out.println(listHD);
     }//GEN-LAST:event_tbHienThiMouseClicked
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        String sdt = txtTimKiem.getText();
+        List<ViewKhachHangRepose> listSearch = khService.searchByPhone(listKH, sdt);
+        showDetail(listSearch);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        String search = txtTimKiem.getText();
+        List<ViewKhachHangRepose> listSearch = khService.searchByName(listKH, search);
+        showDetail(listSearch);
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCuoi;
@@ -667,10 +709,12 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTien;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnVe;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -705,5 +749,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTenKhachHang;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }
