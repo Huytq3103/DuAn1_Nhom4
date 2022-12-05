@@ -22,7 +22,6 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         initComponents();
         viewQuenMatKhauService = new ViewQuenMatKhauServiceImpl();
         setLocationRelativeTo(null);
-//        initMoving(this);
         hide();
     }
 
@@ -218,27 +217,29 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
     private void btnOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOTPActionPerformed
         String otp = txtMaXacNhan.getText();
         if (otp.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã OTP đã gửi về email!");
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã OTP được gửi về email!");
         } else if (Integer.parseInt(otp) != randomCode) {
             JOptionPane.showMessageDialog(this, "Mã OTP không đúng!");
         } else {
             txtMatKhau.setEnabled(true);
             txtXacNhanMatKhau.setEnabled(true);
-            String email = txtEmail.getText();
-            Account acc = viewQuenMatKhauService.checkEmail(email);
-            acc.setPassword(otp);
+            btnXacNhan.setEnabled(true);
         }
     }//GEN-LAST:event_btnOTPActionPerformed
 
     private void btnEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmailActionPerformed
         String email = txtEmail.getText();
-        if (email.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập email tài khoản!");
-        } else if (viewQuenMatKhauService.checkEmail(email) == null) {
-            JOptionPane.showMessageDialog(this, "Mã email không tồn tại!");
-        } else {
-            sendCode();
-            txtMaXacNhan.setEnabled(true);
+
+        try {
+            if (email.trim().isEmpty() || viewQuenMatKhauService.checkEmail(email) == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập email tài khoản!");
+            } else {
+                sendCode();
+                txtMaXacNhan.setEnabled(true);
+                btnOTP.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Email không tồn tại!");
         }
     }//GEN-LAST:event_btnEmailActionPerformed
 
@@ -262,41 +263,25 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         txtEmail.setText("");
     }//GEN-LAST:event_txtEmailFocusGained
 
-//    public void initMoving(JFrame frame) {
-//        jPanel1.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                x = e.getX();
-//                y = e.getY();
-//            }
-//
-//        });
-//        jPanel1.addMouseMotionListener(new MouseMotionAdapter() {
-//            @Override
-//            public void mouseDragged(MouseEvent e) {
-//                frame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
-//            }
-//        });
-//    }
     private void doiMK() {
         String mkMoi = txtMatKhau.getText();
         String xnMK = txtXacNhanMatKhau.getText();
         if (mkMoi.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu mới!");
-        }
-        if (xnMK.trim().isEmpty()) {
+        } else if (xnMK.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng xác nhận lại mật khẩu!");
-        }
-        if (!mkMoi.equalsIgnoreCase(xnMK)) {
+        } else if (!mkMoi.equalsIgnoreCase(xnMK)) {
             JOptionPane.showMessageDialog(this, "Mật khẩu không trùng khớp!");
+        } else {
+            Account acc = viewQuenMatKhauService.checkEmail(txtEmail.getText());
+            acc.setPassword(mkMoi);
+            viewQuenMatKhauService.update(acc);
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
+            ViewLogin login = new ViewLogin();
+            login.setVisible(true);
+            this.dispose();
+            new ViewLogin().setVisible(true);
         }
-        Account acc = viewQuenMatKhauService.checkEmail(txtEmail.getText());
-        acc.setPassword(mkMoi);
-        viewQuenMatKhauService.update(acc);
-        JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
-        ViewLogin login = new ViewLogin();
-        login.setVisible(true);
-        this.dispose();
     }
 
     private void sendCode() {
@@ -311,8 +296,10 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
 
     public void hide() {
         txtMaXacNhan.setEnabled(false);
+        btnOTP.setEnabled(false);
         txtMatKhau.setEnabled(false);
         txtXacNhanMatKhau.setEnabled(false);
+        btnXacNhan.setEnabled(false);
     }
 
     public static void main(String args[]) {
