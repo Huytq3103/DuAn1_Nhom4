@@ -5,8 +5,11 @@
 package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
+import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
+import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewThongKeResponse;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -24,7 +27,6 @@ public class ThongKeRepository {
         Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE IdTT = 1 OR IdTT = 3");
         i = (Integer) query.getSingleResult();
         return i;
-
     }
 
     public Integer getHoaDonThanhCong() {
@@ -41,8 +43,32 @@ public class ThongKeRepository {
         return i;
     }
 
+    public Integer getTongDonHang_Ngay(String ngay) {
+        int i = 0;
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND IdTT = 1 OR IdTT = 3");
+        query.setParameter("ngay", ngay);
+        i = (Integer) query.getSingleResult();
+        return i;
+    }
+
+    public Integer getDonHangThanhCong_Ngay(String ngay) {
+        int i = 0;
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayThanhToan=:ngay AND IdTT = 1");
+        query.setParameter("ngay", ngay);
+        i = (Integer) query.getSingleResult();
+        return i;
+    }
+
+    public Integer getDonHangBiHuy_Ngay(String ngay) {
+        int i = 0;
+        Query query = session.createNativeQuery("SELECT COUNT(id) FROM HoaDon WHERE NgayTao=:ngay AND IdTT = 3");
+        query.setParameter("ngay", ngay);
+        i = (Integer) query.getSingleResult();
+        return i;
+    }
+
     public List<Integer> getNam() {
-        Query query = session.createNativeQuery("SELECT DISTINCT YEAR(NgayThanhToan) FROM HoaDon ORDER BY YEAR(NgayThanhToan) DESC");
+        Query query = session.createNativeQuery("SELECT DISTINCT YEAR(NgayThanhToan) FROM HoaDon WHERE IdTT = 1 ORDER BY YEAR(NgayThanhToan) DESC");
         List<Integer> listNam = query.getResultList();
         return listNam;
     }
@@ -98,8 +124,15 @@ public class ThongKeRepository {
         return i;
     }
 
-    public static void main(String[] args) {
-        ThongKeRepository tkr = new ThongKeRepository();
-        System.out.println(tkr.getTongDoanhThuNgay2("2022-11-12", "2022-11-26"));
+    public List<BigDecimal> getGiaBan_Nam() {
+        Query query = session.createNativeQuery("SELECT SUM(TongTien) AS Tong FROM HoaDon WHERE IdTT = 1 GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
+        List<BigDecimal> lists = query.getResultList();
+        return lists;
+    }
+
+    public List<Integer> getNam_2() {
+        Query query = session.createNativeQuery("SELECT YEAR(NgayThanhToan) FROM HoaDon WHERE IdTT = 1 GROUP BY YEAR(NgayThanhToan) ORDER BY YEAR(NgayThanhToan) ASC");
+        List<Integer> lists = query.getResultList();
+        return lists;
     }
 }

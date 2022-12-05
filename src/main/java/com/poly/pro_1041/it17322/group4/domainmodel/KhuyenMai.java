@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.domainmodel;
 
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;

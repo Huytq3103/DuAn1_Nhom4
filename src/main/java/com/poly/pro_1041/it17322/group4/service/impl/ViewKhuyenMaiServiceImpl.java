@@ -80,6 +80,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public String addKhuyenMai(ViewKhuyenMaiResponse vkmr) {
+
         if (kmrp.add(new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
             return "Add thành công";
         } else {
@@ -90,6 +91,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     @Override
     public boolean deleteKhuyenMai(ViewKhuyenMaiResponse vkmr) {
         UUID id = vkmr.getId();
+
         KhuyenMai km = new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM());
         km.setId(id);
         if (kmrp.delete(km)) {
@@ -103,7 +105,38 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     @Override
     public boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr) {
 
+
         if (kmrp.update(new KhuyenMai(vkmr.getId(), vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public List<ViewKhuyenMaiResponse> getOneMaKM(String maKM) {
+        return (List<ViewKhuyenMaiResponse>) kmrp.getOneMaKM(maKM);
+    }
+
+    @Override
+    public List<ViewKhuyenMaiResponse> Search(String loaiKM) {
+        List<ViewKhuyenMaiResponse> lkm = new ArrayList<>();
+        List<KhuyenMai> loaikm = new ArrayList<>();
+        KhuyenMaiRepository khuyenMaiRepo = new KhuyenMaiRepository();
+        for (KhuyenMai x : khuyenMaiRepo.getAll()) {
+            if (x.getLoaiKM().getTen().toLowerCase().contains(loaiKM.toLowerCase())) {
+                lkm.add(new ViewKhuyenMaiResponse(x.getId(), x.getTrangThaiKM(), x.getLoaiKM(), x.getMa(), x.getTen(), x.getNgayBatDau(), x.getNgayKetThuc(), x.getGiaKM()));
+                System.out.println(lkm + "ádsd");
+            }
+        }
+        return lkm;
+    }
+
+    @Override
+    public boolean updateCTSP(ViewCTSPResponse ctspr) {
+        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(),ctspr.getSp(),ctspr.getMauSac(),ctspr.getHang(), ctspr.getKichCo(),ctspr.getChatLieu(),ctspr.getLoai(),ctspr.getKm(),ctspr.getMa(),ctspr.getSoLuongTon(),ctspr.getGia(),ctspr.getNgayNhap(),null,ctspr.getHinh(),ctspr.getTrangThai()))) {
             return true;
         } else {
             return false;

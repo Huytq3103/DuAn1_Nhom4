@@ -47,6 +47,7 @@ public class AccountRepository {
         Account acc = (Account) query.getSingleResult();
         return acc;
     }
+
     public Account getOneNguoiTao(String id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + " WHERE id=:id";
@@ -54,12 +55,11 @@ public class AccountRepository {
         query.setParameter("id", UUID.fromString(id));
         Account account = (Account) query.getSingleResult();
         return account;
-
     }
 
     public Boolean add(Account acc) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(acc);
             transaction.commit();

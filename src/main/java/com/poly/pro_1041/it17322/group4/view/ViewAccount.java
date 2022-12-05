@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.config.EmailSender;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChucVuAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiAccount;
@@ -13,9 +14,12 @@ import com.poly.pro_1041.it17322.group4.service.impl.ViewAccountServiceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.bytebuddy.utility.RandomString;
 
 /**
  *
@@ -31,6 +35,7 @@ public class ViewAccount extends javax.swing.JPanel {
     private List<ViewAccountReponse> listVAcc = new ArrayList<>();
     private Account account = new Account();
     int index;
+    private String randomPass;
 
     public ViewAccount(Account account) {
         this.account = account;
@@ -107,6 +112,10 @@ public class ViewAccount extends javax.swing.JPanel {
         btnLamMoi = new javax.swing.JButton();
         btnNghi = new javax.swing.JButton();
         btnHienThi = new javax.swing.JButton();
+        btnDau = new javax.swing.JButton();
+        btnTruoc = new javax.swing.JButton();
+        btnSau = new javax.swing.JButton();
+        btnCuoi = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1074, 624));
@@ -135,7 +144,7 @@ public class ViewAccount extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblNhanVien);
 
-        jTextField1.setText("Search");
+        jTextField1.setText("Search...");
 
         btnTimKiem.setText("Tìm kiếm");
 
@@ -351,6 +360,34 @@ public class ViewAccount extends javax.swing.JPanel {
             }
         });
 
+        btnDau.setText("|<");
+        btnDau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDauActionPerformed(evt);
+            }
+        });
+
+        btnTruoc.setText("<<");
+        btnTruoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTruocActionPerformed(evt);
+            }
+        });
+
+        btnSau.setText(">>");
+        btnSau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSauActionPerformed(evt);
+            }
+        });
+
+        btnCuoi.setText(">|");
+        btnCuoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuoiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -375,18 +412,36 @@ public class ViewAccount extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnHienThi)
                 .addGap(88, 88, 88))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDau)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnTruoc, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSau)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCuoi)
+                .addGap(350, 350, 350))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnLamMoi, btnNghi, btnSua, btnThem});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCuoi, btnDau, btnSau, btnTruoc});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTruoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCuoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNghi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -396,35 +451,13 @@ public class ViewAccount extends javax.swing.JPanel {
                 .addGap(14, 14, 14))
         );
 
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCuoi, btnDau, btnSau, btnTruoc});
+
         jPanel3.getAccessibleContext().setAccessibleName("Quản lí nhân viên");
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
-        index = tblNhanVien.getSelectedRow();
-        if (index == -1) {
-            return;
-        }
-        ViewAccountReponse var = listVAcc.get(tblNhanVien.getSelectedRow());
-
-        lblMa.setText(listVAcc.get(index).getId().toString());
-        txtTen.setText(tblNhanVien.getValueAt(index, 1).toString());
-        txtNgaySinh.setText(tblNhanVien.getValueAt(index, 2).toString());
-        txtSdt.setText(tblNhanVien.getValueAt(index, 3).toString());
-        txtEmail.setText(tblNhanVien.getValueAt(index, 4).toString());
-        txtNgayTao.setText(tblNhanVien.getValueAt(index, 5).toString());
-        txtDiaChi.setText(tblNhanVien.getValueAt(index, 6).toString());
-        cboChucVu.setSelectedItem(tblNhanVien.getValueAt(index, 7).toString());
-        if (var.getTta().getId() == 1) {
-            rdoDangLam.setSelected(true);
-        } else {
-            rdoNghi.setSelected(true);
-        }
-
-        if (tblNhanVien.getValueAt(index, 8).toString().equalsIgnoreCase("Nam")) {
-            rdoNam.setSelected(true);
-        } else {
-            rdoNu.setSelected(true);
-        }
+        fillLenForm();
 
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
@@ -440,6 +473,20 @@ public class ViewAccount extends javax.swing.JPanel {
         index = -1;
     }
 
+    private void sendPass() {
+//        Random rand = new Random();
+//        randomPass = rand.nextInt(99999);
+
+        RandomString randomStr = new RandomString(6, ThreadLocalRandom.current());
+        randomPass = randomStr.nextString();
+        String message = "Your password is: " + randomPass;
+        EmailSender sendpass = new EmailSender();
+        String email = txtEmail.getText();
+        sendpass.emailSender(email, "Shelby Company Password", message);
+        JOptionPane.showMessageDialog(this, "Mật khẩu đã dc gửi đến email");
+
+    }
+
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         clearForm();
         listVAcc = vaccsv.getAll();
@@ -452,12 +499,27 @@ public class ViewAccount extends javax.swing.JPanel {
         if (viewacc == null) {
             return;
         }
+        boolean isTrangThai = rdoDangLam.isSelected();
+        int trangThai1;
+        if (isTrangThai) {
+            trangThai1 = 1;
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhân viên mới phải trạng thái đang làm");
+            return;
+        }
+
+        for (ViewAccountReponse x : listVAcc) {
+            if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email đã tồn tại");
+                return;
+            }
+        }
         viewacc.setNguoiTao(account.getId());
         String add = vaccsv.add(viewacc);
         JOptionPane.showMessageDialog(this, add);
         listVAcc = vaccsv.getAll();
         fillToTable(listVAcc);
-
+        sendPass();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -513,14 +575,62 @@ public class ViewAccount extends javax.swing.JPanel {
         fillToTableNhanVienAn(listVAcc);
     }//GEN-LAST:event_btnHienThiActionPerformed
 
+    private void btnDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDauActionPerformed
+        try {
+            index = 0;
+            tblNhanVien.setRowSelectionInterval(index, index);
+            fillLenForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi di chuyển");
+        }
+    }//GEN-LAST:event_btnDauActionPerformed
+
+    private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
+        try {
+            index = listVAcc.size() - 1;
+            tblNhanVien.setRowSelectionInterval(index, index);
+            fillLenForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi di chuyển");
+        }
+    }//GEN-LAST:event_btnCuoiActionPerformed
+
+    private void btnTruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTruocActionPerformed
+        try {
+            if (index > 0) {
+                index--;
+            }
+            tblNhanVien.setRowSelectionInterval(index, index);
+            fillLenForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không di chuyển đc");
+        }
+    }//GEN-LAST:event_btnTruocActionPerformed
+
+    private void btnSauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSauActionPerformed
+        try {
+            if (index < listVAcc.size() - 1) {
+                index++;
+            }
+            tblNhanVien.setRowSelectionInterval(index, index);
+            fillLenForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không di chuyển đc");
+        }
+    }//GEN-LAST:event_btnSauActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCuoi;
+    private javax.swing.JButton btnDau;
     private javax.swing.JButton btnHienThi;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnNghi;
+    private javax.swing.JButton btnSau;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimKiem;
+    private javax.swing.JButton btnTruoc;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cboChucVu;
@@ -599,7 +709,7 @@ public class ViewAccount extends javax.swing.JPanel {
         }
 
         String username = email;
-        String password = "12345678";
+        String password = String.valueOf(randomPass);
 
         int chucVu = cboChucVu.getSelectedIndex() + 1;
         ChucVuAccount cvuacc = new ChucVuAccount(chucVu, null, null);
@@ -607,6 +717,35 @@ public class ViewAccount extends javax.swing.JPanel {
 
         ViewAccountReponse viewacc = new ViewAccountReponse(cvuacc, ttacc, hoTen, ngaySinh, gioiTinh, sdt, diaChi, email, username, password, ngayTao, ngaySinh);
         return viewacc;
+    }
+
+    private void fillLenForm() {
+        index = tblNhanVien.getSelectedRow();
+        if (index == -1) {
+            return;
+        }
+        ViewAccountReponse var = listVAcc.get(tblNhanVien.getSelectedRow());
+
+        lblMa.setText(listVAcc.get(index).getId().toString());
+        txtTen.setText(tblNhanVien.getValueAt(index, 1).toString());
+        txtNgaySinh.setText(tblNhanVien.getValueAt(index, 2).toString());
+        txtSdt.setText(tblNhanVien.getValueAt(index, 3).toString());
+        txtEmail.setText(tblNhanVien.getValueAt(index, 4).toString());
+        txtNgayTao.setText(tblNhanVien.getValueAt(index, 5).toString());
+        txtDiaChi.setText(tblNhanVien.getValueAt(index, 6).toString());
+        cboChucVu.setSelectedItem(tblNhanVien.getValueAt(index, 7).toString());
+        if (var.getTta().getId() == 1) {
+            rdoDangLam.setSelected(true);
+        } else {
+            rdoNghi.setSelected(true);
+        }
+
+        if (tblNhanVien.getValueAt(index, 8).toString().equalsIgnoreCase("Nam")) {
+            rdoNam.setSelected(true);
+        } else {
+            rdoNu.setSelected(true);
+        }
+        tblNhanVien.setRowSelectionInterval(index, index);
     }
 
 }
