@@ -46,7 +46,7 @@ public class AccountRepository {
         query.setParameter("Email", email);
         Account acc = (Account) query.getSingleResult();
         return acc;
-
+    }
     public Account getOneNguoiTao(String id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + " WHERE id=:id";

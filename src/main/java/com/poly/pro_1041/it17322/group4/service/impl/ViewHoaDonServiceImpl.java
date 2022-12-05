@@ -96,6 +96,15 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewHoaDonResponse getOneHDByMa(String ma) {
         return new ViewHoaDonResponse(hdr.getOne(ma));
     }
+    
+    @Override
+    public List<ViewHoaDonResponse> getList(int idTT) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getList(idTT)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
 
     @Override
     public List<TrangThaiOrder> getAllTTO() {
