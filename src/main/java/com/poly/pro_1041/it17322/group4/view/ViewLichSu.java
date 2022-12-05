@@ -1,12 +1,16 @@
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewHoaDonService;
+import com.poly.pro_1041.it17322.group4.service.ViewTTOrder;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
+import com.poly.pro_1041.it17322.group4.service.impl.ViewTTOrderImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 
@@ -20,26 +24,37 @@ public class ViewLichSu extends javax.swing.JPanel {
     private DefaultTableModel dtmSP;
     private List<ViewHoaDonResponse> listHoaDon;
     private List<ViewHDCTResponse> listSanPham;
+    private List<TrangThaiOrder> listTTO;
+    private ViewTTOrder viewTTOrder;
     private ViewHoaDonService viewHoaDonService;
+    private DefaultComboBoxModel dcbm;
 
     public ViewLichSu() {
         initComponents();
         tbDSHD.setModel(dtmHD = new DefaultTableModel());
         tbDSSP.setModel(dtmSP = new DefaultTableModel());
+        cbbTTO.setModel(dcbm = new DefaultComboBoxModel());
 
         listHoaDon = new ArrayList<>();
         listSanPham = new ArrayList<>();
+        listTTO = new ArrayList<>();
         viewHoaDonService = new ViewHoaDonServiceImpl();
+        viewTTOrder = new ViewTTOrderImpl();
 
-        String[] headerHD = {"STT", "Tên NV", "Tên KH","Tên hóa đơn", "Trạng thái",
+        String[] headerHD = {"STT", "Tên NV", "Tên KH", "Tên hóa đơn", "Trạng thái",
             "Ngày tạo", "Ngày thanh toán", "Tổng tiền"};
         dtmHD.setColumnIdentifiers(headerHD);
         String[] headerSP = {"Tên sản phẩm", "Màu sắc", "Hãng",
             "Kích cỡ", "Chất liệu", "Loại", "Số lượng", "Giá"};
         dtmSP.setColumnIdentifiers(headerSP);
 
+        listTTO = viewTTOrder.getAll();
         listHoaDon = viewHoaDonService.getAllHD();
         showDataHD(listHoaDon);
+
+        for (TrangThaiOrder tto : listTTO) {
+            dcbm.addElement(tto.getTen());
+        }
     }
 
     public void showDataHD(List<ViewHoaDonResponse> list) {
@@ -87,7 +102,7 @@ public class ViewLichSu extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDSHD = new javax.swing.JTable();
-        txtSearch = new javax.swing.JTextField();
+        cbbTTO = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -140,21 +155,16 @@ public class ViewLichSu extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbDSHD);
 
-        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        txtSearch.setText("Tên nhân viên");
-        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearchFocusGained(evt);
-            }
-        });
-        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchKeyReleased(evt);
+        cbbTTO.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbbTTO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbTTO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbTTOActionPerformed(evt);
             }
         });
 
-        jLabel1.setIcon(new ImageIcon
-            ("src/main/icon/Search.png"));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel1.setText("Trạng thái:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,22 +174,22 @@ public class ViewLichSu extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -323,30 +333,30 @@ public class ViewLichSu extends javax.swing.JPanel {
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTenNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTenNV, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTenKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTenKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addComponent(jLabel9)
@@ -361,16 +371,16 @@ public class ViewLichSu extends javax.swing.JPanel {
         fillData(index);
     }//GEN-LAST:event_tbDSHDMouseClicked
 
-    private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        txtSearch.setText("");
-    }//GEN-LAST:event_txtSearchFocusGained
-
-    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-
-    }//GEN-LAST:event_txtSearchKeyReleased
+    private void cbbTTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTTOActionPerformed
+        String tto = (String) cbbTTO.getSelectedItem();
+        int idTT = viewTTOrder.getID(tto).getId();
+        listHoaDon = viewHoaDonService.getList(idTT);
+        showDataHD(listHoaDon);
+    }//GEN-LAST:event_cbbTTOActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbbTTO;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -396,6 +406,5 @@ public class ViewLichSu extends javax.swing.JPanel {
     private javax.swing.JTable tbDSHD;
     private javax.swing.JTable tbDSSP;
     private javax.swing.JTextArea txtLyDoHuy;
-    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

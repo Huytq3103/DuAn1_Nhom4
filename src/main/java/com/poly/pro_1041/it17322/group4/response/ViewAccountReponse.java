@@ -74,6 +74,6 @@ public class ViewAccountReponse {
     }
 
     public Object[] toDataRow(int i) {
-        return new Object[]{i, hoTen, ngaySinh, sdt, email, ngayTao, diaChi, cvac.getTen(), gioiTinh == true ? "Nam" : "Nữ", tta.getId()};
+        return new Object[]{i, hoTen, ngaySinh, sdt, email, ngayTao, diaChi, cvac.getTen(), gioiTinh == true ? "Nam" : "Nữ", tta.getId() == 1 ? "Đang làm" : "Nghỉ"};
     }
 }

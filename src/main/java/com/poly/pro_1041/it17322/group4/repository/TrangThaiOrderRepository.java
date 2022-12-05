@@ -29,6 +29,14 @@ public class TrangThaiOrderRepository {
         TrangThaiOrder trangThaiOrder = (TrangThaiOrder) query.getSingleResult();
         return trangThaiOrder;
     }
+    
+    public TrangThaiOrder getID(String ten) {
+        String sql = fromTable + " WHERE Ten =: Ten";
+        Query query = session.createQuery(sql, TrangThaiOrder.class);
+        query.setParameter("Ten", ten);
+        TrangThaiOrder trangThaiOrder = (TrangThaiOrder) query.getSingleResult();
+        return trangThaiOrder;
+    }
 
     public Boolean add(TrangThaiOrder trangThaiOrder) {
         Transaction transaction = null;

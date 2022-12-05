@@ -36,7 +36,7 @@ public class ViewAccount extends javax.swing.JPanel {
     private Account account = new Account();
     int index;
     private String randomPass;
-
+    
     public ViewAccount(Account account) {
         this.account = account;
         initComponents();
@@ -45,9 +45,9 @@ public class ViewAccount extends javax.swing.JPanel {
         model.setColumnIdentifiers(header);
         listVAcc = vaccsv.getAll();
         fillToTable(listVAcc);
-
+        
     }
-
+    
     private void fillToTable(List<ViewAccountReponse> list) {
         model.setRowCount(0);
         int i = 1;
@@ -56,7 +56,7 @@ public class ViewAccount extends javax.swing.JPanel {
             i++;
         }
     }
-
+    
     private void fillToTableNhanVienAn(List<ViewAccountReponse> list) {
         model.setRowCount(0);
         int i = 1;
@@ -82,7 +82,7 @@ public class ViewAccount extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -144,9 +144,18 @@ public class ViewAccount extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblNhanVien);
 
-        jTextField1.setText("Search...");
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,7 +166,7 @@ public class ViewAccount extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
@@ -166,13 +175,13 @@ public class ViewAccount extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiem))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnTimKiem, jTextField1});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnTimKiem, txtTimKiem});
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Quản lí nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -211,7 +220,7 @@ public class ViewAccount extends javax.swing.JPanel {
         buttonGroup2.add(rdoNghi);
         rdoNghi.setText("Nghỉ");
 
-        cboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "C", "NV" }));
+        cboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chủ", "Nhân Viên" }));
 
         lblMa.setText("-");
 
@@ -460,7 +469,7 @@ public class ViewAccount extends javax.swing.JPanel {
         fillLenForm();
 
     }//GEN-LAST:event_tblNhanVienMouseClicked
-
+    
     private void clearForm() {
         lblMa.setText(null);
         txtTen.setText(null);
@@ -470,21 +479,20 @@ public class ViewAccount extends javax.swing.JPanel {
         txtNgayTao.setText(null);
         txtDiaChi.setText(null);
         cboChucVu.setSelectedIndex(0);
+        txtTimKiem.setText(null);
         index = -1;
     }
-
-    private void sendPass() {
+    
+    private void sendPass(String pass) {
 //        Random rand = new Random();
 //        randomPass = rand.nextInt(99999);
 
-        RandomString randomStr = new RandomString(6, ThreadLocalRandom.current());
-        randomPass = randomStr.nextString();
-        String message = "Your password is: " + randomPass;
+        String message = "Your password is: " + pass;
         EmailSender sendpass = new EmailSender();
         String email = txtEmail.getText();
         sendpass.emailSender(email, "Shelby Company Password", message);
         JOptionPane.showMessageDialog(this, "Mật khẩu đã dc gửi đến email");
-
+        
     }
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -495,7 +503,8 @@ public class ViewAccount extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         ViewAccountReponse viewacc = getFormData();
-
+        RandomString randomStr = new RandomString(9, ThreadLocalRandom.current());
+        randomPass = randomStr.nextString();
         if (viewacc == null) {
             return;
         }
@@ -507,29 +516,30 @@ public class ViewAccount extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Nhân viên mới phải trạng thái đang làm");
             return;
         }
-
+        
         for (ViewAccountReponse x : listVAcc) {
             if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
                 JOptionPane.showMessageDialog(this, "Email đã tồn tại");
                 return;
             }
         }
+        viewacc.setPassword(randomPass);
         viewacc.setNguoiTao(account.getId());
         String add = vaccsv.add(viewacc);
         JOptionPane.showMessageDialog(this, add);
         listVAcc = vaccsv.getAll();
         fillToTable(listVAcc);
-        sendPass();
+        sendPass(randomPass);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         index = tblNhanVien.getSelectedRow();
-
+        
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
         }
-
+        
         ViewAccountReponse viewacc = getFormData();
         ViewAccountReponse var = listVAcc.get(index);
         viewacc.setId(var.getId());
@@ -537,7 +547,7 @@ public class ViewAccount extends javax.swing.JPanel {
         viewacc.setNgayTao(var.getNgayTao());
         viewacc.setNguoiTao(var.getNguoiTao());
         viewacc.setNguoiChinhSua(account.getId());
-
+        
         String update = vaccsv.update(viewacc);
         JOptionPane.showMessageDialog(this, update);
         listVAcc = vaccsv.getAll();
@@ -547,7 +557,7 @@ public class ViewAccount extends javax.swing.JPanel {
 
     private void btnNghiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNghiActionPerformed
         index = tblNhanVien.getSelectedRow();
-
+        
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Chọn nhân viên cho nghỉ!");
             return;
@@ -561,7 +571,7 @@ public class ViewAccount extends javax.swing.JPanel {
         ViewAccountReponse viewacc = getFormData();
         UUID id = listVAcc.get(index).getId();
         viewacc.setId(id);
-
+        
         String update = vaccsv.update(viewacc);
         JOptionPane.showMessageDialog(this, "Đã nghỉ!");
         listVAcc = vaccsv.getAll();
@@ -619,6 +629,18 @@ public class ViewAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSauActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String search = txtTimKiem.getText();
+        List<ViewAccountReponse> listSearch = vaccsv.searchByName(listVAcc, search);
+        fillToTable(listSearch);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        String search = txtTimKiem.getText();
+        List<ViewAccountReponse> listSearch = vaccsv.searchByName(listVAcc, search);
+        fillToTable(listSearch);
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCuoi;
@@ -647,7 +669,6 @@ public class ViewAccount extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblMa;
     private javax.swing.JRadioButton rdoDangLam;
     private javax.swing.JRadioButton rdoNam;
@@ -660,6 +681,7 @@ public class ViewAccount extends javax.swing.JPanel {
     private javax.swing.JTextField txtNgayTao;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtTen;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
     private ViewAccountReponse getFormData() {
@@ -669,6 +691,8 @@ public class ViewAccount extends javax.swing.JPanel {
         String sdt = txtSdt.getText();
         String email = txtEmail.getText();
         String diaChi = txtDiaChi.getText();
+        String username = email;
+        String password = String.valueOf(randomPass);
         Date d = new Date();
         int day = d.getDate();
         int month = d.getMonth() + 1;
@@ -679,19 +703,19 @@ public class ViewAccount extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không được để trống!");
             return null;
         }
-
+        
         String patternsdt = "0\\d{9,10}";
         if (!this.txtSdt.getText().matches(patternsdt)) {
             JOptionPane.showMessageDialog(this, "SDT không đúng định dạng!");
             return null;
         }
-
+        
         String dangEmail = "\\w+@\\w+\\.\\w+";
         if (!email.matches(dangEmail)) {
             JOptionPane.showMessageDialog(this, "Email không đúng định dạng!");
             return null;
         }
-
+        
         boolean isGioiTinh = rdoNam.isSelected();
         boolean gioiTinh;
         if (isGioiTinh) {
@@ -699,7 +723,7 @@ public class ViewAccount extends javax.swing.JPanel {
         } else {
             gioiTinh = false;
         }
-
+        
         boolean isTrangThai = rdoDangLam.isSelected();
         int trangThai1;
         if (isTrangThai) {
@@ -707,25 +731,22 @@ public class ViewAccount extends javax.swing.JPanel {
         } else {
             trangThai1 = 2;
         }
-
-        String username = email;
-        String password = String.valueOf(randomPass);
-
+        
         int chucVu = cboChucVu.getSelectedIndex() + 1;
         ChucVuAccount cvuacc = new ChucVuAccount(chucVu, null, null);
         TrangThaiAccount ttacc = new TrangThaiAccount(trangThai1, null, null);
-
+        
         ViewAccountReponse viewacc = new ViewAccountReponse(cvuacc, ttacc, hoTen, ngaySinh, gioiTinh, sdt, diaChi, email, username, password, ngayTao, ngaySinh);
         return viewacc;
     }
-
+    
     private void fillLenForm() {
         index = tblNhanVien.getSelectedRow();
         if (index == -1) {
             return;
         }
         ViewAccountReponse var = listVAcc.get(tblNhanVien.getSelectedRow());
-
+        
         lblMa.setText(listVAcc.get(index).getId().toString());
         txtTen.setText(tblNhanVien.getValueAt(index, 1).toString());
         txtNgaySinh.setText(tblNhanVien.getValueAt(index, 2).toString());
@@ -733,13 +754,17 @@ public class ViewAccount extends javax.swing.JPanel {
         txtEmail.setText(tblNhanVien.getValueAt(index, 4).toString());
         txtNgayTao.setText(tblNhanVien.getValueAt(index, 5).toString());
         txtDiaChi.setText(tblNhanVien.getValueAt(index, 6).toString());
-        cboChucVu.setSelectedItem(tblNhanVien.getValueAt(index, 7).toString());
-        if (var.getTta().getId() == 1) {
+        if (var.getCvac().getTen().equalsIgnoreCase("C")) {
+            cboChucVu.setSelectedIndex(0);
+        } else {
+            cboChucVu.setSelectedIndex(1);
+        }
+        if (var.getTta().getTen().equalsIgnoreCase("Able")) {
             rdoDangLam.setSelected(true);
         } else {
             rdoNghi.setSelected(true);
         }
-
+        
         if (tblNhanVien.getValueAt(index, 8).toString().equalsIgnoreCase("Nam")) {
             rdoNam.setSelected(true);
         } else {
@@ -747,5 +772,5 @@ public class ViewAccount extends javax.swing.JPanel {
         }
         tblNhanVien.setRowSelectionInterval(index, index);
     }
-
+    
 }
