@@ -101,15 +101,6 @@ public class ChiTietSanPhamRepository {
         return null;
     }
 
-    public Boolean updatetableKM(ChiTietSanPham chitietsanPham) {
-        Transaction transaction = null;
-        session = HibernateUtil.getSession();
-        transaction = (Transaction) session.beginTransaction();
-        session.saveOrUpdate(chitietsanPham);
-        transaction.commit();
-        return true;
-
-    }
 
     public Boolean updateTableHD(ChiTietSanPham ctsp) {
         Transaction transaction = null;

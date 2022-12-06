@@ -9,7 +9,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import java.util.List;
 
 /**
@@ -17,8 +16,6 @@ import java.util.List;
  * @author Acer
  */
 public interface ViewThuocTinhService {
-
-    List<SanPham> getAllSanPham();
 
     List<MauSac> getAllMauSac();
 
@@ -29,8 +26,6 @@ public interface ViewThuocTinhService {
     List<Hang> getAllHang();
 
     List<ChatLieu> getAllChatLieu();
-
-    String AddSanPham(SanPham sanPham);
 
     String AddMauSac(MauSac mauSac);
 
@@ -43,8 +38,6 @@ public interface ViewThuocTinhService {
     String AddChatLieu(ChatLieu chatLieu);
 
     String UpdateMauSac(MauSac mauSac);
-
-    String UpdateSanPham(SanPham sanPham);
 
     String UpdateLoai(Loai loai);
 

@@ -6,13 +6,10 @@ package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
-import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
-import com.poly.pro_1041.it17322.group4.repository.SanPhamRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewSanPhamService;
 import com.poly.pro_1041.it17322.group4.service.ViewThuocTinhService;
@@ -26,25 +23,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.RichTextString;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -66,7 +54,6 @@ public class ViewSanPham extends javax.swing.JPanel {
     private DefaultComboBoxModel cbb4 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb5 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb6 = new DefaultComboBoxModel();
-    private List<SanPham> listSP = new ArrayList<>();
     private List<KichCo> listkc = new ArrayList<>();
     private List<MauSac> listms = new ArrayList<>();
     private List<Hang> listh = new ArrayList<>();
@@ -86,15 +73,11 @@ public class ViewSanPham extends javax.swing.JPanel {
         cbbKichCo.setModel(cbb4);
         cbbHang.setModel(cbb5);
         cbbChatLieu.setModel(cbb6);
-        listSP = vtts.getAllSanPham();
         listkc = vtts.getAllKichCo();
         listms = vtts.getAllMauSac();
         listh = vtts.getAllHang();
         listl = vtts.getAllLoai();
         listcl = vtts.getAllChatLieu();
-        for (SanPham sp : listSP) {
-            cbb1.addElement(sp.getTenSP());
-        }
         for (KichCo kc : listkc) {
             cbb4.addElement(kc.getTen());
         }
@@ -128,13 +111,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (ViewCTSPResponse vctspr : list) {
             dtm.addRow(vctspr.toDataRow1());
-        }
-    }
-
-    private void showDataTableSanPham(List<SanPham> list) {
-        dtm1.setRowCount(0);
-        for (SanPham sp : list) {
-            dtm1.addRow(new Object[]{sp.getId(), sp.getMa(), sp.getTenSP()});
         }
     }
 
@@ -174,10 +150,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }
 
     private void thuocTinh() {
-        if (radioTenSP.isSelected() == true) {
-            listSP = vtts.getAllSanPham();
-            showDataTableSanPham(listSP);
-        } else if (radioChatLieu.isSelected() == true) {
+        if (radioChatLieu.isSelected() == true) {
             listcl = vtts.getAllChatLieu();
             showDataTableChatLieu(listcl);
         } else if (radioLoaiSanPham.isSelected() == true) {
@@ -198,7 +171,6 @@ public class ViewSanPham extends javax.swing.JPanel {
 
     private void fill(int row) {
         txtMa.setText(listVCTSP.get(row).getMa());
-        cbbTenSP.setSelectedItem(listVCTSP.get(row).getSp().getTenSP());
         cbbMauSac.setSelectedItem(listVCTSP.get(row).getMauSac().getTen());
         cbbLoaiSP.setSelectedItem(listVCTSP.get(row).getLoai().getTen());
         cbbKichCo.setSelectedItem(listVCTSP.get(row).getKichCo().getTen());
@@ -213,10 +185,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }
 
     private void fill1(int row) {
-        if (radioTenSP.isSelected()) {
-            txtMaThuocTinh.setText(listSP.get(row).getMa());
-            txtThuocTinh.setText(listSP.get(row).getTenSP());
-        } else if (radioMauSac.isSelected()) {
+        if (radioMauSac.isSelected()) {
             txtMaThuocTinh.setText(listms.get(row).getMa());
             txtThuocTinh.setText(listms.get(row).getTen());
         } else if (radioLoaiSanPham.isSelected()) {
@@ -959,7 +928,6 @@ public class ViewSanPham extends javax.swing.JPanel {
                 cell = rows.createCell(0, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getMa());
                 cell = rows.createCell(1, CellType.STRING);
-                cell.setCellValue(listVCTSP.get(i).getSp().getTenSP());
                 cell = rows.createCell(2, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getMauSac().getTen());
                 cell = rows.createCell(3, CellType.STRING);
@@ -980,7 +948,7 @@ public class ViewSanPham extends javax.swing.JPanel {
             File file = new java.io.File("C:\\Users\\Huy PC\\Desktop\\anh\\danhsach.xlsx");
             try {
                 file.getParentFile().mkdir();
-                if(!file.exists()){
+                if (!file.exists()) {
                     file.createNewFile();
                 }
                 FileOutputStream fis = new FileOutputStream(file);
@@ -1034,14 +1002,13 @@ public class ViewSanPham extends javax.swing.JPanel {
             String ngayNhap = txtNgayNhap.getText();
             int soLuong = Integer.valueOf(txtSoLuong.getText());
             BigDecimal giaBan = BigDecimal.valueOf(gia);
-            SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
             MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
             Hang hang = listh.get(cbbHang.getSelectedIndex());
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
             int trangThai = 1;
-            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().update(viewCTSP, id));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
@@ -1064,7 +1031,6 @@ public class ViewSanPham extends javax.swing.JPanel {
             String ngayNhap = getDate();
             int soLuong = Integer.valueOf(txtSoLuong.getText());
             BigDecimal giaBan = BigDecimal.valueOf(gia);
-            SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
             MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
             Hang hang = listh.get(cbbHang.getSelectedIndex());
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
@@ -1072,7 +1038,7 @@ public class ViewSanPham extends javax.swing.JPanel {
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
             String anh = duongdananh;
             int trangThai = 1;
-            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().add(viewCTSP));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
@@ -1103,38 +1069,39 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiThuocTinhActionPerformed
 
     private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTenSPActionPerformed
-        listSP = vtts.getAllSanPham();
-        showDataTableSanPham(listSP);
+
     }//GEN-LAST:event_radioTenSPActionPerformed
 
     private void btnThemThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuocTinhSPActionPerformed
         String maThuocTinh = txtMaThuocTinh.getText();
         String tenThuocTinh = txtThuocTinh.getText();
-        if (radioTenSP.isSelected()) {
-            JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddSanPham(new SanPham(null, maThuocTinh, tenThuocTinh)));
-            listSP = vtts.getAllSanPham();
-            showDataTableSanPham(listSP);
-        } else if (radioMauSac.isSelected()) {
+        if (radioMauSac.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddMauSac(new MauSac(0, maThuocTinh, tenThuocTinh)));
             listms = vtts.getAllMauSac();
+            cbb2.addElement(tenThuocTinh);
             showDataTableMauSac(listms);
         } else if (radioLoaiSanPham.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddLoai(new Loai(0, maThuocTinh, tenThuocTinh)));
             listl = vtts.getAllLoai();
+            cbb3.addElement(tenThuocTinh);
             showDataTableLoai(listl);
         } else if (radioKichCo.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddKichCo(new KichCo(0, maThuocTinh, tenThuocTinh)));
             listkc = vtts.getAllKichCo();
+            cbb4.addElement(tenThuocTinh);
             showDataTableKichCo(listkc);
         } else if (radioChatLieu.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddChatLieu(new ChatLieu(0, maThuocTinh, tenThuocTinh)));
             listcl = vtts.getAllChatLieu();
+            cbb6.addElement(tenThuocTinh);
             showDataTableChatLieu(listcl);
         } else {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddHang(new Hang(0, maThuocTinh, tenThuocTinh)));
             listh = vtts.getAllHang();
+            cbb5.addElement(tenThuocTinh);
             showDataTableHang(listh);
         }
+
     }//GEN-LAST:event_btnThemThuocTinhSPActionPerformed
 
     private void btnSuaThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThuocTinhSPActionPerformed
@@ -1145,13 +1112,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         } else {
             String maThuocTinh = txtMaThuocTinh.getText();
             String tenThuocTinh = txtThuocTinh.getText();
-            if (radioTenSP.isSelected()) {
-                SanPham sp = listSP.get(tbThuocTinh.getSelectedRow());
-                UUID idSanPham = sp.getId();
-                JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().UpdateSanPham(new SanPham(idSanPham, maThuocTinh, tenThuocTinh)));
-                listSP = vtts.getAllSanPham();
-                showDataTableSanPham(listSP);
-            } else if (radioMauSac.isSelected()) {
+            if (radioMauSac.isSelected()) {
                 MauSac ms = listms.get(tbThuocTinh.getSelectedRow());
                 int idMauSac = ms.getId();
                 JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().UpdateMauSac(new MauSac(idMauSac, maThuocTinh, tenThuocTinh)));

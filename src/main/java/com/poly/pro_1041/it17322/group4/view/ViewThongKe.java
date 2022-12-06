@@ -242,7 +242,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         }
         for (ViewCTSPResponse i : viewHoaDonService.getAllSP()) {
             if (i.getSoLuongTon() <= 5) {
-                listSP_Het.add("\n" + "+ Mã sản phẩm: " + i.getId() + " - Tên sản phẩm: " + i.getSp().getTenSP() + " - Số lượng còn lại: " + i.getSoLuongTon());
+                listSP_Het.add("\n" + "+ Mã sản phẩm: " + i.getId() + " - Tên sản phẩm: " + i.getTen() + " - Số lượng còn lại: " + i.getSoLuongTon());
             }
         }
         if (listSP_Het.isEmpty()) {

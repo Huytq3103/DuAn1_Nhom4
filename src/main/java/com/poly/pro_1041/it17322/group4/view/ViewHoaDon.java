@@ -71,7 +71,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         listVCTSP = vhds.getAllSP();
         listHD = vhds.getAllHD();
         for (ViewKhachHangRepose vkhr : listKH) {
-            cbbModelKhachHang.addElement(vkhr.getMa());
+            cbbModelKhachHang.addElement(vkhr.getHoTen());
         }
         cbbModelKhachHang.addElement(" ");
         cbbModelKhachHang.setSelectedItem(" ");
@@ -1049,7 +1049,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                     ViewCTSPResponse vctspr = listVCTSP.get(tbSanPham.getSelectedRow());
                     ChiTietSanPham ctsp = new ChiTietSanPham();
                     ctsp.setId(vctspr.getId());
-                    ViewHDCTResponse vhdctr = new ViewHDCTResponse(ctsp, vctspr.getHang().getTen(), vctspr.getSp().getTenSP(), vctspr.getMauSac().getTen(), vctspr.getLoai().getTen(), vctspr.getKichCo().getTen(), vctspr.getChatLieu().getTen(), Integer.valueOf(soLuong), vctspr.getGia());
+                    ViewHDCTResponse vhdctr = new ViewHDCTResponse(ctsp, vctspr.getHang().getTen(), vctspr.getTen(), vctspr.getMauSac().getTen(), vctspr.getLoai().getTen(), vctspr.getKichCo().getTen(), vctspr.getChatLieu().getTen(), Integer.valueOf(soLuong), vctspr.getGia());
                     if (vhds.checkSoLuongTonVoiSoLuong(vhdctr)) {
                         UUID id = listHD.get(tbHoaDon.getSelectedRow()).getId();
                         HoaDon hd = new HoaDon();
@@ -1147,15 +1147,21 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
         // TODO add your handling code here:
-        if (tbHoaDon.getSelectedRow() > -1) {
-            ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
-            vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
-            try {
-                vhds.taoFilePDF(vhdr, vhds.getOneHD(vhdr.getId()), a);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        int i = JOptionPane.showConfirmDialog(TBPaneHD, "Bạn có muốn xuất hóa đơn không ?");
+        if (i == JOptionPane.YES_OPTION) {
+            if (tbHoaDon.getSelectedRow() > -1) {
+                ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
+                vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
+                try {
+                    vhds.taoFilePDF(vhdr, vhds.getOneHD(vhdr.getId()), a);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(TBPaneHD, "Hãy chọn hóa đơn bạn cần in");
             }
         }
+
     }//GEN-LAST:event_btnPDFActionPerformed
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
@@ -1340,16 +1346,20 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 kh.setId(idKH);
                 vhdr.setKhachHang(kh);
             }
-            if (Double.valueOf(tongTienHoaDon()) <= Double.valueOf(txtTienKhachDua.getText()) + Double.valueOf(txtTienTaiKhoan.getText())) {
-                JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(vhdr));
-                cbbModelKhachHang.setSelectedItem(" ");
-                listHD = vhds.getAllHD();
-                showDataTableHoaDon(listHD);
-                txtTienTaiKhoan.setText("0.0");
-                txtTienKhachDua.setText("0.0");
-                lbTienThua.setText("0.0");
+            if (txtTienKhachDua.getText().matches(regexInt) && txtTienTaiKhoan.getText().matches(regexInt)) {
+                if (Double.valueOf(tongTienHoaDon()) <= Double.valueOf(txtTienKhachDua.getText()) + Double.valueOf(txtTienTaiKhoan.getText())) {
+                    JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(vhdr));
+                    cbbModelKhachHang.setSelectedItem(" ");
+                    listHD = vhds.getAllHD();
+                    showDataTableHoaDon(listHD);
+                    txtTienTaiKhoan.setText("0");
+                    txtTienKhachDua.setText("0");
+                    lbTienThua.setText("0");
+                } else {
+                    JOptionPane.showMessageDialog(TBPaneHD, "Tiền khách đưa không đủ");
+                }
             } else {
-                JOptionPane.showMessageDialog(TBPaneHD, "Tiền khách đưa không đủ");
+                JOptionPane.showMessageDialog(TBPaneHD, "Tiền đưa phải là số");
             }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
