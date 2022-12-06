@@ -186,7 +186,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
 
     @Override
     public boolean updateHD(ViewHoaDonResponse vhdr) {
-        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien()))) {
+        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), vhdr.getNgayShip(), vhdr.getNgayNhan(), vhdr.getTongTien()))) {
             return true;
         } else {
             return false;

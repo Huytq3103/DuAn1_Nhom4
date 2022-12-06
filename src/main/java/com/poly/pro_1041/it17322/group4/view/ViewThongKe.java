@@ -315,7 +315,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         listGiaBan_Nam = viewThongKeService.getGiaBan_Nam();
         listNam2 = viewThongKeService.getNam_2();
         DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
-        for (int i = 0; i <= listGiaBan_Nam.size() - 1; i++) {
+        for (int i = 0; i < listGiaBan_Nam.size(); i++) {
             dataset2.addValue(Double.parseDouble((listGiaBan_Nam.get(i)).toString()), "Tổng giá bán", listNam2.get(i));
         }
 
