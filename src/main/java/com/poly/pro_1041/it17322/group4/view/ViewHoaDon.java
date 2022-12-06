@@ -1732,6 +1732,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (tbHoaDon.getSelectedRow() > -1) {
             ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
+            vhdr.setNgayThanhToan(getDate());
             vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
             if (cbbModelKhachHang.getSelectedItem() != " ") {
                 UUID idKH = listKH.get(cbbKhachHang.getSelectedIndex()).getId();
@@ -1824,30 +1825,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void tbHDCTTraHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTTraHangMouseClicked
         // TODO add your handling code here:
-        if (tbHDCTTraHang.getSelectedRow() > -1) {
-            String soLuong = JOptionPane.showInputDialog(TBPaneHD, "Nhập số lượng cần đổi");
-            if (soLuong != null && soLuong != "") {
-                if (soLuong.matches(regexInt) || Integer.valueOf(soLuong) > 0) {
-                    ViewHDCTResponse vhdctr = listHDCTTraHang.get(tbHDCTTraHang.getSelectedRow());
-                    HoaDonChiTiet hdct = new HoaDonChiTiet();
-                    hdct.setChiTietSanPham(vhdctr.getCtsp());
-                    ViewCTSPResponse vctsprepose = new ViewCTSPResponse(vhdctr.getCtsp().getMa(), vhdctr.getCtsp().getSanPham(), vhdctr.getCtsp().getHang(), vhdctr.getCtsp().getLoai(), vhdctr.getCtsp().getKichCo(), vhdctr.getCtsp().getMauSac(), vhdctr.getCtsp().getChatLieu(), vhdctr.getCtsp().getNgayNhap(), vhdctr.getCtsp().getSoLuongTon(), vhdctr.getCtsp().getGia());
-                    if (vspService.checkSoLuongGioHangVoiSoLuongSP(vctsprepose)) {
-                        UUID id = listHDTH.get(tbHDTraHang.getSelectedRow()).getId();
-                        HoaDon hd = new HoaDon();
-                        hd.setId(id);
-                        vctsprepose.setId(id);
-                    } else {
-                        JOptionPane.showMessageDialog(TBPaneHD, "Số lượng không đủ");
-                    }
 
-                } else {
-                    JOptionPane.showMessageDialog(TBPaneHD, "Số lượng là số nguyên lớn hơn 0");
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(TBPaneHD, "Hãy chọn hóa đơn bạn cần thêm sản phẩm");
-        }
     }//GEN-LAST:event_tbHDCTTraHangMouseClicked
 
     private void tbCTTraHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTTraHangMouseClicked

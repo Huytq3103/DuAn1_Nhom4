@@ -20,6 +20,8 @@ public interface ViewKhuyenMaiService {
     
     List<ViewKhuyenMaiResponse> getAllKM();
     
+    List<ViewKhuyenMaiResponse> getOneMaKM(String maKM);
+    
     List<ViewLoaiKMResponse> getAllLKM();
     
     List<ViewTrangThaiKMResponse> getAllTTKM();
@@ -27,6 +29,10 @@ public interface ViewKhuyenMaiService {
     List<ViewCTSPResponse> getAllSP();
     
     List<ViewCTSPResponse> getOneLoai(int idLoai);
+    
+    List<ViewKhuyenMaiResponse> Search(String loaiKM);
+    
+    boolean updateCTSP(ViewCTSPResponse ctspr);
     
     public String addKhuyenMai(ViewKhuyenMaiResponse vkmr);
     

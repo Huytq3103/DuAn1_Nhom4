@@ -14,6 +14,7 @@ import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -21,7 +22,7 @@ import org.hibernate.Transaction;
  */
 public class KhachHangRepository {
 
-    private String fromtable = " FROM KhachHang ";
+    private String fromtable = " FROM KhachHang";
     private String fromtableHD = "FROM HoaDon";
 
     public List<KhachHang> getAll() {
@@ -38,6 +39,40 @@ public class KhachHangRepository {
         query.setParameter("id", id);
         KhachHang kh = (KhachHang) query.getSingleResult();
         return kh;
+    }
+
+    public List<KhachHang> seachKhoangNgay(String ngayBatDau, String ngayKetThuc) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " WHERE NgayTao BETWEEN :ngayBatDau AND :ngayKetThuc";
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("ngayBatDau", ngayBatDau);
+        query.setParameter("ngayKetThuc", ngayKetThuc);
+        List<KhachHang> lists = query.getResultList();
+        return lists;
+    }
+
+    public List<KhachHang> seachKhoangNgaySinh(String ngaySinh) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " WHERE NgaySinh = :ngaySinh";
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("ngaySinh", ngaySinh);
+        List<KhachHang> lists = query.getResultList();
+        return lists;
+    }
+
+    public int genMaKH() {
+        String maKH = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM KhachHang");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maKH = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maKH);
+        return ++ma;
     }
 
     public Boolean add(KhachHang kh) {

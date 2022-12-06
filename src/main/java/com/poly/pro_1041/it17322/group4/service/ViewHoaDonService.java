@@ -35,6 +35,8 @@ public interface ViewHoaDonService {
 
     List<ViewHoaDonResponse> getOneHDKH(UUID id);
 
+    List<ViewHoaDonResponse> getList(int idTT);
+
     List<TrangThaiOrder> getAllTTO();
 
     String thanhToan(ViewHoaDonResponse vhdr);

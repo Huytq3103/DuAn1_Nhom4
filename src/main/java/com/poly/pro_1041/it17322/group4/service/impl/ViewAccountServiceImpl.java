@@ -58,4 +58,15 @@ public class ViewAccountServiceImpl implements ViewAccountService {
         }
     }
 
+    @Override
+    public List<ViewAccountReponse> searchByName(List<ViewAccountReponse> lists, String hoTen) {
+        List<ViewAccountReponse> list = new ArrayList<>();
+        for (ViewAccountReponse vacc : lists) {
+            if (vacc.getHoTen().equalsIgnoreCase(hoTen)) {
+                list.add(vacc);
+            }
+        }
+        return list;
+    }
+
 }

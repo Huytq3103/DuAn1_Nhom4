@@ -8,6 +8,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ViewKhuyenMaiResponse {
+
     private UUID id;
     private TrangThaiKM trangThaiKM;
     private LoaiKM loaiKM;
@@ -29,6 +31,7 @@ public class ViewKhuyenMaiResponse {
     private String ngayBatDau;
     private String ngayKetThuc;
     private Float giaKM;
+    private int loaiSanPham;
 
     public ViewKhuyenMaiResponse() {
     }
@@ -55,13 +58,16 @@ public class ViewKhuyenMaiResponse {
         this.giaKM = giaKM;
     }
 
-    
-
-
-    
-    
-    public Object[] toDataRow(int i) {
-        return new Object[]{i,ten,ngayBatDau,ngayKetThuc,giaKM, loaiKM.getTen()};
+    public ViewKhuyenMaiResponse(String ten, String ten0, String ma, String ten1, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    public Object[] toDataRow(int i) {
+        return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
+    }
+
+    public Object[] toDataRow1(int i) {
+        return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
+    }
+
 }
