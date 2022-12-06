@@ -42,11 +42,13 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnEmail = new javax.swing.JButton();
         btnOTP = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(700, 400));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(700, 400));
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 400));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 400));
@@ -60,13 +62,13 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         jLabel8.setIcon(new ImageIcon
             ("src/main/icon/JPassword.png"));
 
-        jLabel1.setFont(new java.awt.Font("Be Vietnam Pro ExtraBold", 0, 20)); // NOI18N
-        jLabel1.setText("Quên mật khẩu");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setText("Quên Mật Khẩu");
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(81, 81, 81));
         txtEmail.setText("  Email");
-        txtEmail.setBorder(null);
+        txtEmail.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtEmailFocusGained(evt);
@@ -76,7 +78,7 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         txtMaXacNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtMaXacNhan.setForeground(new java.awt.Color(81, 81, 81));
         txtMaXacNhan.setText(" Mã xác nhận");
-        txtMaXacNhan.setBorder(null);
+        txtMaXacNhan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtMaXacNhan.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtMaXacNhanFocusGained(evt);
@@ -86,7 +88,7 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         txtMatKhau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtMatKhau.setForeground(new java.awt.Color(81, 81, 81));
         txtMatKhau.setText("jPasswordField1");
-        txtMatKhau.setBorder(null);
+        txtMatKhau.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtMatKhau.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtMatKhauFocusGained(evt);
@@ -96,7 +98,7 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         txtXacNhanMatKhau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtXacNhanMatKhau.setForeground(new java.awt.Color(81, 81, 81));
         txtXacNhanMatKhau.setText("jPasswordField1");
-        txtXacNhanMatKhau.setBorder(null);
+        txtXacNhanMatKhau.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtXacNhanMatKhau.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtXacNhanMatKhauFocusGained(evt);
@@ -104,7 +106,8 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
         });
 
         btnXacNhan.setBackground(new java.awt.Color(255, 255, 255));
-        btnXacNhan.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        btnXacNhan.setForeground(new java.awt.Color(0, 102, 102));
         btnXacNhan.setText("Xác nhận");
         btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,16 +134,22 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
             }
         });
 
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(0, 102, 102));
+        btnHuy.setText("Cancel");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(181, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -155,12 +164,19 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
                                     .addComponent(txtMaXacNhan)
                                     .addComponent(txtMatKhau)
                                     .addComponent(txtXacNhanMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnXacNhan, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnHuy)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnXacNhan)
+                                .addGap(34, 34, 34)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEmail)
-                            .addComponent(btnOTP))))
-                .addGap(162, 162, 162))
+                            .addComponent(btnOTP))
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(262, 262, 262))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +210,9 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
                         .addGap(71, 71, 71))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addComponent(btnXacNhan)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnXacNhan)
+                    .addComponent(btnHuy))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -262,6 +280,11 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
         txtEmail.setText("");
     }//GEN-LAST:event_txtEmailFocusGained
+
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        this.dispose();
+        new ViewLogin().setVisible(true);
+    }//GEN-LAST:event_btnHuyActionPerformed
 
     private void doiMK() {
         String mkMoi = txtMatKhau.getText();
@@ -336,6 +359,7 @@ public class ViewQuenMatKhau extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEmail;
+    private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnOTP;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel jLabel1;

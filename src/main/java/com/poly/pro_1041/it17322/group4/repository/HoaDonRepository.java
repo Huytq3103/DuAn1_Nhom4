@@ -29,6 +29,16 @@ public class HoaDonRepository {
         return hoadons;
     }
 
+    public List<HoaDon> getListByDate(String tuNgay, String denNgay) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "WHERE NgayTao BETWEEN :tuNgay AND :denNgay";
+        Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("tuNgay", tuNgay);
+        query.setParameter("denNgay", denNgay);
+        List<HoaDon> list = query.getResultList();
+        return list;
+    }
+
     public List<HoaDon> getAllOrderByNgayTao() {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "ORDER BY NgayTao DESC";
@@ -36,8 +46,8 @@ public class HoaDonRepository {
         List<HoaDon> hoadons = query.getResultList();
         return hoadons;
     }
-    
-     public List<HoaDon> getList(int idTT) {
+
+    public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";
         Query query = session.createQuery(sql, HoaDon.class);

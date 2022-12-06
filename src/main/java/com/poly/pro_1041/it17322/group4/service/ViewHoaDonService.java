@@ -34,6 +34,8 @@ public interface ViewHoaDonService {
 
     List<ViewHoaDonResponse> getList(int idTT);
 
+    List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay);
+
     List<TrangThaiOrder> getAllTTO();
 
     String thanhToan(ViewHoaDonResponse vhdr);
