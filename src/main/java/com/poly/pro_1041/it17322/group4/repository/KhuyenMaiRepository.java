@@ -17,7 +17,7 @@ import org.hibernate.query.Query;
  */
 public class KhuyenMaiRepository {
     
-    
+    private Session session ;
     private String fromTable = "FROM KhuyenMai";
     public List<KhuyenMai> getAll(){
         Session session = HibernateUtil.getFACTORY().openSession();
