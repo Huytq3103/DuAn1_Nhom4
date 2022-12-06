@@ -80,11 +80,11 @@ public class ViewHoaDonResponse {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getHoTen(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
     public Object[] toDataRowLS(int k) {
-        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getMaKH(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getHoTen(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
     }
 
     public Object[] toDataRowHD(int stt) {

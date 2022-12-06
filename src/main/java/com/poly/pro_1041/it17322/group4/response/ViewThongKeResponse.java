@@ -52,7 +52,7 @@ public class ViewThongKeResponse {
         ctsp.setMa(vctsp.getMa());
         this.ctsp = ctsp;
         this.hang = vctsp.getHang().getTen();
-        this.ten = vctsp.getSp().getTenSP();
+        this.ten = vctsp.getTen();
         this.mauSac = vctsp.getMauSac().getTen();
         this.loai = vctsp.getLoai().getTen();
         this.kichCo = vctsp.getKichCo().getTen();

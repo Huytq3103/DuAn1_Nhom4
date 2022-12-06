@@ -6,7 +6,6 @@ package com.poly.pro_1041.it17322.group4.response;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import java.util.Date;
 import java.util.UUID;
