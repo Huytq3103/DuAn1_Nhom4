@@ -96,7 +96,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewHoaDonResponse getOneHDByMa(String ma) {
         return new ViewHoaDonResponse(hdr.getOne(ma));
     }
-    
+
     @Override
     public List<ViewHoaDonResponse> getList(int idTT) {
         List<ViewHoaDonResponse> list = new ArrayList<>();
@@ -376,6 +376,15 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     static Cell getCell10fLeft(String textValue, boolean isBold) {
         Cell myCell = new Cell().add(textValue).setFontSize(10f).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
         return isBold ? myCell.setBold() : myCell;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getListByDate(tuNgay, denNgay)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
     }
 
     @Override
