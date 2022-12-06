@@ -175,6 +175,7 @@ public class ViewLogin extends javax.swing.JFrame {
                     tc.setVisible(true);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(rootPane, "Tài khoản hoặc mật khẩu không chính xác");
             }
         } else {

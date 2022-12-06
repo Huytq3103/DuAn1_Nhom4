@@ -6,11 +6,13 @@ package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
+import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
 import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
+import com.poly.pro_1041.it17322.group4.repository.SanPhamRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewSanPhamService;
 import com.poly.pro_1041.it17322.group4.service.ViewThuocTinhService;
@@ -24,16 +26,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -63,8 +74,6 @@ public class ViewSanPham extends javax.swing.JPanel {
     private List<ChatLieu> listcl = new ArrayList<>();
     private ViewThuocTinhService vtts = new ViewThuocTinhServiceImpl();
     public int index = -1;
-
-    private String regexINT = "[0-9 ]+";
 
     /**
      * Creates new form ViewSanPham
@@ -118,9 +127,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     private void showDataTableCTSanPham(List<ViewCTSPResponse> list) {
         dtm.setRowCount(0);
         for (ViewCTSPResponse vctspr : list) {
-            if (vctspr.getTrangThai() == 1) {
-                dtm.addRow(vctspr.toDataRow1());
-            }
+            dtm.addRow(vctspr.toDataRow1());
         }
     }
 
@@ -334,6 +341,11 @@ public class ViewSanPham extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbThuocTinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbThuocTinhMouseClicked(evt);
+            }
+        });
         jScrollPane8.setViewportView(tbThuocTinh);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -719,7 +731,7 @@ public class ViewSanPham extends javax.swing.JPanel {
                             .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27)
                             .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGap(18, 22, Short.MAX_VALUE)
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThemChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSuaChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -965,14 +977,16 @@ public class ViewSanPham extends javax.swing.JPanel {
                 cell = rows.createCell(9, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getGia().toPlainString());
             }
-            File file = new File("D://danhsach.xlsx");
+            File file = new java.io.File("C:\\Users\\Huy PC\\Desktop\\anh\\danhsach.xlsx");
             try {
+                file.getParentFile().mkdir();
+                if(!file.exists()){
+                    file.createNewFile();
+                }
                 FileOutputStream fis = new FileOutputStream(file);
                 workbook.write(fis);
                 fis.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }
             JOptionPane.showMessageDialog(this, "In thành công");
@@ -999,68 +1013,19 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtMa.setEditable(true);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
-    private void btnSuaChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnSuaChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaChiTietSanPhamActionPerformed
         int row = tbSanPham.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
         } else if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
-        }
-    }
-
-    private void tbThuocTinhMouseClicked(java.awt.event.MouseEvent evt) {
-        int row = tbThuocTinh.getSelectedRow();
-        txtMaThuocTinh.setEditable(false);
-        fill1(row);
-    }
-
-    private void radioMauSacActionPerformed(java.awt.event.ActionEvent evt) {
-        listms = vtts.getAllMauSac();
-        showDataTableMauSac(listms);
-    }
-
-    private void radioHangActionPerformed(java.awt.event.ActionEvent evt) {
-        listh = vtts.getAllHang();
-        showDataTableHang(listh);
-    }
-
-    private void radioKichCoActionPerformed(java.awt.event.ActionEvent evt) {
-        listkc = vtts.getAllKichCo();
-        showDataTableKichCo(listkc);
-    }
-
-    private void radioChatLieuActionPerformed(java.awt.event.ActionEvent evt) {
-        listcl = vtts.getAllChatLieu();
-        showDataTableChatLieu(listcl);
-    }
-
-    private void radioLoaiSanPhamActionPerformed(java.awt.event.ActionEvent evt) {
-        listl = vtts.getAllLoai();
-        showDataTableLoai(listl);
-    }
-
-    private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {
-        listSP = vtts.getAllSanPham();
-        showDataTableSanPham(listSP);
-    }
-
-    private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {
-        if (txtMa.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtSoLuong.getText().trim().isEmpty()) {
-
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
-
-        } else if ((!txtSoLuong.getText().matches(regexINT))) {
-            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải là số");
-
-        } else if (Integer.valueOf(String.valueOf(txtSoLuong.getText())) <= 0) {
-            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
-
-        } else if ((!txtSoLuong.getText().matches(regexINT))) {
-            JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải là số");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
             JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải lớn hơn 0");
 
+        } else if (Integer.valueOf(txtSoLuong.getText()) <= 0) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
         } else {
             ViewCTSPResponse vctspr = listVCTSP.get(tbSanPham.getSelectedRow());
             UUID id = vctspr.getId();
@@ -1071,24 +1036,52 @@ public class ViewSanPham extends javax.swing.JPanel {
             BigDecimal giaBan = BigDecimal.valueOf(gia);
             SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
             MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
-            Hang hang = listh.get(cbbMauSac.getSelectedIndex());
+            Hang hang = listh.get(cbbHang.getSelectedIndex());
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
-
             int trangThai = 1;
             ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().update(viewCTSP, id));
-
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }
-    }
+    }//GEN-LAST:event_btnSuaChiTietSanPhamActionPerformed
 
+    private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemChiTietSanPhamActionPerformed
+        if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
+
+        } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Giá bán phải lớn hơn 0");
+
+        } else if (Integer.valueOf(txtSoLuong.getText()) <= 0) {
+            JOptionPane.showMessageDialog(PanelDSSP, "Số lượng phải lớn hơn 0");
+
+        } else {
+            double gia = Double.valueOf(txtGiaBan.getText());
+            String ma = txtMa.getText();
+            String ngayNhap = getDate();
+            int soLuong = Integer.valueOf(txtSoLuong.getText());
+            BigDecimal giaBan = BigDecimal.valueOf(gia);
+            SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
+            MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
+            Hang hang = listh.get(cbbHang.getSelectedIndex());
+            Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
+            ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
+            KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
+            String anh = duongdananh;
+            int trangThai = 1;
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
+            JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().add(viewCTSP));
+            listVCTSP = vsp.getAllSP();
+            showDataTableCTSanPham(listVCTSP);
+        }
+    }//GEN-LAST:event_btnThemChiTietSanPhamActionPerformed
 
     private void btnChonAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonAnhActionPerformed
         try {
-            JFileChooser f = new JFileChooser("D:\\anh");
+            JFileChooser f = new JFileChooser("C:\\Users\\Huy PC\\Desktop\\anh");
             f.setDialogTitle("Mở file");
             f.showOpenDialog(null);
             File ftenanh = f.getSelectedFile();
@@ -1108,6 +1101,11 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtThuocTinh.setText("");
         txtMaThuocTinh.setEditable(true);
     }//GEN-LAST:event_btnLamMoiThuocTinhActionPerformed
+
+    private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTenSPActionPerformed
+        listSP = vtts.getAllSanPham();
+        showDataTableSanPham(listSP);
+    }//GEN-LAST:event_radioTenSPActionPerformed
 
     private void btnThemThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuocTinhSPActionPerformed
         String maThuocTinh = txtMaThuocTinh.getText();
@@ -1187,49 +1185,71 @@ public class ViewSanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSuaThuocTinhSPActionPerformed
 
-    private void btnLamMoi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoi2ActionPerformed
+    private void radioLoaiSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioLoaiSanPhamActionPerformed
+        listl = vtts.getAllLoai();
+        showDataTableLoai(listl);
+    }//GEN-LAST:event_radioLoaiSanPhamActionPerformed
 
-        XSSFWorkbook excelImporWorBook = null;
+    private void radioChatLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioChatLieuActionPerformed
+        listcl = vtts.getAllChatLieu();
+        showDataTableChatLieu(listcl);
+    }//GEN-LAST:event_radioChatLieuActionPerformed
+
+    private void radioKichCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioKichCoActionPerformed
+        listkc = vtts.getAllKichCo();
+        showDataTableKichCo(listkc);
+    }//GEN-LAST:event_radioKichCoActionPerformed
+
+    private void radioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioHangActionPerformed
+        listh = vtts.getAllHang();
+        showDataTableHang(listh);
+    }//GEN-LAST:event_radioHangActionPerformed
+
+    private void radioMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMauSacActionPerformed
+        listms = vtts.getAllMauSac();
+        showDataTableMauSac(listms);
+    }//GEN-LAST:event_radioMauSacActionPerformed
+
+    private void tbThuocTinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbThuocTinhMouseClicked
+        int row = tbThuocTinh.getSelectedRow();
+        txtMaThuocTinh.setEditable(false);
+        fill1(row);
+    }//GEN-LAST:event_tbThuocTinhMouseClicked
+
+    private void btnLamMoi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoi2ActionPerformed
+        File excelFile;
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
-        String current = "D:\\DanhSach";
-        JFileChooser excelFileChooserImport = new JFileChooser(current);
+        XSSFWorkbook excelJTableImport = null;
 
-        int excelChooser = excelFileChooserImport.showOpenDialog(null);
+        String defaultCurrentDirectoryPath = "D:\\DanhSach";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
 
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
             try {
-                File excelFile = excelFileChooserImport.getSelectedFile();
+                excelFile = excelFileChooser.getSelectedFile();
                 excelFIS = new FileInputStream(excelFile);
                 excelBIS = new BufferedInputStream(excelFIS);
-                excelImporWorBook = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelImporWorBook.getSheetAt(5);
-                for (int i = 0; i < excelSheet.getLastRowNum(); i++) {
-                    XSSFRow excelRow = excelSheet.getRow(i);
-                    XSSFCell cell1 = excelRow.getCell(0);
-                    XSSFCell cell2 = excelRow.getCell(1);
-                    XSSFCell cell3 = excelRow.getCell(2);
-                    XSSFCell cell4 = excelRow.getCell(3);
-                    XSSFCell cell5 = excelRow.getCell(4);
-                    XSSFCell cell6 = excelRow.getCell(5);
-                    XSSFCell cell7 = excelRow.getCell(6);
-                    XSSFCell cell8 = excelRow.getCell(7);
-                    XSSFCell cell9 = excelRow.getCell(8);
-                    XSSFCell cell10 = excelRow.getCell(9);
-                    dtm.addRow(new Object[]{cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10});
 
+                excelJTableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                for (int row = 0; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    for (int column = 0; column < excelRow.getLastCellNum(); column++) {
+                        XSSFCell excelCell = excelRow.getCell(column);
+
+                        System.out.println(excelCell.getStringCellValue());
+                    }
                 }
-                JOptionPane.showMessageDialog(this, "Data Imported Success");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }//GEN-LAST:event_btnLamMoi2ActionPerformed
-
-    String duongdananh = "D:\\anh\\anh3.png";
+    String duongdananh = "C:\\Users\\Huy PC\\Desktop\\anh";
 
     public ImageIcon ResizeImage(String ImagePath) {
         ImageIcon MyImage = new ImageIcon(ImagePath);
@@ -1238,7 +1258,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         ImageIcon image = new ImageIcon(newImg);
         return image;
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelDSSP;

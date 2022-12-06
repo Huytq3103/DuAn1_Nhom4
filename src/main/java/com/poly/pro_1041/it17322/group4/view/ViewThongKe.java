@@ -115,7 +115,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         }
         radioNam.setSelected(true);
         showDataTableCTSP();
-//        bieuDo_Nam();
+        bieuDo_Nam();
         phanQuyen();
     }
 
@@ -262,7 +262,7 @@ public class ViewThongKe extends javax.swing.JPanel {
             // Mat khai email cua ban
             final String password = "sljrvxfsbibpntqe";
             // dia chi email nguoi nhan
-            final String toEmail = "sang.vg2209@gmail.com";
+            final String toEmail = "tranquanghuy3103@gmail.com";
             final String subject = "Java Example Test";
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
@@ -315,7 +315,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         listGiaBan_Nam = viewThongKeService.getGiaBan_Nam();
         listNam2 = viewThongKeService.getNam_2();
         DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
-        for (int i = 0; i <= listGiaBan_Nam.size() - 1; i++) {
+        for (int i = 0; i < listGiaBan_Nam.size(); i++) {
             dataset2.addValue(Double.parseDouble((listGiaBan_Nam.get(i)).toString()), "Tổng giá bán", listNam2.get(i));
         }
 
@@ -362,7 +362,7 @@ public class ViewThongKe extends javax.swing.JPanel {
                 cell.setCellValue(formatter.format(listGiaBan.get(i)));
             }
 
-            File file = new File("D:\\PRO1041\\DuAn1_Nhom4\\CT_DoanhThu.xlsx");
+            File file = new File("C:\\Users\\Huy PC\\Desktop\\anh\\CT_DoanhThu.xlsx");
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 workbook.write(fos);
@@ -410,7 +410,7 @@ public class ViewThongKe extends javax.swing.JPanel {
                 cell.setCellValue(formatter.format(listGiaBan_Nam.get(i)));
             }
 
-            File file = new File("D:\\PRO1041\\DuAn1_Nhom4\\CT_DoanhThu.xlsx");
+            File file = new File("C:\\Users\\Huy PC\\Desktop\\anh\\CT_DoanhThu.xlsx");
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 workbook.write(fos);
