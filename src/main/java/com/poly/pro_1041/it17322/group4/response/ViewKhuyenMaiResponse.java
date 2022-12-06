@@ -28,10 +28,9 @@ public class ViewKhuyenMaiResponse {
     private LoaiKM loaiKM;
     private String ma;
     private String ten;
-    private String ngayBatDau;
-    private String ngayKetThuc;
+    private Date ngayBatDau;
+    private Date ngayKetThuc;
     private Float giaKM;
-    private int loaiSanPham;
 
     public ViewKhuyenMaiResponse() {
     }
@@ -47,7 +46,7 @@ public class ViewKhuyenMaiResponse {
         this.giaKM = khuyenMai.getGiaKM();
     }
 
-    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, String ngayBatDau, String ngayKetThuc, Float giaKM) {
+    public ViewKhuyenMaiResponse(UUID id, TrangThaiKM trangThaiKM, LoaiKM loaiKM, String ma, String ten, Date ngayBatDau, Date ngayKetThuc, Float giaKM) {
         this.id = id;
         this.trangThaiKM = trangThaiKM;
         this.loaiKM = loaiKM;
@@ -58,15 +57,7 @@ public class ViewKhuyenMaiResponse {
         this.giaKM = giaKM;
     }
 
-    public ViewKhuyenMaiResponse(String ten, String ten0, String ma, String ten1, Date ngayBatDau, Date ngayKetThuc, Float giaKM, int loaiSanPham) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public Object[] toDataRow(int i) {
-        return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
-    }
-
-    public Object[] toDataRow1(int i) {
         return new Object[]{i, ten, ngayBatDau, ngayKetThuc, giaKM, loaiKM.getTen()};
     }
 

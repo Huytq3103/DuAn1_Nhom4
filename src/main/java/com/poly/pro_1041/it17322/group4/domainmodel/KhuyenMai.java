@@ -53,10 +53,10 @@ public class KhuyenMai {
     private String ten;
 
     @Column(name = "NgayBatDau")
-    private String ngayBatDau;
+    private Date ngayBatDau;
 
     @Column(name = "NgayKetThuc")
-    private String ngayKetThuc;
+    private Date ngayKetThuc;
 
     @Column(name = "GiaKM")
     private Float giaKM;

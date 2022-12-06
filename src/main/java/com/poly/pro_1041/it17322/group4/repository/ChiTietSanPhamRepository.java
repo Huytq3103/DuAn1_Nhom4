@@ -77,7 +77,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean add(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+        try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(chitietsanPham);
             transaction.commit();
@@ -90,7 +90,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean update(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+        try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.saveOrUpdate(chitietsanPham);
             transaction.commit();
@@ -99,6 +99,16 @@ public class ChiTietSanPhamRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public Boolean updatetableKM(ChiTietSanPham chitietsanPham) {
+        Transaction transaction = null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(chitietsanPham);
+        transaction.commit();
+        return true;
+
     }
 
     public Boolean updateTableHD(ChiTietSanPham ctsp) {
@@ -112,7 +122,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean delete(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+        try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.delete(chitietsanPham);
             transaction.commit();
