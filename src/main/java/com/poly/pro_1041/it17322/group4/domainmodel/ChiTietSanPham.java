@@ -38,6 +38,7 @@ public class ChiTietSanPham {
     @Column(name = "Id")
     private UUID id;
 
+
     @Column(name = "TenSP")
     private String sanPham;
 
@@ -68,6 +69,9 @@ public class ChiTietSanPham {
     @Column(name = "ma")
     private String ma;
 
+    @Column(name = "Ten")
+    private String ten;
+
     @Column(name = "SoLuongTon")
     private int soLuongTon;
 
@@ -84,6 +88,6 @@ public class ChiTietSanPham {
     private String Hinh;
 
 
-    @Column(name = "TrangThai")
+    @Column(name = "TrangThaiSP")
     private int trangThai;
 }

@@ -1,5 +1,6 @@
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
@@ -7,12 +8,19 @@ import com.poly.pro_1041.it17322.group4.service.ViewHoaDonService;
 import com.poly.pro_1041.it17322.group4.service.ViewTTOrder;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewTTOrderImpl;
+import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,13 +36,14 @@ public class ViewLichSu extends javax.swing.JPanel {
     private ViewTTOrder viewTTOrder;
     private ViewHoaDonService viewHoaDonService;
     private DefaultComboBoxModel dcbm;
+    private Account a = new Account();
 
-    public ViewLichSu() {
+    public ViewLichSu(Account account) {
         initComponents();
         tbDSHD.setModel(dtmHD = new DefaultTableModel());
         tbDSSP.setModel(dtmSP = new DefaultTableModel());
         cbbTTO.setModel(dcbm = new DefaultComboBoxModel());
-
+        a = account;
         listHoaDon = new ArrayList<>();
         listSanPham = new ArrayList<>();
         listTTO = new ArrayList<>();
@@ -44,7 +53,7 @@ public class ViewLichSu extends javax.swing.JPanel {
         String[] headerHD = {"STT", "Tên NV", "Tên KH", "Tên hóa đơn", "Trạng thái",
             "Ngày tạo", "Ngày thanh toán", "Tổng tiền"};
         dtmHD.setColumnIdentifiers(headerHD);
-        String[] headerSP = {"Tên sản phẩm", "Màu sắc", "Hãng",
+        String[] headerSP = {"STT", "Tên sản phẩm", "Màu sắc", "Hãng",
             "Kích cỡ", "Chất liệu", "Loại", "Số lượng", "Giá"};
         dtmSP.setColumnIdentifiers(headerSP);
 
@@ -95,6 +104,43 @@ public class ViewLichSu extends javax.swing.JPanel {
         showDataSP(listSanPham);
     }
 
+    public boolean checkNgay() {
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date ngayBatDau = java.sql.Date.valueOf(datePicker1.getDate());
+        Date ngayKetThuc = java.sql.Date.valueOf(datePicker3.getDate());
+        c1.setTime(ngayBatDau);
+        c2.setTime(ngayKetThuc);
+        long a = (c1.getTime().getTime()) / (24 * 3600 * 1000);
+        long b = (c2.getTime().getTime()) / (24 * 3600 * 1000);
+        if (a < b) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn ngày kết thúc!");
+            return false;
+        }
+    }
+
+    public void getListByDate() {
+        try {
+            String tuNgay = String.valueOf(datePicker1);
+            String denNgay = String.valueOf(datePicker3);
+            listHoaDon = viewHoaDonService.getListByDate(tuNgay, denNgay);
+            showDataHD(listHoaDon);
+        } catch (Exception e) {
+            listHoaDon = null;
+            showDataHD(listHoaDon);
+        }
+    }
+
+    private String tongTienHoaDon() {
+        Double tongTien = 0.00;
+        for (ViewHDCTResponse vhdctr : listSanPham) {
+            tongTien += Double.valueOf(String.valueOf(vhdctr.getGia())) * vhdctr.getSoLuong();
+        }
+        return String.valueOf(tongTien);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -102,8 +148,14 @@ public class ViewLichSu extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDSHD = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        datePicker3 = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel11 = new javax.swing.JLabel();
+        btnLoc = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
         cbbTTO = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        btnXuat = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDSSP = new javax.swing.JTable();
@@ -155,7 +207,30 @@ public class ViewLichSu extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbDSHD);
 
-        cbbTTO.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel10.setText("Từ ngày:");
+
+        datePicker1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        datePicker3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel11.setText("Đến ngày:");
+
+        btnLoc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnLoc.setIcon(new ImageIcon
+            ("src/main/icon/setting.png"));
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel12.setText("Trạng thái:");
+
+        cbbTTO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbbTTO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbbTTO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,8 +238,16 @@ public class ViewLichSu extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Trạng thái:");
+        btnXuat.setBackground(new java.awt.Color(0, 102, 102));
+        btnXuat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnXuat.setIcon(new ImageIcon
+            ("src/main/icon/file.png"));
+        btnXuat.setText("Xuất hóa đơn");
+        btnXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,21 +258,50 @@ public class ViewLichSu extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(datePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnLoc)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(40, 40, 40))
+                            .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(74, 74, 74)
+                        .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(0, 0, 0)
+                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(datePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLoc)))
+                    .addComponent(btnXuat)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(1, 1, 1)
+                        .addComponent(cbbTTO, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -371,6 +483,11 @@ public class ViewLichSu extends javax.swing.JPanel {
         fillData(index);
     }//GEN-LAST:event_tbDSHDMouseClicked
 
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        checkNgay();
+        getListByDate();
+    }//GEN-LAST:event_btnLocActionPerformed
+
     private void cbbTTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTTOActionPerformed
         String tto = (String) cbbTTO.getSelectedItem();
         int idTT = viewTTOrder.getID(tto).getId();
@@ -378,10 +495,28 @@ public class ViewLichSu extends javax.swing.JPanel {
         showDataHD(listHoaDon);
     }//GEN-LAST:event_cbbTTOActionPerformed
 
+    private void btnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatActionPerformed
+        if (tbDSHD.getSelectedRow() > -1) {
+            ViewHoaDonResponse vhdr = listHoaDon.get(tbDSHD.getSelectedRow());
+            vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
+            try {
+                viewHoaDonService.taoFilePDF(vhdr, viewHoaDonService.getOneHD(vhdr.getId()), this.a);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnXuatActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoc;
+    private javax.swing.JButton btnXuat;
     private javax.swing.JComboBox<String> cbbTTO;
-    private javax.swing.JLabel jLabel1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker3;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -71,7 +71,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         listVCTSP = vhds.getAllSP();
         listHD = vhds.getAllHD();
         for (ViewKhachHangRepose vkhr : listKH) {
-            cbbModelKhachHang.addElement(vkhr.getMa());
+            cbbModelKhachHang.addElement(vkhr.getHoTen());
         }
         cbbModelKhachHang.addElement(" ");
         cbbModelKhachHang.setSelectedItem(" ");
@@ -128,6 +128,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         btnDaGiao.setEnabled(true);
         btnHuy.setEnabled(true);
         btnHuyDonShip.setEnabled(true);
+        tbHDCT.setEnabled(true);
 
         lbTongTien.setText(tongTienHoaDon());
         if (vhdr.getTto().getId() == 2) {
@@ -153,6 +154,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
             btnHuy.setEnabled(false);
             btnRemoveAll.setEnabled(false);
             btnDaGiao.setEnabled(false);
+            tbHDCT.setEnabled(false);
         }
         if (vhdr.getTto().getId() == 3) {
             btnHuy.setEnabled(false);
@@ -186,6 +188,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         jScrollPane6 = new javax.swing.JScrollPane();
         tbKhachHang = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         TBPaneHD = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -251,6 +254,10 @@ public class ViewHoaDon extends javax.swing.JPanel {
         txtTienShip = new javax.swing.JTextField();
         txtTienKhachDuaShip = new javax.swing.JTextField();
         lbTienThuaShip = new javax.swing.JLabel();
+        radioChoTT = new javax.swing.JRadioButton();
+        radioDaTT = new javax.swing.JRadioButton();
+        radioDangGiao = new javax.swing.JRadioButton();
+        radioDaGiao = new javax.swing.JRadioButton();
 
         ViewKhachHang.setMinimumSize(new java.awt.Dimension(536, 538));
 
@@ -368,10 +375,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -980,16 +984,59 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Ship hàng", jPanel6);
 
+        buttonGroup1.add(radioChoTT);
+        radioChoTT.setText("Chờ thanh toán");
+        radioChoTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioChoTTActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioDaTT);
+        radioDaTT.setText("Đã thanh toán");
+        radioDaTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDaTTActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioDangGiao);
+        radioDangGiao.setText("Đang giao");
+        radioDangGiao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDangGiaoActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioDaGiao);
+        radioDaGiao.setText("Đã giao");
+        radioDaGiao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDaGiaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(radioChoTT)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioDaTT)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioDangGiao)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioDaGiao)))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -997,8 +1044,14 @@ public class ViewHoaDon extends javax.swing.JPanel {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioChoTT)
+                    .addComponent(radioDaTT)
+                    .addComponent(radioDangGiao)
+                    .addComponent(radioDaGiao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1049,7 +1102,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                     ViewCTSPResponse vctspr = listVCTSP.get(tbSanPham.getSelectedRow());
                     ChiTietSanPham ctsp = new ChiTietSanPham();
                     ctsp.setId(vctspr.getId());
-                    ViewHDCTResponse vhdctr = new ViewHDCTResponse(ctsp, vctspr.getHang().getTen(), vctspr.getSp().getTenSP(), vctspr.getMauSac().getTen(), vctspr.getLoai().getTen(), vctspr.getKichCo().getTen(), vctspr.getChatLieu().getTen(), Integer.valueOf(soLuong), vctspr.getGia());
+                    ViewHDCTResponse vhdctr = new ViewHDCTResponse(ctsp, vctspr.getHang().getTen(), vctspr.getTen(), vctspr.getMauSac().getTen(), vctspr.getLoai().getTen(), vctspr.getKichCo().getTen(), vctspr.getChatLieu().getTen(), Integer.valueOf(soLuong), vctspr.getGia());
                     if (vhds.checkSoLuongTonVoiSoLuong(vhdctr)) {
                         UUID id = listHD.get(tbHoaDon.getSelectedRow()).getId();
                         HoaDon hd = new HoaDon();
@@ -1147,15 +1200,21 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
         // TODO add your handling code here:
-        if (tbHoaDon.getSelectedRow() > -1) {
-            ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
-            vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
-            try {
-                vhds.taoFilePDF(vhdr, vhds.getOneHD(vhdr.getId()), a);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        int i = JOptionPane.showConfirmDialog(TBPaneHD, "Bạn có muốn xuất hóa đơn không ?");
+        if (i == JOptionPane.YES_OPTION) {
+            if (tbHoaDon.getSelectedRow() > -1) {
+                ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
+                vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
+                try {
+                    vhds.taoFilePDF(vhdr, vhds.getOneHD(vhdr.getId()), a);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(TBPaneHD, "Hãy chọn hóa đơn bạn cần in");
             }
         }
+
     }//GEN-LAST:event_btnPDFActionPerformed
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
@@ -1170,7 +1229,9 @@ public class ViewHoaDon extends javax.swing.JPanel {
         }
         cbbModelKhachHang.setSelectedItem(" ");
         JOptionPane.showMessageDialog(TBPaneHD, vhds.addHoaDon(vhdr));
+        ViewHoaDonResponse vhdr1 = vhds.getOneHDByMa(String.valueOf(randomNum));
         listHD = vhds.getAllHD();
+        tbHoaDon.setRowSelectionInterval(listHD.indexOf(vhdr1), listHD.indexOf(vhdr1));
         showDataTableHoaDon(listHD);
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
@@ -1340,16 +1401,20 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 kh.setId(idKH);
                 vhdr.setKhachHang(kh);
             }
-            if (Double.valueOf(tongTienHoaDon()) <= Double.valueOf(txtTienKhachDua.getText()) + Double.valueOf(txtTienTaiKhoan.getText())) {
-                JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(vhdr));
-                cbbModelKhachHang.setSelectedItem(" ");
-                listHD = vhds.getAllHD();
-                showDataTableHoaDon(listHD);
-                txtTienTaiKhoan.setText("0.0");
-                txtTienKhachDua.setText("0.0");
-                lbTienThua.setText("0.0");
+            if (txtTienKhachDua.getText().matches(regexInt) && txtTienTaiKhoan.getText().matches(regexInt)) {
+                if (Double.valueOf(tongTienHoaDon()) <= Double.valueOf(txtTienKhachDua.getText()) + Double.valueOf(txtTienTaiKhoan.getText())) {
+                    JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(vhdr));
+                    cbbModelKhachHang.setSelectedItem(" ");
+                    listHD = vhds.getAllHD();
+                    showDataTableHoaDon(listHD);
+                    txtTienTaiKhoan.setText("0");
+                    txtTienKhachDua.setText("0");
+                    lbTienThua.setText("0");
+                } else {
+                    JOptionPane.showMessageDialog(TBPaneHD, "Tiền khách đưa không đủ");
+                }
             } else {
-                JOptionPane.showMessageDialog(TBPaneHD, "Tiền khách đưa không đủ");
+                JOptionPane.showMessageDialog(TBPaneHD, "Tiền đưa phải là số");
             }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -1423,6 +1488,30 @@ public class ViewHoaDon extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTienShipKeyReleased
 
+    private void radioChoTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioChoTTActionPerformed
+        // TODO add your handling code here:  
+        listHD = vhds.getAllHDByTT(2);
+        showDataTableHoaDon(listHD);
+    }//GEN-LAST:event_radioChoTTActionPerformed
+
+    private void radioDaTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDaTTActionPerformed
+        // TODO add your handling code here:
+        listHD = vhds.getAllHDByTT(1);
+        showDataTableHoaDon(listHD);
+    }//GEN-LAST:event_radioDaTTActionPerformed
+
+    private void radioDangGiaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDangGiaoActionPerformed
+        // TODO add your handling code here:
+        listHD = vhds.getAllHDByTT(4);
+        showDataTableHoaDon(listHD);
+    }//GEN-LAST:event_radioDangGiaoActionPerformed
+
+    private void radioDaGiaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDaGiaoActionPerformed
+        // TODO add your handling code here:
+        listHD = vhds.getAllHDByTT(5);
+        showDataTableHoaDon(listHD);
+    }//GEN-LAST:event_radioDaGiaoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane TBPaneHD;
@@ -1439,6 +1528,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private javax.swing.JButton btnTaoDonShip;
     private javax.swing.JButton btnTaoHoaDon;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbHinhThuc;
     private javax.swing.JComboBox<String> cbbHinhThucThanhToanShip;
     private javax.swing.JComboBox<String> cbbKHShip;
@@ -1483,6 +1573,10 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private javax.swing.JLabel lbTienThuaShip;
     private javax.swing.JLabel lbTongTien;
     private javax.swing.JLabel lbTongTienDonShip;
+    private javax.swing.JRadioButton radioChoTT;
+    private javax.swing.JRadioButton radioDaGiao;
+    private javax.swing.JRadioButton radioDaTT;
+    private javax.swing.JRadioButton radioDangGiao;
     private javax.swing.JTable tbHDCT;
     private javax.swing.JTable tbHoaDon;
     private javax.swing.JTable tbKhachHang;

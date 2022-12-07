@@ -43,7 +43,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private HoaDon hd = new HoaDon();
     private ViewHoaDonServiceImpl hdService = new ViewHoaDonServiceImpl();
     private List<ViewHoaDonResponse> listHD = new ArrayList<>();
-    
+
     public ViewKhachHang(Account a) {
         initComponents();
         this.account = a;
@@ -53,14 +53,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
         listKH = khService.getAll();
         showDetail(listKH);
     }
-    
+
     private void showDetail(List<ViewKhachHangRepose> lists) {
         dtm.setRowCount(0);
         for (ViewKhachHangRepose viewKH : lists) {
             dtm.addRow(viewKH.toDataRow());
         }
     }
-    
+
     private void clearForm() {
         txtTenKhachHang.setText("");
         txtNgaySinh.setText("");
@@ -72,12 +72,11 @@ public class ViewKhachHang extends javax.swing.JPanel {
         tbHienThi.setRowSelectionAllowed(false);
         btnThem.setEnabled(true);
         btnSua.setEnabled(false);
-        btnXoa.setEnabled(false);
         labelNgayTao.setText("");
         labelNCS.setText("");
         labelNguoiTao.setText("");
     }
-    
+
     private void fillIndex() {
         ViewKhachHangRepose kh = listKH.get(index);
         txtTenKhachHang.setText(kh.getHoTen());
@@ -138,7 +137,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
         btnLamMoi = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
         labelDiem = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -225,14 +223,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
             }
         });
         jPanel5.add(btnSua);
-
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-        jPanel5.add(btnXoa);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -504,16 +494,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        ViewKhachHangRepose khrepo = listKH.get(tbHienThi.getSelectedRow());
-        String delete = khService.delete(khrepo);
-        JOptionPane.showMessageDialog(this, delete);
-        listKH = khService.getAll();
-        clearForm();
-        showDetail(listKH);
-    }//GEN-LAST:event_btnXoaActionPerformed
-
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         if (!radioNam.isSelected() && !radioNu.isSelected()) {
@@ -583,7 +563,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, add);
             listKH = khService.getAll();
             showDetail(listKH);
-            
+
         }
     }//GEN-LAST:event_btnThemActionPerformed
     private String getDate() {
@@ -642,7 +622,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void tbHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiMouseClicked
         // TODO add your handling code here:
-        String headerhd[] = {"STT", "Tên", "Ngày tạo", "Ngày thanh toán", "Ngày ship", "Ngày nhận", "Tổng tiền"};
+        String headerhd[] = {"STT", "Mã HD", "Ngày tạo", "Ngày thanh toán", "Ngày ship", "Ngày nhận", "Tổng tiền"};
         tbHoaDon.setModel(dtm2);
         dtm2.setColumnIdentifiers(headerhd);
         index = tbHienThi.getSelectedRow();
@@ -668,7 +648,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTien;
     private javax.swing.JButton btnVe;
-    private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;

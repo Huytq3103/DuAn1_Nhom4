@@ -23,11 +23,13 @@ import java.util.List;
  */
 public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
+
     private MauSacRepository msr = new MauSacRepository();
     private LoaiSPRepository lspr = new LoaiSPRepository();
     private KichCoRepository kcr = new KichCoRepository();
     private HangSPRepository hspr = new HangSPRepository();
     private ChatLieuRepository clr = new ChatLieuRepository();
+
 
     @Override
     public List<MauSac> getAllMauSac() {
@@ -169,6 +171,7 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
             return "Không thành công";
         }
     }
+
 
     @Override
     public String UpdateLoai(Loai loai) {
