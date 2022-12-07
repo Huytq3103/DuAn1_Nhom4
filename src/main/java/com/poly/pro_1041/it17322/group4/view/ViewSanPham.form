@@ -220,9 +220,7 @@
                                           <Component id="radioChatLieu" min="-2" pref="98" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                           <Component id="radioLoaiSanPham" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                          <Component id="radioTenSP" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -240,7 +238,6 @@
                               <Component id="radioKichCo" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioChatLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioLoaiSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioTenSP" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtMaThuocTinh" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -351,17 +348,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemThuocTinhSPActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="radioTenSP">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroup1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="T&#xea;n s&#x1ea3;n ph&#x1ea9;m"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioTenSPActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="M&#xe3;"/>
@@ -469,8 +455,8 @@
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="cbbTenSP" pref="137" max="32767" attributes="0"/>
-                                              <Component id="cbbLoaiSP" max="32767" attributes="0"/>
+                                              <Component id="cbbLoaiSP" pref="137" max="32767" attributes="0"/>
+                                              <Component id="txtTenSP" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -526,19 +512,8 @@
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="txtMa" min="-2" pref="158" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lbanh" min="-2" pref="154" max="-2" attributes="0"/>
-                                      <Component id="btnChonAnh" min="-2" pref="154" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="txtMa" min="-2" pref="158" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -550,16 +525,15 @@
                               <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbbMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbbTenSP" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTenSP" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -579,7 +553,7 @@
                                       <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtNgayNhap" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" pref="20" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnThemChiTietSanPham" min="-2" pref="37" max="-2" attributes="0"/>
                                       <Component id="btnSuaChiTietSanPham" min="-2" pref="37" max="-2" attributes="0"/>
@@ -590,14 +564,8 @@
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnLamMoi1" min="-2" pref="37" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lbanh" min="-2" pref="137" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnChonAnh" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -732,42 +700,12 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cbbTenSP">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel28">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="M&#xe3;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtMa">
-                </Component>
-                <Component class="javax.swing.JButton" name="btnChonAnh">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n &#x1ea3;nh"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChonAnhActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lbanh">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new ImageIcon&#xd;&#xa;            (&quot;src/main/anh/anh1.png&quot;)" type="code"/>
-                    </Property>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnThemChiTietSanPham">
                   <Properties>
@@ -837,6 +775,8 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoi2ActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtTenSP">
                 </Component>
               </SubComponents>
             </Container>

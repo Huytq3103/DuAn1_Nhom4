@@ -19,7 +19,7 @@ public class ChatLieuRepository {
 
     private String fromTable = "FROM ChatLieu";
 
-    private Session session;
+    private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<ChatLieu> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();

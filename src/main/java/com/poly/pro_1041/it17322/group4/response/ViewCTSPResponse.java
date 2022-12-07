@@ -11,7 +11,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -31,7 +30,7 @@ public class ViewCTSPResponse {
 
     private UUID id;
     private String ma;
-    private SanPham sp;
+    private String sp;
     private Hang hang;
     private Loai loai;
     private KichCo kichCo;
@@ -47,7 +46,7 @@ public class ViewCTSPResponse {
     public ViewCTSPResponse() {
     }
 
-    public ViewCTSPResponse(UUID id, SanPham sp, int soLuongTon) {
+    public ViewCTSPResponse(UUID id, String sp, int soLuongTon) {
         this.id = id;
         this.sp = sp;
         this.soLuongTon = soLuongTon;
@@ -69,7 +68,7 @@ public class ViewCTSPResponse {
         this.hinh = ctsp.getHinh();
     }
 
-    public ViewCTSPResponse(UUID id, String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
+    public ViewCTSPResponse(UUID id, String ma, String sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
         this.id = id;
         this.ma = ma;
         this.sp = sp;
@@ -83,10 +82,9 @@ public class ViewCTSPResponse {
         this.gia = gia;
         this.km = km;
 
-
     }
 
-    public ViewCTSPResponse(String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String hinh, int trangThai) {
+    public ViewCTSPResponse(String ma, String sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String hinh, int trangThai) {
         this.ma = ma;
         this.sp = sp;
         this.hang = hang;
@@ -101,9 +99,8 @@ public class ViewCTSPResponse {
         this.trangThai = trangThai;
     }
 
+    public ViewCTSPResponse(String ma, String sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
 
-    public ViewCTSPResponse( String ma, SanPham sp, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
-        
         this.ma = ma;
         this.sp = sp;
         this.hang = hang;
@@ -116,19 +113,17 @@ public class ViewCTSPResponse {
         this.gia = gia;
         this.km = km;
     }
-    
-
-
 
     public Object[] toDataRow() {
-        return new Object[]{sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
+        return new Object[]{sp, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), soLuongTon, gia};
     }
+
     public Object[] toDataRowKM() {
-        return new Object[]{sp.getTenSP(),loai.getTen(),soLuongTon,false};
+        return new Object[]{sp, loai.getTen(), soLuongTon, false};
     }
 
     public Object[] toDataRow1() {
-        return new Object[]{ma, sp.getTenSP(), mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
+        return new Object[]{ma, sp, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
     }
 
     public static void main(String[] args) {

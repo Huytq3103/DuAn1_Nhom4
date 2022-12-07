@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -131,6 +132,29 @@ public class ChiTietSanPhamRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public int genMaCTSP() {
+        String maStr = "";
+        session = HibernateUtil.getSession();
+        try {
+            String nativeQuery = "SELECT MAX(CONVERT(INT, SUBSTRING(a.ma,5,10))) from ChiTietSanPham a";
+            NativeQuery query = session.createNativeQuery(nativeQuery);
+            if (query.getSingleResult() != null) {
+                maStr = query.getSingleResult().toString();
+            } else {
+                maStr = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (maStr == null) {
+            maStr = "0";
+            int ma = Integer.parseInt(maStr);
+            return ++ma;
+        }
+        int ma = Integer.parseInt(maStr);
+        return ++ma;
     }
 
 }
