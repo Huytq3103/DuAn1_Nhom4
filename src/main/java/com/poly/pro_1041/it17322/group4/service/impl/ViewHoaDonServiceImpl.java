@@ -64,11 +64,20 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         }
         return list;
     }
+    
 
     @Override
     public List<ViewHoaDonResponse> getAllHD() {
         List<ViewHoaDonResponse> list = new ArrayList<>();
         for (HoaDon hd : hdr.getAllOrderByNgayTao()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+    @Override
+    public List<ViewHoaDonResponse> getAllHDByTT(int id) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByTrangThai(id)) {
             list.add(new ViewHoaDonResponse(hd));
         }
         return list;
