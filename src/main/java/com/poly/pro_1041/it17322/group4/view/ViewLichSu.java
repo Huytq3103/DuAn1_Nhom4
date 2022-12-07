@@ -38,12 +38,12 @@ public class ViewLichSu extends javax.swing.JPanel {
     private DefaultComboBoxModel dcbm;
     private Account a = new Account();
 
-    public ViewLichSu() {
+    public ViewLichSu(Account account) {
         initComponents();
         tbDSHD.setModel(dtmHD = new DefaultTableModel());
         tbDSSP.setModel(dtmSP = new DefaultTableModel());
         cbbTTO.setModel(dcbm = new DefaultComboBoxModel());
-
+        a = account;
         listHoaDon = new ArrayList<>();
         listSanPham = new ArrayList<>();
         listTTO = new ArrayList<>();
@@ -500,7 +500,7 @@ public class ViewLichSu extends javax.swing.JPanel {
             ViewHoaDonResponse vhdr = listHoaDon.get(tbDSHD.getSelectedRow());
             vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
             try {
-                viewHoaDonService.taoFilePDF(vhdr, viewHoaDonService.getOneHD(vhdr.getId()), a);
+                viewHoaDonService.taoFilePDF(vhdr, viewHoaDonService.getOneHD(vhdr.getId()), this.a);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
             }

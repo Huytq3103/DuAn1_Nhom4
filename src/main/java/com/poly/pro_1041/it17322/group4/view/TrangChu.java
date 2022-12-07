@@ -303,7 +303,7 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
         clearButtomSelection();
-        ViewLichSu viewLichSu = new ViewLichSu();
+        ViewLichSu viewLichSu = new ViewLichSu(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewLichSu);
         panelTrangChu.setLayout(new FlowLayout());

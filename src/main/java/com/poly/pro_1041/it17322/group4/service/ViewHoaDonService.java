@@ -68,4 +68,6 @@ public interface ViewHoaDonService {
 
     List<ViewKhachHangRepose> getAllKH();
 
+    List<ViewHoaDonResponse> getAllHDByTT(int id);
+
 }

@@ -237,7 +237,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         radioLoaiSanPham = new javax.swing.JRadioButton();
         btnSuaThuocTinhSP = new javax.swing.JButton();
         btnThemThuocTinhSP = new javax.swing.JButton();
-        radioTenSP = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         txtMaThuocTinh = new javax.swing.JTextField();
         btnLamMoiThuocTinh = new javax.swing.JButton();
@@ -394,14 +393,6 @@ public class ViewSanPham extends javax.swing.JPanel {
             }
         });
 
-        buttonGroup1.add(radioTenSP);
-        radioTenSP.setText("Tên sản phẩm");
-        radioTenSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioTenSPActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Mã");
 
         btnLamMoiThuocTinh.setBackground(new java.awt.Color(0, 102, 102));
@@ -444,13 +435,11 @@ public class ViewSanPham extends javax.swing.JPanel {
                                 .addComponent(radioHang, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addComponent(radioKichCo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(radioChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                 .addComponent(radioLoaiSanPham)
-                                .addGap(31, 31, 31)
-                                .addComponent(radioTenSP)
-                                .addGap(23, 23, 23))))))
+                                .addGap(135, 135, 135))))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,7 +451,6 @@ public class ViewSanPham extends javax.swing.JPanel {
                     .addComponent(radioKichCo)
                     .addComponent(radioChatLieu)
                     .addComponent(radioLoaiSanPham)
-                    .addComponent(radioTenSP)
                     .addComponent(jLabel3)
                     .addComponent(txtMaThuocTinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
@@ -700,7 +688,7 @@ public class ViewSanPham extends javax.swing.JPanel {
                             .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27)
                             .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 22, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThemChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSuaChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1068,10 +1056,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtMaThuocTinh.setEditable(true);
     }//GEN-LAST:event_btnLamMoiThuocTinhActionPerformed
 
-    private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTenSPActionPerformed
-
-    }//GEN-LAST:event_radioTenSPActionPerformed
-
     private void btnThemThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuocTinhSPActionPerformed
         String maThuocTinh = txtMaThuocTinh.getText();
         String tenThuocTinh = txtThuocTinh.getText();
@@ -1269,7 +1253,6 @@ public class ViewSanPham extends javax.swing.JPanel {
     private javax.swing.JRadioButton radioKichCo;
     private javax.swing.JRadioButton radioLoaiSanPham;
     private javax.swing.JRadioButton radioMauSac;
-    private javax.swing.JRadioButton radioTenSP;
     private javax.swing.JTable tbSanPham;
     private javax.swing.JTable tbThuocTinh;
     private javax.swing.JTextField txtGiaBan;
