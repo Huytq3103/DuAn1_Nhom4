@@ -31,7 +31,6 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
     private ChatLieuRepository clr = new ChatLieuRepository();
 
 
-
     @Override
     public List<MauSac> getAllMauSac() {
         return msr.getAll();
@@ -144,12 +143,6 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddChatLieu(ChatLieu chatLieu) {
-        ChatLieu spMa = null;
-        try {
-            spMa = clr.getOneMa(chatLieu.getMa());
-        } catch (Exception e) {
-
-        }
         if (chatLieu.getMa().isEmpty()) {
             return "Mã không được trống";
         }
