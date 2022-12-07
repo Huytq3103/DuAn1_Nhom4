@@ -11,15 +11,12 @@ import com.poly.pro_1041.it17322.group4.domainmodel.ChucVuAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
-import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonTra;
-import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonTraChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
@@ -63,12 +60,9 @@ public class HibernateUtil {
         conf.addAnnotatedClass(Loai.class);
         conf.addAnnotatedClass(LoaiKM.class);
         conf.addAnnotatedClass(MauSac.class);
-        conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(TrangThaiAccount.class);
         conf.addAnnotatedClass(TrangThaiKM.class);
         conf.addAnnotatedClass(TrangThaiOrder.class);
-        conf.addAnnotatedClass(HoaDonTra.class);
-        conf.addAnnotatedClass(HoaDonTraChiTiet.class);
         conf.setProperties(properties);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();

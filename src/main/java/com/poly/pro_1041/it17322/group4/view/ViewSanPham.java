@@ -6,13 +6,10 @@ package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
-import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
-import com.poly.pro_1041.it17322.group4.repository.SanPhamRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewSanPhamService;
 import com.poly.pro_1041.it17322.group4.service.ViewThuocTinhService;
@@ -26,25 +23,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.RichTextString;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -60,13 +48,11 @@ public class ViewSanPham extends javax.swing.JPanel {
     private DefaultTableModel dtm1 = new DefaultTableModel();
     private ViewSanPhamService vsp = new ViewSanPhamServiceImpl();
     private List<ViewCTSPResponse> listVCTSP = new ArrayList<>();
-    private DefaultComboBoxModel cbb1 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb2 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb3 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb4 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb5 = new DefaultComboBoxModel();
     private DefaultComboBoxModel cbb6 = new DefaultComboBoxModel();
-    private List<SanPham> listSP = new ArrayList<>();
     private List<KichCo> listkc = new ArrayList<>();
     private List<MauSac> listms = new ArrayList<>();
     private List<Hang> listh = new ArrayList<>();
@@ -80,21 +66,16 @@ public class ViewSanPham extends javax.swing.JPanel {
      */
     public ViewSanPham(Account a) {
         initComponents();
-        cbbTenSP.setModel(cbb1);
         cbbMauSac.setModel(cbb2);
         cbbLoaiSP.setModel(cbb3);
         cbbKichCo.setModel(cbb4);
         cbbHang.setModel(cbb5);
         cbbChatLieu.setModel(cbb6);
-        listSP = vtts.getAllSanPham();
         listkc = vtts.getAllKichCo();
         listms = vtts.getAllMauSac();
         listh = vtts.getAllHang();
         listl = vtts.getAllLoai();
         listcl = vtts.getAllChatLieu();
-        for (SanPham sp : listSP) {
-            cbb1.addElement(sp.getTenSP());
-        }
         for (KichCo kc : listkc) {
             cbb4.addElement(kc.getTen());
         }
@@ -128,13 +109,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (ViewCTSPResponse vctspr : list) {
             dtm.addRow(vctspr.toDataRow1());
-        }
-    }
-
-    private void showDataTableSanPham(List<SanPham> list) {
-        dtm1.setRowCount(0);
-        for (SanPham sp : list) {
-            dtm1.addRow(new Object[]{sp.getId(), sp.getMa(), sp.getTenSP()});
         }
     }
 
@@ -174,10 +148,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }
 
     private void thuocTinh() {
-        if (radioTenSP.isSelected() == true) {
-            listSP = vtts.getAllSanPham();
-            showDataTableSanPham(listSP);
-        } else if (radioChatLieu.isSelected() == true) {
+        if (radioChatLieu.isSelected() == true) {
             listcl = vtts.getAllChatLieu();
             showDataTableChatLieu(listcl);
         } else if (radioLoaiSanPham.isSelected() == true) {
@@ -198,7 +169,6 @@ public class ViewSanPham extends javax.swing.JPanel {
 
     private void fill(int row) {
         txtMa.setText(listVCTSP.get(row).getMa());
-        cbbTenSP.setSelectedItem(listVCTSP.get(row).getSp().getTenSP());
         cbbMauSac.setSelectedItem(listVCTSP.get(row).getMauSac().getTen());
         cbbLoaiSP.setSelectedItem(listVCTSP.get(row).getLoai().getTen());
         cbbKichCo.setSelectedItem(listVCTSP.get(row).getKichCo().getTen());
@@ -207,16 +177,12 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtGiaBan.setText(String.valueOf(listVCTSP.get(row).getGia()));
         txtNgayNhap.setText(String.valueOf(listVCTSP.get(row).getNgayNhap()));
         txtSoLuong.setText(String.valueOf(listVCTSP.get(row).getSoLuongTon()));
-        lbanh.setIcon(ResizeImage(String.valueOf(listVCTSP.get(row).getHinh())));
         tbSanPham.setRowSelectionAllowed(true);
 
     }
 
     private void fill1(int row) {
-        if (radioTenSP.isSelected()) {
-            txtMaThuocTinh.setText(listSP.get(row).getMa());
-            txtThuocTinh.setText(listSP.get(row).getTenSP());
-        } else if (radioMauSac.isSelected()) {
+        if (radioMauSac.isSelected()) {
             txtMaThuocTinh.setText(listms.get(row).getMa());
             txtThuocTinh.setText(listms.get(row).getTen());
         } else if (radioLoaiSanPham.isSelected()) {
@@ -268,7 +234,6 @@ public class ViewSanPham extends javax.swing.JPanel {
         radioLoaiSanPham = new javax.swing.JRadioButton();
         btnSuaThuocTinhSP = new javax.swing.JButton();
         btnThemThuocTinhSP = new javax.swing.JButton();
-        radioTenSP = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         txtMaThuocTinh = new javax.swing.JTextField();
         btnLamMoiThuocTinh = new javax.swing.JButton();
@@ -291,16 +256,14 @@ public class ViewSanPham extends javax.swing.JPanel {
         cbbHang = new javax.swing.JComboBox<>();
         cbbChatLieu = new javax.swing.JComboBox<>();
         cbbKichCo = new javax.swing.JComboBox<>();
-        cbbTenSP = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
         txtMa = new javax.swing.JTextField();
-        btnChonAnh = new javax.swing.JButton();
-        lbanh = new javax.swing.JLabel();
         btnThemChiTietSanPham = new javax.swing.JButton();
         btnSuaChiTietSanPham = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         btnLamMoi1 = new javax.swing.JButton();
         btnLamMoi2 = new javax.swing.JButton();
+        txtTenSP = new javax.swing.JTextField();
         PanelDSSP = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         tbSanPham = new javax.swing.JTable();
@@ -425,14 +388,6 @@ public class ViewSanPham extends javax.swing.JPanel {
             }
         });
 
-        buttonGroup1.add(radioTenSP);
-        radioTenSP.setText("Tên sản phẩm");
-        radioTenSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioTenSPActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Mã");
 
         btnLamMoiThuocTinh.setBackground(new java.awt.Color(0, 102, 102));
@@ -475,13 +430,10 @@ public class ViewSanPham extends javax.swing.JPanel {
                                 .addComponent(radioHang, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addComponent(radioKichCo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(radioChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                 .addComponent(radioLoaiSanPham)
-                                .addGap(31, 31, 31)
-                                .addComponent(radioTenSP)
-                                .addGap(23, 23, 23))))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,7 +445,6 @@ public class ViewSanPham extends javax.swing.JPanel {
                     .addComponent(radioKichCo)
                     .addComponent(radioChatLieu)
                     .addComponent(radioLoaiSanPham)
-                    .addComponent(radioTenSP)
                     .addComponent(jLabel3)
                     .addComponent(txtMaThuocTinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
@@ -568,19 +519,7 @@ public class ViewSanPham extends javax.swing.JPanel {
 
         cbbKichCo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cbbTenSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel28.setText("Mã");
-
-        btnChonAnh.setText("Chọn ảnh");
-        btnChonAnh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonAnhActionPerformed(evt);
-            }
-        });
-
-        lbanh.setIcon(new ImageIcon
-            ("src/main/anh/anh1.png"));
 
         btnThemChiTietSanPham.setBackground(new java.awt.Color(0, 102, 102));
         btnThemChiTietSanPham.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -646,8 +585,8 @@ public class ViewSanPham extends javax.swing.JPanel {
                                     .addComponent(jLabel19))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbbTenSP, 0, 137, Short.MAX_VALUE)
-                                    .addComponent(cbbLoaiSP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(cbbLoaiSP, 0, 137, Short.MAX_VALUE)
+                                    .addComponent(txtTenSP))))
                         .addGap(0, 57, Short.MAX_VALUE)
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -688,15 +627,8 @@ public class ViewSanPham extends javax.swing.JPanel {
                         .addGap(28, 28, 28)
                         .addComponent(btnLamMoi2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSPLayout.createSequentialGroup()
-                        .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(PanelSPLayout.createSequentialGroup()
-                        .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbanh, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnChonAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         PanelSPLayout.setVerticalGroup(
             PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -706,15 +638,14 @@ public class ViewSanPham extends javax.swing.JPanel {
                     .addComponent(jLabel22)
                     .addComponent(cbbMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
-                    .addComponent(cbbTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28)
                     .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26)
-                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelSPLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(35, 35, 35)
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -731,7 +662,7 @@ public class ViewSanPham extends javax.swing.JPanel {
                             .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27)
                             .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, Short.MAX_VALUE)
+
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThemChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSuaChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -739,13 +670,8 @@ public class ViewSanPham extends javax.swing.JPanel {
                                 .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnLamMoi2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSPLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnLamMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSPLayout.createSequentialGroup()
-                        .addComponent(lbanh, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnChonAnh)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLamMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );
 
@@ -959,7 +885,6 @@ public class ViewSanPham extends javax.swing.JPanel {
                 cell = rows.createCell(0, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getMa());
                 cell = rows.createCell(1, CellType.STRING);
-                cell.setCellValue(listVCTSP.get(i).getSp().getTenSP());
                 cell = rows.createCell(2, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getMauSac().getTen());
                 cell = rows.createCell(3, CellType.STRING);
@@ -997,7 +922,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoi1ActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        cbbTenSP.setSelectedIndex(0);
+        txtTenSP.setText("");
         cbbMauSac.setSelectedIndex(0);
         cbbLoaiSP.setSelectedIndex(0);
         cbbKichCo.setSelectedIndex(0);
@@ -1018,7 +943,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
-        } else if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
+        } else if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
@@ -1034,14 +959,13 @@ public class ViewSanPham extends javax.swing.JPanel {
             String ngayNhap = txtNgayNhap.getText();
             int soLuong = Integer.valueOf(txtSoLuong.getText());
             BigDecimal giaBan = BigDecimal.valueOf(gia);
-            SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
             MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
             Hang hang = listh.get(cbbHang.getSelectedIndex());
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
             int trangThai = 1;
-            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().update(viewCTSP, id));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
@@ -1049,7 +973,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaChiTietSanPhamActionPerformed
 
     private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemChiTietSanPhamActionPerformed
-        if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty()) {
+        if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
@@ -1064,37 +988,21 @@ public class ViewSanPham extends javax.swing.JPanel {
             String ngayNhap = getDate();
             int soLuong = Integer.valueOf(txtSoLuong.getText());
             BigDecimal giaBan = BigDecimal.valueOf(gia);
-            SanPham sp = listSP.get(cbbTenSP.getSelectedIndex());
             MauSac mauSac = listms.get(cbbMauSac.getSelectedIndex());
             Hang hang = listh.get(cbbHang.getSelectedIndex());
             Loai loai = listl.get(cbbLoaiSP.getSelectedIndex());
             ChatLieu chatLieu = listcl.get(cbbChatLieu.getSelectedIndex());
             KichCo kichCo = listkc.get(cbbKichCo.getSelectedIndex());
-            String anh = duongdananh;
             int trangThai = 1;
-            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, sp, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
+            ViewCTSPResponse viewCTSP = new ViewCTSPResponse(ma, hang, loai, kichCo, mauSac, chatLieu, ngayNhap, soLuong, giaBan, duongdananh, trangThai);
             JOptionPane.showMessageDialog(PanelDSSP, new ViewSanPhamServiceImpl().add(viewCTSP));
             listVCTSP = vsp.getAllSP();
             showDataTableCTSanPham(listVCTSP);
         }
     }//GEN-LAST:event_btnThemChiTietSanPhamActionPerformed
 
-    private void btnChonAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonAnhActionPerformed
-        try {
-            JFileChooser f = new JFileChooser("C:\\Users\\DELL\\Pictures");
-            f.setDialogTitle("Mở file");
-            f.showOpenDialog(null);
-            File ftenanh = f.getSelectedFile();
-            duongdananh = ftenanh.getAbsolutePath();
 
-            lbanh.setIcon(ResizeImage(String.valueOf(duongdananh)));
-            System.out.println(duongdananh);
 
-        } catch (Exception e) {
-            System.out.println("Chua chon anh");
-            System.out.println(duongdananh);
-        }
-    }//GEN-LAST:event_btnChonAnhActionPerformed
 
     private void btnLamMoiThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiThuocTinhActionPerformed
         txtMaThuocTinh.setText("");
@@ -1102,39 +1010,41 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtMaThuocTinh.setEditable(true);
     }//GEN-LAST:event_btnLamMoiThuocTinhActionPerformed
 
-    private void radioTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTenSPActionPerformed
-        listSP = vtts.getAllSanPham();
-        showDataTableSanPham(listSP);
-    }//GEN-LAST:event_radioTenSPActionPerformed
-
     private void btnThemThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuocTinhSPActionPerformed
         String maThuocTinh = txtMaThuocTinh.getText();
         String tenThuocTinh = txtThuocTinh.getText();
-        if (radioTenSP.isSelected()) {
-            JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddSanPham(new SanPham(null, maThuocTinh, tenThuocTinh)));
-            listSP = vtts.getAllSanPham();
-            showDataTableSanPham(listSP);
-        } else if (radioMauSac.isSelected()) {
+        if (radioMauSac.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddMauSac(new MauSac(0, maThuocTinh, tenThuocTinh)));
             listms = vtts.getAllMauSac();
+            cbb2.addElement(tenThuocTinh);
             showDataTableMauSac(listms);
+            cbb2.addElement(tenThuocTinh);
         } else if (radioLoaiSanPham.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddLoai(new Loai(0, maThuocTinh, tenThuocTinh)));
             listl = vtts.getAllLoai();
+            cbb3.addElement(tenThuocTinh);
             showDataTableLoai(listl);
+            cbb3.addElement(tenThuocTinh);
         } else if (radioKichCo.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddKichCo(new KichCo(0, maThuocTinh, tenThuocTinh)));
             listkc = vtts.getAllKichCo();
+            cbb4.addElement(tenThuocTinh);
             showDataTableKichCo(listkc);
+            cbb4.addElement(tenThuocTinh);
         } else if (radioChatLieu.isSelected()) {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddChatLieu(new ChatLieu(0, maThuocTinh, tenThuocTinh)));
             listcl = vtts.getAllChatLieu();
+            cbb6.addElement(tenThuocTinh);
             showDataTableChatLieu(listcl);
+            cbb6.addElement(tenThuocTinh);
         } else {
             JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().AddHang(new Hang(0, maThuocTinh, tenThuocTinh)));
             listh = vtts.getAllHang();
+            cbb5.addElement(tenThuocTinh);
             showDataTableHang(listh);
+            cbb5.addElement(tenThuocTinh);
         }
+
     }//GEN-LAST:event_btnThemThuocTinhSPActionPerformed
 
     private void btnSuaThuocTinhSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThuocTinhSPActionPerformed
@@ -1145,13 +1055,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         } else {
             String maThuocTinh = txtMaThuocTinh.getText();
             String tenThuocTinh = txtThuocTinh.getText();
-            if (radioTenSP.isSelected()) {
-                SanPham sp = listSP.get(tbThuocTinh.getSelectedRow());
-                UUID idSanPham = sp.getId();
-                JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().UpdateSanPham(new SanPham(idSanPham, maThuocTinh, tenThuocTinh)));
-                listSP = vtts.getAllSanPham();
-                showDataTableSanPham(listSP);
-            } else if (radioMauSac.isSelected()) {
+            if (radioMauSac.isSelected()) {
                 MauSac ms = listms.get(tbThuocTinh.getSelectedRow());
                 int idMauSac = ms.getId();
                 JOptionPane.showMessageDialog(PanelDSSP, new ViewThuocTinhServiceImpl().UpdateMauSac(new MauSac(idMauSac, maThuocTinh, tenThuocTinh)));
@@ -1217,53 +1121,12 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_tbThuocTinhMouseClicked
 
     private void btnLamMoi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoi2ActionPerformed
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelJTableImport = null;
 
-        String defaultCurrentDirectoryPath = "D:\\";
-        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
-        int excelChooser = excelFileChooser.showOpenDialog(null);
-
-        if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = excelFileChooser.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-
-                excelJTableImport = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                for (int row = 0; row < excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    for (int column = 0; column < excelRow.getLastCellNum(); column++) {
-                        XSSFCell excelCell = excelRow.getCell(column);
-
-                        System.out.println(excelCell.getStringCellValue());
-                    }
-                }
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_btnLamMoi2ActionPerformed
-    String duongdananh = "C:\\Users\\DELL\\Pictures";
-
-    public ImageIcon ResizeImage(String ImagePath) {
-        ImageIcon MyImage = new ImageIcon(ImagePath);
-        Image img = MyImage.getImage();
-        Image newImg = img.getScaledInstance(lbanh.getWidth(), lbanh.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(newImg);
-        return image;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelDSSP;
     private javax.swing.JPanel PanelSP;
     private javax.swing.JTabbedPane TBPaneSP;
-    private javax.swing.JButton btnChonAnh;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnLamMoi1;
     private javax.swing.JButton btnLamMoi2;
@@ -1283,7 +1146,6 @@ public class ViewSanPham extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbbKichCo;
     private javax.swing.JComboBox<String> cbbLoaiSP;
     private javax.swing.JComboBox<String> cbbMauSac;
-    private javax.swing.JComboBox<String> cbbTenSP;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1302,13 +1164,11 @@ public class ViewSanPham extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JLabel lbanh;
     private javax.swing.JRadioButton radioChatLieu;
     private javax.swing.JRadioButton radioHang;
     private javax.swing.JRadioButton radioKichCo;
     private javax.swing.JRadioButton radioLoaiSanPham;
     private javax.swing.JRadioButton radioMauSac;
-    private javax.swing.JRadioButton radioTenSP;
     private javax.swing.JTable tbSanPham;
     private javax.swing.JTable tbThuocTinh;
     private javax.swing.JTextField txtGiaBan;
@@ -1317,6 +1177,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     private javax.swing.JTextField txtNgayNhap;
     private javax.swing.JTextField txtSeach;
     private javax.swing.JTextField txtSoLuong;
+    private javax.swing.JTextField txtTenSP;
     private javax.swing.JTextField txtThuocTinh;
     // End of variables declaration//GEN-END:variables
 

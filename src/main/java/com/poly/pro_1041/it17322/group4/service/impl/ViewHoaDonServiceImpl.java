@@ -64,11 +64,20 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         }
         return list;
     }
+    
 
     @Override
     public List<ViewHoaDonResponse> getAllHD() {
         List<ViewHoaDonResponse> list = new ArrayList<>();
         for (HoaDon hd : hdr.getAllOrderByNgayTao()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+    @Override
+    public List<ViewHoaDonResponse> getAllHDByTT(int id) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByTrangThai(id)) {
             list.add(new ViewHoaDonResponse(hd));
         }
         return list;
@@ -96,7 +105,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewHoaDonResponse getOneHDByMa(String ma) {
         return new ViewHoaDonResponse(hdr.getOne(ma));
     }
-    
+
     @Override
     public List<ViewHoaDonResponse> getList(int idTT) {
         List<ViewHoaDonResponse> list = new ArrayList<>();
@@ -186,7 +195,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
 
     @Override
     public boolean updateHD(ViewHoaDonResponse vhdr) {
-        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), null, null, vhdr.getTongTien()))) {
+        if (hdr.update(new HoaDon(vhdr.getId(), vhdr.getAccount(), vhdr.getKhachHang(), vhdr.getTto(), vhdr.getMa(), vhdr.getNgaoTao(), vhdr.getNgayThanhToan(), vhdr.getNgayShip(), vhdr.getNgayNhan(), vhdr.getTongTien()))) {
             return true;
         } else {
             return false;
@@ -376,6 +385,15 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     static Cell getCell10fLeft(String textValue, boolean isBold) {
         Cell myCell = new Cell().add(textValue).setFontSize(10f).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
         return isBold ? myCell.setBold() : myCell;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getListByDate(tuNgay, denNgay)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
     }
 
     @Override

@@ -37,6 +37,8 @@ public interface ViewHoaDonService {
 
     List<ViewHoaDonResponse> getList(int idTT);
 
+    List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay);
+
     List<TrangThaiOrder> getAllTTO();
 
     String thanhToan(ViewHoaDonResponse vhdr);
@@ -70,5 +72,7 @@ public interface ViewHoaDonService {
     boolean updateSoLuongTonKhiXoa(ViewHDCTResponse vhdctr);
 
     List<ViewKhachHangRepose> getAllKH();
+
+    List<ViewHoaDonResponse> getAllHDByTT(int id);
 
 }

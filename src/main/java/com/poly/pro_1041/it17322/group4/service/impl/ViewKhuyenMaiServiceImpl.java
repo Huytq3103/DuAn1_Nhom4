@@ -17,6 +17,7 @@ import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewLoaiKMResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewTrangThaiKMResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewKhuyenMaiService;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -82,16 +83,15 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     public String addKhuyenMai(ViewKhuyenMaiResponse vkmr) {
 
         if (kmrp.add(new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
-            return "Add thành công";
+            return "Lưu thành công";
         } else {
             return "Add thất bại";
         }
     }
 
     @Override
-    public boolean deleteKhuyenMai(ViewKhuyenMaiResponse vkmr) {
+    public boolean updateTTKhuyenMai(ViewKhuyenMaiResponse vkmr) {
         UUID id = vkmr.getId();
-
         KhuyenMai km = new KhuyenMai(null, vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM());
         km.setId(id);
         if (kmrp.delete(km)) {
@@ -99,12 +99,10 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         } else {
             return false;
         }
-
     }
 
     @Override
     public boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr) {
-
 
         if (kmrp.update(new KhuyenMai(vkmr.getId(), vkmr.getTrangThaiKM(), vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM()))) {
 
@@ -113,7 +111,6 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
             return false;
         }
     }
-
 
     @Override
     public List<ViewKhuyenMaiResponse> getOneMaKM(String maKM) {
@@ -136,11 +133,25 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public boolean updateCTSP(ViewCTSPResponse ctspr) {
-        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(),ctspr.getSp(),ctspr.getMauSac(),ctspr.getHang(), ctspr.getKichCo(),ctspr.getChatLieu(),ctspr.getLoai(),ctspr.getKm(),ctspr.getMa(),ctspr.getSoLuongTon(),ctspr.getGia(),ctspr.getNgayNhap(),null,ctspr.getHinh(),ctspr.getTrangThai()))) {
+        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, ctspr.getHinh(), ctspr.getTrangThai()))) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<ViewCTSPResponse> SearchSP(String tenSP) {
+        List<ViewCTSPResponse> tsp = new ArrayList<>();
+        List<ChiTietSanPham> tensp = new ArrayList<>();
+        ChiTietSanPhamRepository chiTietSPRepo = new ChiTietSanPhamRepository();
+        for (ChiTietSanPham x : chiTietSPRepo.getAll()) {
+            if (x.getTen().toLowerCase().contains(tenSP.toLowerCase())) {
+                tsp.add(new ViewCTSPResponse(x.getId(), x.getMa(), x.getTen(), x.getHang(), x.getLoai(), x.getKichCo(), x.getMauSac(), x.getChatLieu(), x.getNgayNhap(), x.getSoLuongTon(), x.getGia(), x.getKhuyenMai()));
+                System.out.println(tsp + "ádsd");
+            }
+        }
+        return tsp;
     }
 
 }
