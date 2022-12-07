@@ -45,7 +45,7 @@ public class HibernateUtil {
         properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
         properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=QuanAoNam");
         properties.put(Environment.USER, "sa");
-        properties.put(Environment.PASS, "31032003lssh");
+        properties.put(Environment.PASS, "Cuong180902");
         properties.put(Environment.SHOW_SQL, "true");
         conf.addAnnotatedClass(Account.class);
         conf.addAnnotatedClass(ChatLieu.class);

@@ -33,4 +33,15 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen);
 
+    List<ViewKhachHangRepose> searchByPhone(List<ViewKhachHangRepose> lists, String sdt);
+
+    List<ViewKhachHangRepose> searchByDiaChi(List<ViewKhachHangRepose> lists, String diaChi);
+
+    List<ViewKhachHangRepose> searchByEmail(List<ViewKhachHangRepose> lists, String email);
+
+    List<ViewKhachHangRepose> seachKhoangNgay(String ngayBatDau, String ngayKetThuc);
+
+    List<ViewKhachHangRepose> seachKhoangNgaySinh(String ngaySinh);
+
+    int genMaHD();
 }

@@ -5,6 +5,8 @@
 package com.poly.pro_1041.it17322.group4.response;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,7 +56,7 @@ public class ViewKhachHangRepose {
         this.diem = kh.getDiem();
     }
 
-    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, UUID nguoiTao, UUID nguoiChinhSua,int diem) {
+    public ViewKhachHangRepose(String ma, String hoTen, String ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, String ngayTao, String ngayChinhSua, UUID nguoiTao, UUID nguoiChinhSua, int diem) {
         this.ma = ma;
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
@@ -69,8 +71,8 @@ public class ViewKhachHangRepose {
         this.diem = diem;
     }
 
-    public Object[] toDataRow() {
-        return new Object[]{ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, ngayChinhSua,diem};
+    public Object[] toDataRow(int stt) {
+        return new Object[]{stt, ma, hoTen, ngaySinh, gioiTinh == true ? "Nam" : "Nữ", sdt, email, diaChi, ngayTao, (ngayChinhSua), diem};
     }
 
     public Object[] toDataRowHoaDon() {

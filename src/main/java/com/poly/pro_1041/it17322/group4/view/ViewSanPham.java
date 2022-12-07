@@ -662,6 +662,7 @@ public class ViewSanPham extends javax.swing.JPanel {
                             .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27)
                             .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+
                         .addGroup(PanelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThemChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSuaChiTietSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1000,6 +1001,9 @@ public class ViewSanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnThemChiTietSanPhamActionPerformed
 
+
+
+
     private void btnLamMoiThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiThuocTinhActionPerformed
         txtMaThuocTinh.setText("");
         txtThuocTinh.setText("");
@@ -1117,8 +1121,6 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_tbThuocTinhMouseClicked
 
     private void btnLamMoi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoi2ActionPerformed
-        
-    }//GEN-LAST:event_btnLamMoi2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

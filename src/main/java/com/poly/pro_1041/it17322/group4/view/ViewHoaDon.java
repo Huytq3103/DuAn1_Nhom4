@@ -7,14 +7,18 @@ package com.poly.pro_1041.it17322.group4.view;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
+import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
+import com.poly.pro_1041.it17322.group4.repository.ChiTietSanPhamRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewHoaDonService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
+import com.poly.pro_1041.it17322.group4.service.impl.ViewSanPhamServiceImpl;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,13 +45,21 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private DefaultTableModel dtm = new DefaultTableModel();
     private DefaultTableModel dtm1 = new DefaultTableModel();
     private DefaultTableModel dtm2 = new DefaultTableModel();
+    private DefaultTableModel dtmHD = new DefaultTableModel();
+    private DefaultTableModel dtmHDCTTH = new DefaultTableModel();
+    private DefaultTableModel dtmCTTH = new DefaultTableModel();
     private DefaultTableModel dtmKhachHang = new DefaultTableModel();
     private List<ViewCTSPResponse> listVCTSP = new ArrayList<>();
     private List<ViewHoaDonResponse> listHD = new ArrayList<>();
+    private List<ViewHoaDonResponse> listHDTH = new ArrayList<>();
     private List<ViewHDCTResponse> listHDCT = new ArrayList<>();
+    private List<ViewHDCTResponse> listHDCTTraHang = new ArrayList<>();
     private List<TrangThaiOrder> listTTO = new ArrayList<>();
     private List<ViewKhachHangRepose> listKH = new ArrayList<>();
+    private ChiTietSanPhamRepository ctspR = new ChiTietSanPhamRepository();
+    private ViewSanPhamServiceImpl vspService = new ViewSanPhamServiceImpl();
     private DefaultComboBoxModel cbbModelKhachHang = new DefaultComboBoxModel();
+
     private String regexInt = "[0-9]+";
     private Account a = new Account();
 
@@ -60,16 +72,23 @@ public class ViewHoaDon extends javax.swing.JPanel {
         cbbKhachHang.setModel(cbbModelKhachHang);
         String[] headerSanPham = {"Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Số Lượng tồn", "Đơn Giá"};
         String[] headerGioHang = {"Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Số Lượng", "Đơn Giá", "Tổng tiền"};
+        String[] headerHoaDonTH = {"Nhân viên", "Khách Hàng", "Mã hóa đơn", "Trạng thái", "Ngày tạo", "Ngày thanh toán"};
         String[] headerHoaDon = {"Nhân viên", "Khách Hàng", "Mã hóa đơn", "Trạng thái", "Ngày tạo", "Ngày thanh toán"};
+        dtmHD.setColumnIdentifiers(headerHoaDonTH);
+        dtmHDCTTH.setColumnIdentifiers(headerGioHang);
+        dtmCTTH.setColumnIdentifiers(headerSanPham);
         cbbKhachHang.setModel(cbbModelKhachHang);
         cbbKHShip.setModel(cbbModelKhachHang);
         dtm.setColumnIdentifiers(headerHoaDon);
         dtm1.setColumnIdentifiers(headerGioHang);
         dtm2.setColumnIdentifiers(headerSanPham);
+
         listKH = vhds.getAllKH();
         listTTO = vhds.getAllTTO();
         listVCTSP = vhds.getAllSP();
         listHD = vhds.getAllHD();
+        listHDTH = vhds.getAllHD();
+        listHDCTTraHang = vhds.getAllHDCT();
         for (ViewKhachHangRepose vkhr : listKH) {
             cbbModelKhachHang.addElement(vkhr.getHoTen());
         }
@@ -83,6 +102,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         showDataTableSanPham(listVCTSP);
         txtTienTaiKhoan.setEnabled(false);
         txtTienTaiKhoanShip.setEnabled(false);
+        showDetailHoaDonTH(listHDTH);
     }
 
     /**
@@ -94,6 +114,27 @@ public class ViewHoaDon extends javax.swing.JPanel {
         dtm2.setRowCount(0);
         for (ViewCTSPResponse vctspr : list) {
             dtm2.addRow(vctspr.toDataRow());
+        }
+    }
+
+    private void showDetailHoaDonTH(List<ViewHoaDonResponse> list) {
+        dtmHD.setRowCount(0);
+        for (ViewHoaDonResponse vhdr : list) {
+            dtmHD.addRow(vhdr.toDataRow());
+        }
+    }
+
+    private void showDetailHDCTTH(List<ViewHDCTResponse> list) {
+        dtmHDCTTH.setRowCount(0);
+        for (ViewHDCTResponse x : list) {
+            dtmHDCTTH.addRow(x.toDataRow());
+        }
+    }
+
+    private void showDetailCTSPTH(List<ViewCTSPResponse> list) {
+        dtmCTTH.setRowCount(0);
+        for (ViewCTSPResponse x : list) {
+            dtmCTTH.addRow(x.toDataRow());
         }
     }
 
@@ -254,10 +295,12 @@ public class ViewHoaDon extends javax.swing.JPanel {
         txtTienShip = new javax.swing.JTextField();
         txtTienKhachDuaShip = new javax.swing.JTextField();
         lbTienThuaShip = new javax.swing.JLabel();
+
         radioChoTT = new javax.swing.JRadioButton();
         radioDaTT = new javax.swing.JRadioButton();
         radioDangGiao = new javax.swing.JRadioButton();
         radioDaGiao = new javax.swing.JRadioButton();
+
 
         ViewKhachHang.setMinimumSize(new java.awt.Dimension(536, 538));
 
@@ -527,7 +570,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                             .addComponent(jLabel24))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(txtSDT)
                             .addComponent(txtTenKhachHang)
                             .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -667,7 +710,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 313, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -723,7 +766,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addComponent(jLabel8))
                     .addComponent(lbTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -775,7 +818,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                             .addComponent(jLabel12))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSDTKHShip, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(txtSDTKHShip, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                             .addComponent(txtTenKHShip))))
                 .addContainerGap())
         );
@@ -850,7 +893,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                         .addComponent(btnTaoDonShip, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHuyDonShip, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 322, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -978,7 +1021,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel20))
                     .addComponent(lbTienThuaShip, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1488,6 +1531,8 @@ public class ViewHoaDon extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTienShipKeyReleased
 
+
+
     private void radioChoTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioChoTTActionPerformed
         // TODO add your handling code here:  
         listHD = vhds.getAllHDByTT(2);
@@ -1511,6 +1556,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         listHD = vhds.getAllHDByTT(5);
         showDataTableHoaDon(listHD);
     }//GEN-LAST:event_radioDaGiaoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1573,10 +1619,13 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private javax.swing.JLabel lbTienThuaShip;
     private javax.swing.JLabel lbTongTien;
     private javax.swing.JLabel lbTongTienDonShip;
+
+
     private javax.swing.JRadioButton radioChoTT;
     private javax.swing.JRadioButton radioDaGiao;
     private javax.swing.JRadioButton radioDaTT;
     private javax.swing.JRadioButton radioDangGiao;
+
     private javax.swing.JTable tbHDCT;
     private javax.swing.JTable tbHoaDon;
     private javax.swing.JTable tbKhachHang;

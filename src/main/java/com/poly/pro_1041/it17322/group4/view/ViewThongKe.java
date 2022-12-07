@@ -115,7 +115,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         }
         radioNam.setSelected(true);
         showDataTableCTSP();
-        bieuDo_Nam();
+//        bieuDo_Nam();
         phanQuyen();
     }
 
@@ -410,7 +410,7 @@ public class ViewThongKe extends javax.swing.JPanel {
                 cell.setCellValue(formatter.format(listGiaBan_Nam.get(i)));
             }
 
-            File file = new File("C:\\Users\\Huy PC\\Desktop\\anh\\CT_DoanhThu.xlsx");
+            File file = new File("D:\\CT_DoanhThu.xlsx");
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 workbook.write(fos);

@@ -404,4 +404,24 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         }
         return list;
     }
+
+    @Override
+    public boolean checkSoLuongGioHangVoiSoLuongSP(ViewHDCTResponse vhdctr) {
+        boolean check = true;
+        int SoluongTon = ctspr.getOne(vhdctr.getCtsp().getId()).getSoLuongTon();
+        if (vhdctr.getSoLuong() < SoluongTon) {
+            check = false;
+        }
+        return check;
+    }
+
+    @Override
+    public List<ViewHDCTResponse> getOneHDVoiHDCT(UUID id) {
+        List<ViewHDCTResponse> list = new ArrayList<>();
+        for (HoaDonChiTiet hdct : hdctr.getOneHDVoiHDCT(id)) {
+            list.add(new ViewHDCTResponse(hdct));
+        }
+        return list;
+    }
+
 }

@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.service;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
@@ -29,6 +30,8 @@ public interface ViewHoaDonService {
     List<ViewHDCTResponse> getAllHDCT();
 
     List<ViewHDCTResponse> getOneHD(UUID id);
+
+    List<ViewHDCTResponse> getOneHDVoiHDCT(UUID id);
 
     List<ViewHoaDonResponse> getOneHDKH(UUID id);
 
@@ -61,6 +64,8 @@ public interface ViewHoaDonService {
     ViewHoaDonResponse getOneHDByMa(String ma);
 
     boolean checkSoLuongTonVoiSoLuong(ViewHDCTResponse vhdctr);
+
+    boolean checkSoLuongGioHangVoiSoLuongSP(ViewHDCTResponse vhdctr);
 
     boolean updateSoLuongTonKhiThem(ViewHDCTResponse vhdctr);
 
