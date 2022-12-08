@@ -38,10 +38,6 @@ public class ChiTietSanPham {
     @Column(name = "Id")
     private UUID id;
 
-
-    @Column(name = "TenSP")
-    private String sanPham;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdMauSac", referencedColumnName = "Id")
     private MauSac mauSac;

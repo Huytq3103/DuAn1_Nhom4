@@ -97,7 +97,7 @@ public class ViewLichSu extends javax.swing.JPanel {
         }
         lblTenNV.setText(viewHoaDonResponse.getAccount().getHoTen());
         lblTongTien.setText(String.valueOf(viewHoaDonResponse.getTongTien()));
-        lblNgayTao.setText(viewHoaDonResponse.getNgaoTao());
+        lblNgayTao.setText(viewHoaDonResponse.getNgaoTao().toString());
         lblTrangThai.setText(String.valueOf(viewHoaDonResponse.getTto().getTen()));
         UUID id = viewHoaDonResponse.getId();
         listSanPham = viewHoaDonService.getOneHD(id);

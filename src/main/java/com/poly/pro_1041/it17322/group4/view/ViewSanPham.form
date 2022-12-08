@@ -204,10 +204,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="txtThuocTinh" min="-2" pref="206" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="txtThuocTinh" min="-2" pref="206" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="txtMaThuocTinh" min="-2" pref="206" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -218,10 +215,11 @@
                                           <Component id="radioKichCo" min="-2" pref="98" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="radioChatLieu" min="-2" pref="98" max="-2" attributes="0"/>
-                                          <EmptySpace pref="28" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="radioLoaiSanPham" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <EmptySpace min="0" pref="145" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -459,7 +457,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="57" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel23" min="-2" pref="71" max="-2" attributes="0"/>
                                       <Component id="jLabel22" min="-2" pref="71" max="-2" attributes="0"/>
@@ -483,7 +481,7 @@
                                               <Component id="txtGiaBan" min="-2" pref="160" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="txtSoLuong" min="-2" pref="160" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="85" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="76" max="32767" attributes="0"/>
                                                   <Component id="jLabel28" min="-2" pref="28" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -506,8 +504,6 @@
                                   <Component id="btnSuaChiTietSanPham" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnLamMoi" min="-2" pref="113" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                  <Component id="btnLamMoi2" min="-2" pref="113" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -556,10 +552,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnThemChiTietSanPham" min="-2" pref="37" max="-2" attributes="0"/>
                                       <Component id="btnSuaChiTietSanPham" min="-2" pref="37" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btnLamMoi" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <Component id="btnLamMoi2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="btnLamMoi" min="-2" pref="37" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -759,20 +752,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoi1ActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="btnLamMoi2">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="66" green="66" red="0" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="14" style="1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="&#x110;&#x1ecd;c file"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoi2ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtTenSP">

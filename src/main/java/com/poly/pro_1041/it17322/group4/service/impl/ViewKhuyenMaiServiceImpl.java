@@ -133,7 +133,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public boolean updateCTSP(ViewCTSPResponse ctspr) {
-        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, ctspr.getHinh(), ctspr.getTrangThai()))) {
+        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, null, ctspr.getTrangThai()))) {
             return true;
         } else {
             return false;

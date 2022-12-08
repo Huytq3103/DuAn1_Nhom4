@@ -42,7 +42,7 @@ public class ImportExcelCTSP {
             int mactsp = chiTietSanPhamRepository.genMaCTSP();
             while (iterator.hasNext()) {            
              Row currentRow = iterator.next();
-              String ma=String.valueOf(getCellVal)
+//              String ma=String.valueOf(getCellVal);
         }
     }
 }

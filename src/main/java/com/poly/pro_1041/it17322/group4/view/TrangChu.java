@@ -23,9 +23,9 @@ public class TrangChu extends javax.swing.JFrame {
         String chucVu = account.getChucVuAccount().getId() == 1 ? "Chủ" : "Nhân viên";
         String nhanVien = "Hello : " + account.getHoTen() + " ( " + chucVu + " )";
         lbTenNV.setText(nhanVien);
-        ViewThongKe viewThongKe = new ViewThongKe(this.account);
+        ViewSanPham  viewSanPham = new ViewSanPham(account);
         panelTrangChu.removeAll();
-        panelTrangChu.add(viewThongKe);
+        panelTrangChu.add(viewSanPham);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);

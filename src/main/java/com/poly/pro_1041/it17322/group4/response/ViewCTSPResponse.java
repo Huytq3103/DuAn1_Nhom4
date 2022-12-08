@@ -31,7 +31,6 @@ public class ViewCTSPResponse {
     private UUID id;
     private String ten;
     private String ma;
-    private String ten;
     private Hang hang;
     private Loai loai;
     private KichCo kichCo;
@@ -41,7 +40,6 @@ public class ViewCTSPResponse {
     private int soLuongTon;
     private BigDecimal gia;
     private KhuyenMai km;
-    private String hinh;
     private int trangThai;
 
     public ViewCTSPResponse() {
@@ -65,7 +63,7 @@ public class ViewCTSPResponse {
         this.soLuongTon = ctsp.getSoLuongTon();
         this.gia = ctsp.getGia();
         this.km = ctsp.getKhuyenMai();
-        this.hinh = ctsp.getHinh();
+        this.ten = ctsp.getTen();
     }
 
 
@@ -85,7 +83,7 @@ public class ViewCTSPResponse {
     }
 
 
-    public ViewCTSPResponse(String ma, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String hinh, int trangThai) {
+    public ViewCTSPResponse(String ma, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String ten, int trangThai) {
         this.ma = ma;
         this.hang = hang;
         this.loai = loai;
@@ -95,7 +93,7 @@ public class ViewCTSPResponse {
         this.ngayNhap = ngayNhap;
         this.soLuongTon = soLuongTon;
         this.gia = gia;
-        this.hinh = hinh;
+        this.ten = ten;
         this.trangThai = trangThai;
     }
 

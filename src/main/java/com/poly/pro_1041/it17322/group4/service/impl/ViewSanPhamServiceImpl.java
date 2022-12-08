@@ -44,7 +44,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
         if (spMa != null) {
             return "Mã trùng";
 
-        } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getTen(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, ctsp.getHinh(), ctsp.getTrangThai()))) {
+        } else if (chiTietSanPhamRepository.add(new ChiTietSanPham(null, ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(),ctsp.getTen(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null, ctsp.getTrangThai()))) {
 
             return "Thành công";
         } else {
@@ -54,7 +54,7 @@ public class ViewSanPhamServiceImpl implements ViewSanPhamService {
 
     @Override
     public String update(ViewCTSPResponse ctsp, UUID id) {
-        if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getTen(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, ctsp.getHinh(), ctsp.getTrangThai()))) {
+        if (chiTietSanPhamRepository.update(new ChiTietSanPham(id, ctsp.getMauSac(), ctsp.getHang(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getLoai(), null, ctsp.getMa(), ctsp.getTen(), ctsp.getSoLuongTon(), ctsp.getGia(), ctsp.getNgayNhap(), null, null, ctsp.getTrangThai()))) {
             return "Thành công";
         } else {
             return "Không thành công";
