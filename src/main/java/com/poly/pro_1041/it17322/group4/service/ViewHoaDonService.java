@@ -73,6 +73,19 @@ public interface ViewHoaDonService {
 
     List<ViewKhachHangRepose> getAllKH();
 
-    List<ViewHoaDonResponse> getAllHDByTT(int id);
+    public List<ViewHoaDonResponse> getAllHDByChuaTT();
 
+    public List<ViewHoaDonResponse> getAllHDByDaTT();
+
+    public List<ViewHoaDonResponse> getAllHDByDangGiao();
+
+    public List<ViewHoaDonResponse> getAllHDByDaGiao();
+
+    List<ViewKhachHangRepose> searchSDT(String SDT);
+
+    int genMaHD();
+
+    String add(ViewKhachHangRepose vkhr);
+
+    ViewCTSPResponse getOneSP(String ma);
 }

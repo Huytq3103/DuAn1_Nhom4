@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,10 +29,10 @@ public class ViewHoaDonResponse {
     private KhachHang khachHang;
     private TrangThaiOrder tto;
     private String ma;
-    private String ngaoTao;
-    private String ngayThanhToan;
-    private String ngayShip;
-    private String ngayNhan;
+    private Date ngaoTao;
+    private Date ngayThanhToan;
+    private Date ngayShip;
+    private Date ngayNhan;
     private BigDecimal TongTien;
 
     public ViewHoaDonResponse() {
@@ -48,7 +49,7 @@ public class ViewHoaDonResponse {
         this.TongTien = hd.getTongTien();
     }
 
-    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ma, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ma, Date ngaoTao, Date ngayThanhToan, BigDecimal TongTien) {
         this.id = id;
         this.account = account;
         this.khachHang = khachHang;
@@ -59,7 +60,7 @@ public class ViewHoaDonResponse {
         this.TongTien = TongTien;
     }
 
-    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ngaoTao, String ngayThanhToan, BigDecimal TongTien) {
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, Date ngaoTao, Date ngayThanhToan, BigDecimal TongTien) {
         this.id = id;
         this.account = account;
         this.khachHang = khachHang;
@@ -69,7 +70,7 @@ public class ViewHoaDonResponse {
         this.TongTien = TongTien;
     }
 
-    public ViewHoaDonResponse(Account account, String ten, String ngaoTao, String ngayThanhToan, String ngayShip, String ngayNhan, BigDecimal TongTien) {
+    public ViewHoaDonResponse(Account account, String ten, Date ngaoTao, Date ngayThanhToan, Date ngayShip, Date ngayNhan, BigDecimal TongTien) {
         this.account = account;
         this.ma = ten;
         this.ngaoTao = ngaoTao;

@@ -55,9 +55,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private HoaDon hd = new HoaDon();
     private ViewHoaDonServiceImpl hdService = new ViewHoaDonServiceImpl();
     private List<ViewHoaDonResponse> listHD = new ArrayList<>();
-
     private List<String> listCombobox = new ArrayList<>();
-
 
     public ViewKhachHang(Account a) {
         initComponents();
@@ -83,9 +81,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         FillToTable(listKH);
     }
 
-
     private void FillToTable(List<ViewKhachHangRepose> lists) {
-
         dtm.setRowCount(0);
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
@@ -104,10 +100,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
         txtEmail.setText("");
         txtDiaChi.setText("");
         tbHienThi.setRowSelectionAllowed(false);
-
-        btnThem.setEnabled(true);
-        btnSua.setEnabled(false);
-
         labelNgayTao.setText("");
         labelNgayChinhSua.setText("");
     }
@@ -232,9 +224,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         btnLamMoi = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-
         jButton1 = new javax.swing.JButton();
-
         labelDiem = new javax.swing.JLabel();
         labelNguoiTao = new javax.swing.JLabel();
         labelNgayTao = new javax.swing.JLabel();
@@ -340,7 +330,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
             }
         });
         jPanel5.add(btnSua);
-
 
         jButton1.setText("Xuất Exel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -765,11 +754,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
             String add = khService.add(viewkh);
             JOptionPane.showMessageDialog(this, add);
             listKH = khService.getAll();
-
-            showDetail(listKH);
-
-        }
-
+            FillToTable(listKH);
     }//GEN-LAST:event_btnThemActionPerformed
 
     }
@@ -805,9 +790,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void tbHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiMouseClicked
         // TODO add your handling code here:
-
         String headerhd[] = {"STT", "Mã", "Ngày tạo", "Ngày thanh toán", "Ngày ship", "Ngày nhận", "Tổng tiền"};
-
         tbHoaDon.setModel(dtm2);
         dtm2.setColumnIdentifiers(headerhd);
         index = tbHienThi.getSelectedRow();

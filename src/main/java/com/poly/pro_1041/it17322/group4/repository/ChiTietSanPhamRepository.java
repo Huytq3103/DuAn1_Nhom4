@@ -57,7 +57,7 @@ public class ChiTietSanPhamRepository {
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }
-
+ 
     public ChiTietSanPham getOneUpdateHoaDon(UUID id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + "Where id=:id";
