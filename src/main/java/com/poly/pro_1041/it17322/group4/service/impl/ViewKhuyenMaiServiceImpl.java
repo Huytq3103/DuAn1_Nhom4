@@ -60,11 +60,6 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         return list;
     }
 
-//    public static void main(String[] args) {
-//        for (ViewHoaDonResponse vhdr : new ViewHoaDonServiceImpl().getAllHD()) {
-//            System.out.println(vhdr.toString());
-//        }
-//    }
     @Override
     public List<ViewCTSPResponse> getAllSP() {
         List<ViewCTSPResponse> list = new ArrayList<>();
@@ -72,11 +67,6 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
             list.add(new ViewCTSPResponse(ctsp));
         }
         return list;
-    }
-
-    @Override
-    public List<ViewCTSPResponse> getOneLoai(int idLoai) {
-        return ctsprp.getOneLoai(idLoai);
     }
 
     @Override
@@ -118,12 +108,12 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
     }
 
     @Override
-    public List<ViewKhuyenMaiResponse> Search(String loaiKM) {
+    public List<ViewKhuyenMaiResponse> Search(String tenKM) {
         List<ViewKhuyenMaiResponse> lkm = new ArrayList<>();
-        List<KhuyenMai> loaikm = new ArrayList<>();
+        List<KhuyenMai> tenkm = new ArrayList<>();
         KhuyenMaiRepository khuyenMaiRepo = new KhuyenMaiRepository();
         for (KhuyenMai x : khuyenMaiRepo.getAll()) {
-            if (x.getLoaiKM().getTen().toLowerCase().contains(loaiKM.toLowerCase())) {
+            if (x.getTen().toLowerCase().contains(tenKM.toLowerCase())) {
                 lkm.add(new ViewKhuyenMaiResponse(x.getId(), x.getTrangThaiKM(), x.getLoaiKM(), x.getMa(), x.getTen(), x.getNgayBatDau(), x.getNgayKetThuc(), x.getGiaKM()));
                 System.out.println(lkm + "ádsd");
             }

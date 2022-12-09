@@ -28,7 +28,7 @@ public interface ViewKhuyenMaiService {
     
     List<ViewCTSPResponse> getAllSP();
     
-    List<ViewCTSPResponse> getOneLoai(int idLoai);
+ 
     
     List<ViewKhuyenMaiResponse> Search(String loaiKM);
     

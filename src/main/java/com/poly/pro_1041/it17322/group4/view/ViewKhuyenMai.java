@@ -62,7 +62,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         tbsp = (DefaultTableModel) tbSanPham.getModel();
         tbKhuyenMai.setModel(tbkm);
 
-        String[] headerSanPham = {"Tên SP", "Loại SP", "Giá", "Còn tồn", "Chọn"};
+        String[] headerSanPham = {"Tên SP", "Loại SP", "Giá", "Tên KM", "Chọn"};
         String[] headerKhuyenMai = {"Tên KM", "Ngày bắt đầu", "Ngày kết thúc", "% Khuyến mãi", "Loại khuyến mãi", "Trạng thái"};
         tbsp.setColumnIdentifiers(headerSanPham);
         tbkm.setColumnIdentifiers(headerKhuyenMai);
@@ -104,6 +104,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         tbSanPham = new javax.swing.JTable();
         btnApDung = new javax.swing.JButton();
         txtSearchSP = new javax.swing.JTextField();
+        btnChonHet = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
@@ -253,6 +254,13 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             }
         });
 
+        btnChonHet.setText("Chọn hết");
+        btnChonHet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonHetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -264,8 +272,11 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnApDung, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(btnChonHet, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnApDung, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(20, 20, 20))
         );
         jPanel6Layout.setVerticalGroup(
@@ -275,13 +286,15 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnApDung)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnApDung)
+                    .addComponent(btnChonHet))
                 .addContainerGap())
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Danh sách khuyến mãi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Thông tin khuyến mãi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
         jPanel7.setPreferredSize(new java.awt.Dimension(759, 158));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -305,10 +318,10 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         jLabel8.setText("Trạng thái");
 
         buttonGroup1.add(rdoHoatDong);
-        rdoHoatDong.setSelected(true);
         rdoHoatDong.setText("Đang hoạt động");
 
         buttonGroup1.add(rdoNgungHoatDong);
+        rdoNgungHoatDong.setSelected(true);
         rdoNgungHoatDong.setText("Ngừng hoạt dộng");
 
         btnLuu.setBackground(new java.awt.Color(0, 102, 102));
@@ -485,16 +498,14 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -679,31 +690,48 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchCaretUpdate
 
     private void btnApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungActionPerformed
-        index = tbKhuyenMai.getSelectedRow();
-        int index2 = tbSanPham.getSelectedRow();
+
         int hoi = JOptionPane.showConfirmDialog(this, "Muốn áp dụng KM cho SP này ?");
         if (hoi != JOptionPane.YES_OPTION) {
             return;
         }
-        boolean check = true;
 
-        ViewKhuyenMaiResponse vkmr = listVKM.get(index);
-
-        ViewCTSPResponse vctspr = listSanPham.get(index2);
-        KhuyenMai km = new KhuyenMai();
-        km.setId(vkmr.getId());
-        Double giaMoi;
-        if (cbbLoaiKM.getSelectedIndex() == 0) {
-            giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) * (100 - Double.parseDouble(txtGiamGia.getText())) / 100;
-        } else {
-            giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) - Double.parseDouble(txtGiamGia.getText());
+        if (checkThemKM() == false) {
+            JOptionPane.showMessageDialog(this, "KM đã ngừng hoạt động");
+            return;
         }
 
-//        vctspr = new ViewCTSPResponse(vctspr.getId(), vctspr.getMa(), vctspr.getSp(), vctspr.getHang(), vctspr.getLoai(), vctspr.getKichCo(), vctspr.getMauSac(), vctspr.getChatLieu(), vctspr.getNgayNhap(), vctspr.getSoLuongTon(), BigDecimal.valueOf(giaMoi), km);
-        vctspr.setKm(km);
-        vctspr.setGia(BigDecimal.valueOf(giaMoi));
+        for (int i = 0; i < tbSanPham.getRowCount(); i++) {
+            if (tbSanPham.getValueAt(i, 4).equals(true)) {
+                index = tbKhuyenMai.getSelectedRow();
 
-        check = vkms.updateCTSP(vctspr);
+                int index2 = tbSanPham.getSelectedRow();
+                ViewCTSPResponse vctspr = listSanPham.get(index2);
+                boolean check = true;
+
+                ViewKhuyenMaiResponse vkmr = listVKM.get(index);
+
+                KhuyenMai km = new KhuyenMai();
+                km.setId(vkmr.getId());
+                Double giaMoi;
+                if (cbbLoaiKM.getSelectedIndex() == 0) {
+                    giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) * (100 - vkmr.getGiaKM()) / 100;
+                } else {
+                    giaMoi = Double.parseDouble(String.valueOf(vctspr.getGia())) - vkmr.getGiaKM();
+                }
+                if (giaMoi < 0) {
+                    JOptionPane.showMessageDialog(this, "Giá KM lớn hơn giá SP");
+                    return;
+                }
+                vctspr.setKm(km);
+                vctspr.setGia(BigDecimal.valueOf(giaMoi));
+
+                check = vkms.updateCTSP(vctspr);
+            }
+        }
+
+        listSanPham = vhds.getAllSP();
+        showDataTableSanPham(listSanPham);
         JOptionPane.showMessageDialog(this, "Đã thêm KM cho sản phẩm");
 
 
@@ -713,10 +741,17 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         showDataTableSanPham(vkms.SearchSP(txtSearchSP.getText()));
     }//GEN-LAST:event_txtSearchSPCaretUpdate
 
+    private void btnChonHetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonHetActionPerformed
+        for (int i = 0; i < tbSanPham.getRowCount(); i++) {
+            tbSanPham.setValueAt(true, i, 4);
+        }
+    }//GEN-LAST:event_btnChonHetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApDung;
     private javax.swing.JButton btnCapNhat;
+    private javax.swing.JButton btnChonHet;
     private javax.swing.JButton btnDoi;
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnMoi;
@@ -758,6 +793,16 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
 
 //            i++;
         }
+    }
+
+    private boolean checkThemKM() {
+        int index3 = tbKhuyenMai.getSelectedRow();
+
+        ViewKhuyenMaiResponse vkmr = listVKM.get(index3);
+        if (vkmr.getTrangThaiKM().getId() == 2) {
+            return false;
+        }
+        return true;
     }
 
     private void showDataTableSanPham(List<ViewCTSPResponse> list) {
