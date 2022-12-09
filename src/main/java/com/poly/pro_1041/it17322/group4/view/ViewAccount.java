@@ -52,8 +52,10 @@ public class ViewAccount extends javax.swing.JPanel {
         model.setRowCount(0);
         int i = 1;
         for (ViewAccountReponse x : list) {
+            if(x.getTta().getId() == 1){
             model.addRow(x.toDataRow(i));
             i++;
+        }
         }
     }
     
@@ -556,8 +558,7 @@ public class ViewAccount extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnNghiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNghiActionPerformed
-        index = tblNhanVien.getSelectedRow();
-        
+        index = tblNhanVien.getSelectedRow();  
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Chọn nhân viên cho nghỉ!");
             return;
@@ -571,7 +572,7 @@ public class ViewAccount extends javax.swing.JPanel {
         ViewAccountReponse viewacc = getFormData();
         UUID id = listVAcc.get(index).getId();
         viewacc.setId(id);
-        
+        viewacc.setNguoiTao(account.getId());
         String update = vaccsv.update(viewacc);
         JOptionPane.showMessageDialog(this, "Đã nghỉ!");
         listVAcc = vaccsv.getAll();

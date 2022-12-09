@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.domainmodel;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,16 +55,16 @@ public class HoaDon {
     private String ma;
 
     @Column(name = "NgayTao")
-    private String ngayTao;
+    private Date ngayTao;
 
     @Column(name = "NgayThanhToan")
-    private String ngayThanhToan;
+    private Date ngayThanhToan;
 
     @Column(name = "NgayShip")
-    private String ngayShip;
+    private Date ngayShip;
 
     @Column(name = "NgayKhachNhan")
-    private String ngayKhachNhan;
+    private Date ngayKhachNhan;
 
     @Column(name = "TongTien")
     private BigDecimal tongTien;

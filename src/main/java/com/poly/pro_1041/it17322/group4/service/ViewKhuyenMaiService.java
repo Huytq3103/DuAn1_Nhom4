@@ -32,11 +32,13 @@ public interface ViewKhuyenMaiService {
     
     List<ViewKhuyenMaiResponse> Search(String loaiKM);
     
+    List<ViewCTSPResponse> SearchSP(String tenSP);
+    
     boolean updateCTSP(ViewCTSPResponse ctspr);
     
-    public String addKhuyenMai(ViewKhuyenMaiResponse vkmr);
+    String addKhuyenMai(ViewKhuyenMaiResponse vkmr);
     
-    boolean deleteKhuyenMai(ViewKhuyenMaiResponse vkmr);
+    boolean updateTTKhuyenMai(ViewKhuyenMaiResponse vkmr);
     
     boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr);
 }

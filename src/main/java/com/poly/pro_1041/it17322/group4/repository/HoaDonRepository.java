@@ -32,14 +32,59 @@ public class HoaDonRepository {
         return hoadons;
     }
 
-    public List<HoaDon> getAllOrderByNgayTao() {
+    public List<HoaDon> getAllByChuaTT() {
+        String sql = fromTable + " WHERE IdTT = 2 ORDER BY NgayTao DESC";
         Session session = HibernateUtil.getFACTORY().openSession();
-        String sql = fromTable + "ORDER BY NgayTao DESC";
         Query query = session.createQuery(sql, HoaDon.class);
         List<HoaDon> hoadons = query.getResultList();
         return hoadons;
     }
 
+<<<<<<< HEAD
+=======
+    public List<HoaDon> getAllByDaTT() {
+        String sql = fromTable + " WHERE IdTT = 1 ORDER BY NgayThanhToan DESC";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(sql, HoaDon.class);
+        List<HoaDon> hoadons = query.getResultList();
+        return hoadons;
+    }
+
+    public List<HoaDon> getAllByDangGiao() {
+        String sql = fromTable + " WHERE IdTT = 4 ORDER BY NgayShip DESC";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(sql, HoaDon.class);
+        List<HoaDon> hoadons = query.getResultList();
+        return hoadons;
+    }
+
+    public List<HoaDon> getAllByDaGiao() {
+        String sql = fromTable + " WHERE IdTT = 5 ORDER BY NgayKhachNhan DESC";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(sql, HoaDon.class);
+        List<HoaDon> hoadons = query.getResultList();
+        return hoadons;
+    }
+
+    public List<HoaDon> getListByDate(String tuNgay, String denNgay) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "WHERE NgayTao BETWEEN :tuNgay AND :denNgay";
+        Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("tuNgay", tuNgay);
+        query.setParameter("denNgay", denNgay);
+        List<HoaDon> list = query.getResultList();
+        return list;
+    }
+
+    public List<HoaDon> getAllOrderByNgayTao() {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " ORDER BY NgayTao DESC";
+        Query query = session.createQuery(sql, HoaDon.class);
+        List<HoaDon> hoadons = query.getResultList();
+        return hoadons;
+    }
+
+>>>>>>> develop
     public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";
