@@ -32,8 +32,8 @@ import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
-import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
 import com.poly.pro_1041.it17322.group4.service.ViewHoaDonService;
+import com.poly.pro_1041.it17322.group4.view.ViewSanPham;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -75,6 +75,42 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
+    public List<ViewHoaDonResponse> getAllHDByChuaTT() {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByChuaTT()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getAllHDByDaTT() {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByDaTT()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getAllHDByDangGiao() {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByDangGiao()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ViewHoaDonResponse> getAllHDByDaGiao() {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getAllByDaGiao()) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+
+    @Override
     public List<ViewHDCTResponse> getAllHDCT() {
         List<ViewHDCTResponse> list = new ArrayList<>();
         for (HoaDonChiTiet hdct : hdctr.getAll()) {
@@ -96,7 +132,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewHoaDonResponse getOneHDByMa(String ma) {
         return new ViewHoaDonResponse(hdr.getOne(ma));
     }
-    
+
     @Override
     public List<ViewHoaDonResponse> getList(int idTT) {
         List<ViewHoaDonResponse> list = new ArrayList<>();
@@ -306,7 +342,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         twoColTable3.addCell(getCell10fLeft("Seller", true));
         twoColTable3.addCell(getCell10fLeft("Ship date", true));
         twoColTable3.addCell(getCell10fLeft(hd.getAccount().getHoTen(), false));
-        twoColTable3.addCell(getCell10fLeft(hd.getNgayShip() != null ? hd.getNgayShip() : " ", false));
+        twoColTable3.addCell(getCell10fLeft(hd.getNgayShip().toString() != null ? hd.getNgayShip().toString() : " ", false));
         document.add(twoColTable3);
 
         Table twoColTable4 = new Table(twoColumnWidth);
@@ -379,6 +415,15 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     }
 
     @Override
+    public List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getListByDate(tuNgay, denNgay)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
+
+    @Override
     public List<ViewHoaDonResponse> getOneHDKH(UUID id) {
         List<ViewHoaDonResponse> list = new ArrayList<>();
         for (HoaDon hd : hdr.getOneHDKH(id)) {
@@ -386,4 +431,77 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         }
         return list;
     }
+
+    @Override
+    public boolean checkSoLuongGioHangVoiSoLuongSP(ViewHDCTResponse vhdctr) {
+        boolean check = true;
+        int SoluongTon = ctspr.getOne(vhdctr.getCtsp().getId()).getSoLuongTon();
+        if (vhdctr.getSoLuong() < SoluongTon) {
+            check = false;
+        }
+        return check;
+    }
+
+    @Override
+    public List<ViewHDCTResponse> getOneHDVoiHDCT(UUID id) {
+        List<ViewHDCTResponse> list = new ArrayList<>();
+        for (HoaDonChiTiet hdct : hdctr.getOneHDVoiHDCT(id)) {
+            list.add(new ViewHDCTResponse(hdct));
+        }
+        return list;
+    }
+
+
+    public List<ViewKhachHangRepose> searchSDT(String SDT) {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+        for (KhachHang kh : khr.getAll()) {
+            if (kh.getSdt().contains(SDT)) {
+                list.add(new ViewKhachHangRepose(kh));
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public int genMaHD() {
+        return khr.genMaKH();
+    }
+
+    public String add(ViewKhachHangRepose vkhr) {
+        if (vkhr.getHoTen().trim().isEmpty()) {
+            return "Họ tên đang trống";
+        } else if (!vkhr.getHoTen().matches("[a-z A-Z]+")) {
+            return "Họ tên là chữ";
+        } else if (vkhr.getSdt().trim().isEmpty()) {
+            return "Sdt đang trống";
+        } else if (!vkhr.getSdt().matches("[0-9]+")) {
+            return "Sdt là số";
+        } else if (!vkhr.getSdt().startsWith("0")) {
+            return "Sdt bắt đầu bằng 0";
+        } else if (vkhr.getSdt().length() != 10) {
+            return "Sdt có 10 chữ số";
+        } else if (vkhr.getEmail().trim().isEmpty()) {
+            return "Email đang trống";
+        } else if (!vkhr.getEmail().matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+            return "Email không đúng định dạng";
+        } else if (vkhr.getDiaChi().trim().isEmpty()) {
+            return "Địa chỉ đang trống";
+        } else {
+
+            KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+
+            boolean add = khr.add(kh);
+            if (add) {
+                return "Add thanh cong";
+            } else {
+                return "Add that bai";
+            }
+        }
+    }
+
+    public ViewCTSPResponse getOneSP(String ma) {
+        ViewCTSPResponse vctspr = new ViewCTSPResponse(ctspr.getOneMa(ma));
+        return vctspr;
+    }
+
 }

@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.service;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
@@ -30,9 +31,13 @@ public interface ViewHoaDonService {
 
     List<ViewHDCTResponse> getOneHD(UUID id);
 
+    List<ViewHDCTResponse> getOneHDVoiHDCT(UUID id);
+
     List<ViewHoaDonResponse> getOneHDKH(UUID id);
 
     List<ViewHoaDonResponse> getList(int idTT);
+
+    List<ViewHoaDonResponse> getListByDate(String tuNgay, String denNgay);
 
     List<TrangThaiOrder> getAllTTO();
 
@@ -60,10 +65,27 @@ public interface ViewHoaDonService {
 
     boolean checkSoLuongTonVoiSoLuong(ViewHDCTResponse vhdctr);
 
+    boolean checkSoLuongGioHangVoiSoLuongSP(ViewHDCTResponse vhdctr);
+
     boolean updateSoLuongTonKhiThem(ViewHDCTResponse vhdctr);
 
     boolean updateSoLuongTonKhiXoa(ViewHDCTResponse vhdctr);
 
     List<ViewKhachHangRepose> getAllKH();
 
+    public List<ViewHoaDonResponse> getAllHDByChuaTT();
+
+    public List<ViewHoaDonResponse> getAllHDByDaTT();
+
+    public List<ViewHoaDonResponse> getAllHDByDangGiao();
+
+    public List<ViewHoaDonResponse> getAllHDByDaGiao();
+
+    List<ViewKhachHangRepose> searchSDT(String SDT);
+
+    int genMaHD();
+
+    String add(ViewKhachHangRepose vkhr);
+
+    ViewCTSPResponse getOneSP(String ma);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -17,12 +18,12 @@ import org.hibernate.Transaction;
  */
 public class LoaiSPRepository {
 
-    private String fromtable = " FROM Loai";
+    private String fromtable = " FROM Loai ";
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<Loai> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromtable, Loai.class);
+        Query query = session.createQuery(fromtable + " ORDER BY CONVERT(INT,Ma) DESC", Loai.class);
         List<Loai> listLoai = query.getResultList();
         return listLoai;
     }
@@ -91,5 +92,20 @@ public class LoaiSPRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public int genMaLoai() {
+        String maLoai = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM Loai");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maLoai = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maLoai);
+        return ++ma;
     }
 }

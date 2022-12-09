@@ -10,7 +10,6 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.XDate;
-import com.poly.pro_1041.it17322.group4.repository.KhuyenMaiRepository;
 import com.poly.pro_1041.it17322.group4.repository.LoaiKMRepository;
 import com.poly.pro_1041.it17322.group4.response.ViewCTSPResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhuyenMaiResponse;
@@ -23,7 +22,6 @@ import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewKhuyenMaiServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewLoaiServiceImpl;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +30,6 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.type.BooleanType;
 
 /**
  *
@@ -201,7 +198,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
@@ -347,7 +344,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
 
         btnDoi.setBackground(new java.awt.Color(0, 102, 102));
         btnDoi.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnDoi.setText("Tắt KM");
+        btnDoi.setText("Hủy KM");
         btnDoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDoiActionPerformed(evt);
@@ -523,7 +520,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         txtBatDau.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 1).toString()));
         txtKetThuc.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 2).toString()));
 
-        if (tbKhuyenMai.getValueAt(index, 4).toString().equalsIgnoreCase("Giảm theo %")) {
+        if (tbKhuyenMai.getValueAt(index, 4).toString().equalsIgnoreCase("%")) {
             cbbLoaiKM.setSelectedIndex(0);
 
         } else {
@@ -548,7 +545,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         txtBatDau.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 2).toString()));
         txtKetThuc.setDate(XDate.toDate(tbKhuyenMai.getValueAt(index, 3).toString()));
 
-        if (tbKhuyenMai.getValueAt(index, 5).toString().equalsIgnoreCase("Giảm theo %")) {
+        if (tbKhuyenMai.getValueAt(index, 5).toString().equalsIgnoreCase("%")) {
             cbbLoaiKM.setSelectedIndex(0);
 
         } else {
@@ -587,7 +584,6 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         txtMaKM.setText(null);
         txtBatDau.setCalendar(null);
         txtKetThuc.setCalendar(null);
-        JOptionPane.showMessageDialog(this, "Lưu thành công");
         fillIndex();
     }//GEN-LAST:event_btnLuuActionPerformed
 
@@ -815,7 +811,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         for (ViewCTSPResponse view : list) {
 //            tbsp.addRow(view.toDataRowKM());
             boolean chon = false;
-            tbsp.addRow(new Object[]{view.getSp().getTenSP(), view.getLoai().getTen(), view.getGia(), view.getKm().getTen(), chon});
+            tbsp.addRow(new Object[]{view.getTen(), view.getLoai().getTen(), view.getGia(), view.getSoLuongTon(), chon});
         }
     }
 
@@ -831,8 +827,8 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         Calendar c2 = Calendar.getInstance();
         Calendar c3 = Calendar.getInstance();
 
-        c1.setTime(ngayBatDau);
-        c2.setTime(ngayKetThuc);
+        c1.setTime(txtBatDau.getDate());
+        c2.setTime(txtKetThuc.getDate());
         c3.setTime(java.sql.Date.valueOf(LocalDate.now()));
         long a = (c1.getTime().getTime()) / (24 * 3600 * 1000);
         long b = (c2.getTime().getTime()) / (24 * 3600 * 1000);
@@ -847,9 +843,9 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
 
         int lkm;
         if (cbbLoaiKM.getSelectedIndex() == 0) {
-            lkm = 2;
-        } else {
             lkm = 1;
+        } else {
+            lkm = 2;
         }
         int ttkm;
         if (rdoHoatDong.isSelected()) {

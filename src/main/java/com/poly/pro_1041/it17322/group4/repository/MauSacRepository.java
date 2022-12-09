@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -22,7 +23,7 @@ public class MauSacRepository {
 
     public List<MauSac> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromtable, MauSac.class);
+        Query query = session.createQuery(fromtable + " ORDER BY CONVERT(INT,Ma) DESC", MauSac.class);
         List<MauSac> listMauSac = query.getResultList();
         return listMauSac;
     }
@@ -82,5 +83,20 @@ public class MauSacRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int genMaMauSac() {
+        String maMS = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM MauSac");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maMS = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maMS);
+        return ++ma;
     }
 }

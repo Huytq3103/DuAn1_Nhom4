@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
+import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
 import java.util.List;
 import java.util.UUID;
@@ -96,7 +97,42 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
+    public HoaDonChiTiet getOneUpdateHoaDon(UUID id) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + "Where id=:id";
+        javax.persistence.Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("id", id);
+        HoaDonChiTiet hdct = (HoaDonChiTiet) query.getSingleResult();
+        return hdct;
+    }
+
+    public Boolean updateTableHD(HoaDonChiTiet hdct) {
+        Transaction transaction = null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(hdct);
+        transaction.commit();
+        return true;
+    }
+
     public static void main(String[] args) {
         new HoaDonChiTietRepository().getAll();
+    }
+
+    public List<HoaDonChiTiet> getOneHDVoiHDCT(UUID id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE IdHoaDon =: Id";
+        javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
+        query.setParameter("Id", id);
+        List<HoaDonChiTiet> listHD = query.getResultList();
+        return listHD;
+    }
+    public HoaDonChiTiet getOne(UUID id){
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "Where id=:id";
+        javax.persistence.Query query = session.createQuery(sql, HoaDonChiTiet.class);
+        query.setParameter("id", id);
+        HoaDonChiTiet hdct = (HoaDonChiTiet) query.getSingleResult();
+        return hdct;
     }
 }

@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 /**
@@ -23,7 +24,7 @@ public class KichCoRepository {
 
     public List<KichCo> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, KichCo.class);
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC", KichCo.class);
         List<KichCo> listKichCo = query.getResultList();
         return listKichCo;
     }
@@ -83,6 +84,21 @@ public class KichCoRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int genMaKichCo() {
+        String maKC = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM KichCo");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maKC = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maKC);
+        return ++ma;
     }
 
     public static void main(String[] args) {

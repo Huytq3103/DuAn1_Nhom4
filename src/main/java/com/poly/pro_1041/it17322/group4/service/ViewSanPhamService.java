@@ -25,4 +25,7 @@ public interface ViewSanPhamService {
 
     List<ViewCTSPResponse> Search(List<ViewCTSPResponse> lists, String ten);
 
+    boolean updateSoLuongTonKhiThem(ViewCTSPResponse vctsp);
+    
+    boolean checkSoLuongGioHangVoiSoLuongSP(ViewCTSPResponse vctspr);
 }

@@ -123,7 +123,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
 
     @Override
     public boolean updateCTSP(ViewCTSPResponse ctspr) {
-        if (ctsprp.updatetableKM(new ChiTietSanPham(ctspr.getId(), ctspr.getSp(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, ctspr.getHinh(), ctspr.getTrangThai()))) {
+        if (ctsprp.update(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, null, ctspr.getTrangThai()))) {
             return true;
         } else {
             return false;
@@ -136,8 +136,8 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         List<ChiTietSanPham> tensp = new ArrayList<>();
         ChiTietSanPhamRepository chiTietSPRepo = new ChiTietSanPhamRepository();
         for (ChiTietSanPham x : chiTietSPRepo.getAll()) {
-            if (x.getSanPham().getTenSP().toLowerCase().contains(tenSP.toLowerCase())) {
-                tsp.add(new ViewCTSPResponse(x.getId(), x.getMa(), x.getSanPham(), x.getHang(), x.getLoai(), x.getKichCo(), x.getMauSac(), x.getChatLieu(), x.getNgayNhap(), x.getSoLuongTon(), x.getGia(), x.getKhuyenMai()));
+            if (x.getTen().toLowerCase().contains(tenSP.toLowerCase())) {
+                tsp.add(new ViewCTSPResponse(x.getId(), x.getMa(), x.getTen(), x.getHang(), x.getLoai(), x.getKichCo(), x.getMauSac(), x.getChatLieu(), x.getNgayNhap(), x.getSoLuongTon(), x.getGia(), x.getKhuyenMai()));
                 System.out.println(tsp + "ádsd");
             }
         }

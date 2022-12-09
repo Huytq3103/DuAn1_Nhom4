@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -24,10 +25,9 @@ public class ChiTietSanPhamRepository {
     private Session session;
 
     public List<ChiTietSanPham> getAll() {
-        session = HibernateUtil.getSession();
-        Query query = session.createQuery(fromTable, ChiTietSanPham.class);
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC ", ChiTietSanPham.class);
         List<ChiTietSanPham> list = query.getResultList();
-
         return list;
     }
 
@@ -78,6 +78,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean add(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
+
         session = HibernateUtil.getSession();
         transaction = (Transaction) session.beginTransaction();
         session.save(chitietsanPham);
@@ -128,6 +129,22 @@ public class ChiTietSanPhamRepository {
         session.delete(chitietsanPham);
         transaction.commit();
         return true;
+
+    }
+
+    public int genMaCTSP() {
+        String maCTSP = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM ChiTietSanPham");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maCTSP = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maCTSP);
+        return ++ma;
     }
 
 }

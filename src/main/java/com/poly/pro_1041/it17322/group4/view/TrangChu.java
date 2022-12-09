@@ -23,9 +23,9 @@ public class TrangChu extends javax.swing.JFrame {
         String chucVu = account.getChucVuAccount().getId() == 1 ? "Chủ" : "Nhân viên";
         String nhanVien = "Hello : " + account.getHoTen() + " ( " + chucVu + " )";
         lbTenNV.setText(nhanVien);
-        ViewThongKe viewThongKe = new ViewThongKe(this.account);
+        ViewSanPham viewSanPham = new ViewSanPham(account);
         panelTrangChu.removeAll();
-        panelTrangChu.add(viewThongKe);
+        panelTrangChu.add(viewSanPham);
         panelTrangChu.setLayout(new FlowLayout());
         this.pack();
         panelTrangChu.setVisible(true);
@@ -303,7 +303,7 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
         clearButtomSelection();
-        ViewLichSu viewLichSu = new ViewLichSu();
+        ViewLichSu viewLichSu = new ViewLichSu(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewLichSu);
         panelTrangChu.setLayout(new FlowLayout());
@@ -408,7 +408,7 @@ public class TrangChu extends javax.swing.JFrame {
         btnLichSu.setBackground(Color.WHITE);
         btnLichSu.setForeground(Color.BLACK);
         btnNhanVien.setBackground(Color.WHITE);
-        btnNhanVien .setForeground(Color.BLACK);
+        btnNhanVien.setForeground(Color.BLACK);
         btnSanPham.setBackground(Color.WHITE);
         btnSanPham.setForeground(Color.BLACK);
         btnThongKe.setBackground(Color.WHITE);

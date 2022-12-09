@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 /**
@@ -19,11 +20,11 @@ public class ChatLieuRepository {
 
     private String fromTable = "FROM ChatLieu";
 
-    private Session session;
+    private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<ChatLieu> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, ChatLieu.class);
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC", ChatLieu.class);
         List<ChatLieu> listChatLieu = query.getResultList();
         return listChatLieu;
     }
@@ -79,6 +80,21 @@ public class ChatLieuRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int genMaChatLieu() {
+        String maCL = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM ChatLieu");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maCL = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maCL);
+        return ++ma;
     }
 
     public static void main(String[] args) {

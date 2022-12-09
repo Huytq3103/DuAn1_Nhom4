@@ -9,13 +9,11 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.repository.ChatLieuRepository;
 import com.poly.pro_1041.it17322.group4.repository.HangSPRepository;
 import com.poly.pro_1041.it17322.group4.repository.KichCoRepository;
 import com.poly.pro_1041.it17322.group4.repository.LoaiSPRepository;
 import com.poly.pro_1041.it17322.group4.repository.MauSacRepository;
-import com.poly.pro_1041.it17322.group4.repository.SanPhamRepository;
 import com.poly.pro_1041.it17322.group4.service.ViewThuocTinhService;
 import java.util.List;
 
@@ -25,17 +23,11 @@ import java.util.List;
  */
 public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
-    private SanPhamRepository spr = new SanPhamRepository();
     private MauSacRepository msr = new MauSacRepository();
     private LoaiSPRepository lspr = new LoaiSPRepository();
     private KichCoRepository kcr = new KichCoRepository();
     private HangSPRepository hspr = new HangSPRepository();
     private ChatLieuRepository clr = new ChatLieuRepository();
-
-    @Override
-    public List<SanPham> getAllSanPham() {
-        return spr.getAll();
-    }
 
     @Override
     public List<MauSac> getAllMauSac() {
@@ -63,37 +55,8 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
     }
 
     @Override
-    public String AddSanPham(SanPham sanPham) {
-        SanPham spMa = null;
-        try {
-            spMa = spr.getOneMa(sanPham.getMa());
-        } catch (Exception e) {
-
-        }
-        if (sanPham.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (sanPham.getTenSP().isEmpty()) {
-            return "Tên không được trống";
-        }
-        if (spr.add(sanPham)) {
-            return "Thành công";
-        } else {
-            return "Không thành công";
-        }
-    }
-
-    @Override
     public String AddMauSac(MauSac mauSac) {
-        MauSac spMa = null;
-        try {
-            spMa = msr.getOneMa(mauSac.getMa());
-        } catch (Exception e) {
-
-        }
-        if (mauSac.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
+        mauSac.setMa(String.valueOf(msr.genMaMauSac()));
         if (mauSac.getTen().isEmpty()) {
             return "Tên không được trống";
         }
@@ -106,16 +69,7 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddLoai(Loai loai) {
-        Loai spMa = null;
-        try {
-            spMa = lspr.getOneMa(loai.getMa());
-        } catch (Exception e) {
-
-        }
-
-        if (loai.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
+        loai.setMa("" + lspr.genMaLoai());
         if (loai.getTen().isEmpty()) {
             return "Tên không được trống";
         }
@@ -128,15 +82,7 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddKichCo(KichCo kichCo) {
-        KichCo spMa = null;
-        try {
-            spMa = kcr.getOneMa(kichCo.getMa());
-        } catch (Exception e) {
-
-        }
-        if (kichCo.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
+        kichCo.setMa("" + kcr.genMaKichCo());
         if (kichCo.getTen().isEmpty()) {
             return "Tên không được trống";
         }
@@ -149,15 +95,7 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddHang(Hang hang) {
-        Hang spMa = null;
-        try {
-            spMa = hspr.getOneMa(hang.getMa());
-        } catch (Exception e) {
-
-        }
-        if (hang.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
+        hang.setMa("" + hspr.genMaHang());
         if (hang.getTen().isEmpty()) {
             return "Tên không được trống";
         }
@@ -170,15 +108,7 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
 
     @Override
     public String AddChatLieu(ChatLieu chatLieu) {
-        ChatLieu spMa = null;
-        try {
-            spMa = clr.getOneMa(chatLieu.getMa());
-        } catch (Exception e) {
-
-        }
-        if (chatLieu.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
+        chatLieu.setMa("" + clr.genMaChatLieu());
         if (chatLieu.getTen().isEmpty()) {
             return "Tên không được trống";
         }
@@ -199,22 +129,6 @@ public class ViewThuocTinhServiceImpl implements ViewThuocTinhService {
             return "Tên không được trống";
         }
         if (msr.update(mauSac)) {
-            return "Thành công";
-        } else {
-            return "Không thành công";
-        }
-    }
-
-    @Override
-    public String UpdateSanPham(SanPham sanPham) {
-
-        if (sanPham.getMa().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (sanPham.getTenSP().isEmpty()) {
-            return "Tên không được trống";
-        }
-        if (spr.update(sanPham)) {
             return "Thành công";
         } else {
             return "Không thành công";
