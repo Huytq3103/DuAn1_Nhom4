@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -21,7 +22,7 @@ public class HangSPRepository {
 
     public List<Hang> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromtable, Hang.class);
+        Query query = session.createQuery(fromtable + " ORDER BY CONVERT(INT,Ma) DESC", Hang.class);
         List<Hang> listHang = query.getResultList();
         return listHang;
     }
@@ -83,4 +84,18 @@ public class HangSPRepository {
         return null;
     }
 
+    public int genMaHang() {
+        String maH = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM Hang ");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maH = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maH);
+        return ++ma;
+    }
 }

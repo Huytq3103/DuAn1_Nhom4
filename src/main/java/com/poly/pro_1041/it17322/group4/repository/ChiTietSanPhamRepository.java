@@ -26,7 +26,7 @@ public class ChiTietSanPhamRepository {
 
     public List<ChiTietSanPham> getAll() {
         Session session = HibernateUtil.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, ChiTietSanPham.class);
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC ", ChiTietSanPham.class);
         List<ChiTietSanPham> list = query.getResultList();
         return list;
     }
@@ -57,7 +57,7 @@ public class ChiTietSanPhamRepository {
         ChiTietSanPham ctsp = (ChiTietSanPham) query.getSingleResult();
         return ctsp;
     }
- 
+
     public ChiTietSanPham getOneUpdateHoaDon(UUID id) {
         session = HibernateUtil.getSession();
         String sql = fromTable + "Where id=:id";
@@ -78,7 +78,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean add(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(chitietsanPham);
             transaction.commit();
@@ -91,7 +91,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean update(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.saveOrUpdate(chitietsanPham);
             transaction.commit();
@@ -101,7 +101,6 @@ public class ChiTietSanPhamRepository {
         }
         return null;
     }
-
 
     public Boolean updateTableHD(ChiTietSanPham ctsp) {
         Transaction transaction = null;
@@ -114,7 +113,7 @@ public class ChiTietSanPhamRepository {
 
     public Boolean delete(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.delete(chitietsanPham);
             transaction.commit();
@@ -124,27 +123,19 @@ public class ChiTietSanPhamRepository {
         }
         return null;
     }
-    
+
     public int genMaCTSP() {
-        String maStr = "";
-        session = HibernateUtil.getSession();
-        try {
-            String nativeQuery = "SELECT MAX(CONVERT(INT, SUBSTRING(a.ma,5,10))) from ChiTietSanPham a";
-            NativeQuery query = session.createNativeQuery(nativeQuery);
-            if (query.getSingleResult() != null) {
-                maStr = query.getSingleResult().toString();
-            } else {
-                maStr = null;
+        String maCTSP = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM ChiTietSanPham");
+            if (query.getSingleResult() == null) {
+                return 1;
             }
+            maCTSP = query.getSingleResult().toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
-        if (maStr == null) {
-            maStr = "0";
-            int ma = Integer.parseInt(maStr);
-            return ++ma;
-        }
-        int ma = Integer.parseInt(maStr);
+        int ma = Integer.valueOf(maCTSP);
         return ++ma;
     }
 

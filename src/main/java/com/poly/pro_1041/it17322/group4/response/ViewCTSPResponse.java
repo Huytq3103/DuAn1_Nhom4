@@ -14,6 +14,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
+@AllArgsConstructor
 public class ViewCTSPResponse {
 
     private UUID id;
@@ -44,7 +45,6 @@ public class ViewCTSPResponse {
 
     public ViewCTSPResponse() {
     }
-
 
     public ViewCTSPResponse(UUID id, int soLuongTon) {
         this.id = id;
@@ -66,8 +66,7 @@ public class ViewCTSPResponse {
         this.ten = ctsp.getTen();
     }
 
-
-    public ViewCTSPResponse(UUID id, String ma,String ten, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
+    public ViewCTSPResponse(UUID id, String ma, String ten, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
         this.id = id;
         this.ma = ma;
         this.hang = hang;
@@ -82,7 +81,6 @@ public class ViewCTSPResponse {
 
     }
 
-
     public ViewCTSPResponse(String ma, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, String ten, int trangThai) {
         this.ma = ma;
         this.hang = hang;
@@ -96,7 +94,6 @@ public class ViewCTSPResponse {
         this.ten = ten;
         this.trangThai = trangThai;
     }
-
 
     public ViewCTSPResponse(String ma, Hang hang, Loai loai, KichCo kichCo, MauSac mauSac, ChatLieu chatLieu, String ngayNhap, int soLuongTon, BigDecimal gia, KhuyenMai km) {
 
@@ -121,7 +118,7 @@ public class ViewCTSPResponse {
     }
 
     public Object[] toDataRow1() {
-        return new Object[]{ten, ma, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
+        return new Object[]{"SP" + ma, ten, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
     }
 
     public static void main(String[] args) {

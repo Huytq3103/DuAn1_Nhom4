@@ -23,7 +23,7 @@ public class TrangChu extends javax.swing.JFrame {
         String chucVu = account.getChucVuAccount().getId() == 1 ? "Chủ" : "Nhân viên";
         String nhanVien = "Hello : " + account.getHoTen() + " ( " + chucVu + " )";
         lbTenNV.setText(nhanVien);
-        ViewSanPham  viewSanPham = new ViewSanPham(account);
+        ViewSanPham viewSanPham = new ViewSanPham(account);
         panelTrangChu.removeAll();
         panelTrangChu.add(viewSanPham);
         panelTrangChu.setLayout(new FlowLayout());
@@ -408,7 +408,7 @@ public class TrangChu extends javax.swing.JFrame {
         btnLichSu.setBackground(Color.WHITE);
         btnLichSu.setForeground(Color.BLACK);
         btnNhanVien.setBackground(Color.WHITE);
-        btnNhanVien .setForeground(Color.BLACK);
+        btnNhanVien.setForeground(Color.BLACK);
         btnSanPham.setBackground(Color.WHITE);
         btnSanPham.setForeground(Color.BLACK);
         btnThongKe.setBackground(Color.WHITE);
