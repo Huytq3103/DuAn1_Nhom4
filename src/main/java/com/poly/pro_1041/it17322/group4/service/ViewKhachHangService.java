@@ -47,5 +47,5 @@ public interface ViewKhachHangService {
 
     ViewKhachHangRepose getOneSdt(String sdt);
 
-    List<ViewKhachHangRepose> getOneEmail(String email);
+    ViewKhachHangRepose getOneEmail(String email);
 }

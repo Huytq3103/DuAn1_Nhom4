@@ -451,16 +451,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         return list;
     }
 
-<<<<<<< HEAD
-    @Override
-    public List<ViewHoaDonResponse> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien) {
-        List<ViewHoaDonResponse> list = new ArrayList<>();
-        for (HoaDon hd : hdr.getOneHDKHAndTongTien(id, tongTien)) {
-            list.add(new ViewHoaDonResponse(hd));
-        }
-        return list;
-    }
-=======
+
     public List<ViewKhachHangRepose> searchSDT(String SDT) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (KhachHang kh : khr.getAll()) {
@@ -512,5 +503,5 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         ViewCTSPResponse vctspr = new ViewCTSPResponse(ctspr.getOneMa(ma));
         return vctspr;
     }
->>>>>>> develop
+
 }

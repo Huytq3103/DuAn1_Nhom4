@@ -40,8 +40,6 @@ public class HoaDonRepository {
         return hoadons;
     }
 
-<<<<<<< HEAD
-=======
     public List<HoaDon> getAllByDaTT() {
         String sql = fromTable + " WHERE IdTT = 1 ORDER BY NgayThanhToan DESC";
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -84,7 +82,7 @@ public class HoaDonRepository {
         return hoadons;
     }
 
->>>>>>> develop
+
     public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";

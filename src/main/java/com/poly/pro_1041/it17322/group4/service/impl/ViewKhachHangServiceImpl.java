@@ -194,9 +194,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     }
 
     @Override
-    public List<ViewKhachHangRepose> getOneEmail(String email) {
-        List<ViewKhachHangRepose> list = new ArrayList<>();
-
-        return list;
+    public ViewKhachHangRepose getOneEmail(String email) {
+        return new ViewKhachHangRepose(khRepository.getOneEmail(email));
     }
 }

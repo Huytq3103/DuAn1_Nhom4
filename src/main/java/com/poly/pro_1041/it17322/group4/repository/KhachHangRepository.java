@@ -61,17 +61,17 @@ public class KhachHangRepository {
         String sql = fromtable + " WHERE sdt = :sdt";
         Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("sdt", sdt);
-        KhachHang khachHang =(KhachHang) query.getSingleResult();
+        KhachHang khachHang = (KhachHang) query.getSingleResult();
         return khachHang;
     }
 
-    public List<KhachHang> getOneEmail(String email) {
+    public KhachHang getOneEmail(String email) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " WHERE email = :email";
         Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("email", email);
-        List<KhachHang> lists = query.getResultList();
-        return lists;
+        KhachHang khachHang = (KhachHang) query.getSingleResult();
+        return khachHang;
     }
 
     public List<KhachHang> seachKhoangNgay(String ngayBatDau, String ngayKetThuc) {
