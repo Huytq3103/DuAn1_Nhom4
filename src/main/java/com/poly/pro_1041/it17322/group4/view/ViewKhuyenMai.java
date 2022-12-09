@@ -62,7 +62,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         tbsp = (DefaultTableModel) tbSanPham.getModel();
         tbKhuyenMai.setModel(tbkm);
 
-        String[] headerSanPham = {"Tên SP", "Loại SP", "Giá", "Tên KM", "Chọn"};
+        String[] headerSanPham = {"Tên SP", "Mã SP", "Giá", "Tên KM", "Chọn"};
         String[] headerKhuyenMai = {"Tên KM", "Ngày bắt đầu", "Ngày kết thúc", "% Khuyến mãi", "Loại khuyến mãi", "Trạng thái"};
         tbsp.setColumnIdentifiers(headerSanPham);
         tbkm.setColumnIdentifiers(headerKhuyenMai);
@@ -286,7 +286,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnApDung)
                     .addComponent(btnChonHet))
@@ -479,7 +479,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                     .addComponent(btnDoi, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -502,7 +502,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -701,12 +701,9 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             return;
         }
 
-        for (int i = 0; i < tbSanPham.getRowCount(); i++) {
-            if (tbSanPham.getValueAt(i, 4).equals(true)) {
-                index = tbKhuyenMai.getSelectedRow();
-
-                int index2 = tbSanPham.getSelectedRow();
-                ViewCTSPResponse vctspr = listSanPham.get(index2);
+        for (int i = 0; i < listSanPham.size(); i++) {
+            if (tbSanPham.getValueAt(i, 4).toString() == "true") {
+                ViewCTSPResponse vctspr = listSanPham.get(i);
                 boolean check = true;
 
                 ViewKhuyenMaiResponse vkmr = listVKM.get(index);
@@ -726,7 +723,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 vctspr.setKm(km);
                 vctspr.setGia(BigDecimal.valueOf(giaMoi));
 
-                check = vkms.updateCTSP(vctspr);
+                check = vkms.updateCTSPKM(vctspr);
             }
         }
 
@@ -811,7 +808,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         for (ViewCTSPResponse view : list) {
 //            tbsp.addRow(view.toDataRowKM());
             boolean chon = false;
-            tbsp.addRow(new Object[]{view.getTen(), view.getLoai().getTen(), view.getGia(), view.getSoLuongTon(), chon});
+            tbsp.addRow(new Object[]{view.getTen(), "SP" + view.getMa(), view.getGia(), view.getKm().getTen(), chon});
         }
     }
 

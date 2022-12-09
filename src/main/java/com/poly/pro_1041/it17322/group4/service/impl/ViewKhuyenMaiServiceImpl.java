@@ -143,5 +143,13 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         }
         return tsp;
     }
+    @Override
+    public boolean updateCTSPKM(ViewCTSPResponse ctspr) {
+        if (ctsprp.updatetableKM(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, null, ctspr.getTrangThai()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
