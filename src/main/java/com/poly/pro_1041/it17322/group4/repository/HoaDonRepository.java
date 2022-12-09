@@ -6,6 +6,9 @@ package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
+import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.hibernate.Session;
@@ -36,8 +39,8 @@ public class HoaDonRepository {
         List<HoaDon> hoadons = query.getResultList();
         return hoadons;
     }
-    
-     public List<HoaDon> getList(int idTT) {
+
+    public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";
         Query query = session.createQuery(sql, HoaDon.class);
@@ -64,6 +67,16 @@ public class HoaDonRepository {
         return listHD;
     }
 
+    public List<HoaDon> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien) {
+        String sql = fromTable + "WHERE IdKH =: Id AND tongTien = :tongTien";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("Id", id);
+        query.setParameter("tongTien", tongTien);
+        List<HoaDon> listHD = query.getResultList();
+        return listHD;
+    }
+
     public HoaDon getOne(String Ma) {
         String sql = fromTable + "WHERE Ma =: Ma";
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -77,7 +90,7 @@ public class HoaDonRepository {
     public Boolean add(HoaDon hoadon) {
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.save(hoadon);
             transaction.commit();
@@ -90,7 +103,7 @@ public class HoaDonRepository {
 
     public Boolean update(HoaDon hd) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.saveOrUpdate(hd);
             transaction.commit();
@@ -103,7 +116,7 @@ public class HoaDonRepository {
 
     public Boolean delete(HoaDon hoadon) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getFACTORY().openSession()) {
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
             session.delete(hoadon);
             transaction.commit();

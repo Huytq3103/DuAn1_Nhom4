@@ -71,4 +71,5 @@ public interface ViewHoaDonService {
 
     List<ViewKhachHangRepose> getAllKH();
 
+    List<ViewHoaDonResponse> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien);
 }

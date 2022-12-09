@@ -4,7 +4,21 @@
  */
 package com.poly.pro_1041.it17322.group4.view;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.Common;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.XDate;
@@ -15,8 +29,15 @@ import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewKhachHangServiceImpl;
 import com.toedter.calendar.JDateChooser;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +45,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -34,17 +62,20 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
  * @author DELL
  */
-public class ViewKhachHang extends javax.swing.JPanel {
+public class ViewKhachHang extends javax.swing.JPanel implements Runnable, ThreadFactory {
 
     /**
      * Creates new form ViewKhachHang
      */
     private DefaultTableModel dtm = new DefaultTableModel();
+    private DefaultComboBoxModel dcbbRank = new DefaultComboBoxModel();
+    private List<String> listCbbRank = new ArrayList<>();
     private DefaultTableModel dtm2 = new DefaultTableModel();
     private ViewKhachHangService khService = new ViewKhachHangServiceImpl();
     private DefaultComboBoxModel dcbb = new DefaultComboBoxModel<>();
@@ -56,6 +87,8 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private ViewHoaDonServiceImpl hdService = new ViewHoaDonServiceImpl();
     private List<ViewHoaDonResponse> listHD = new ArrayList<>();
     private List<String> listCombobox = new ArrayList<>();
+    private Webcam webcam = null;
+    private Thread t1;
 
     public ViewKhachHang(Account a) {
         initComponents();
@@ -64,21 +97,45 @@ public class ViewKhachHang extends javax.swing.JPanel {
         String headers[] = {"STT", "Mã", "Họ tên", "Ngày sinh", "Giới tính", "Sdt", "Email", "Địa chỉ", "Ngày tạo", "Ngày chỉnh sửa", "Điểm"};
         dtm.setColumnIdentifiers(headers);
         listKH = khService.getAll();
+        // add dữ liệu vô cbb search
         cbbSearch.setModel(dcbb);
         listCombobox.add("Số điện thoại");
         listCombobox.add("Họ tên");
         listCombobox.add("Địa chỉ");
         listCombobox.add("Ngày tạo");
         listCombobox.add("Ngày sinh");
+        listCombobox.add("Email");
+        CbbRank.setModel(dcbbRank);
+        // add dữ liệu cbb rank
+        listCbbRank.add("Đồng");
+        listCbbRank.add("Sắt");
+        listCbbRank.add("Bạch kim");
+        listCbbRank.add("Kim cương");
+        dcbbRank.setSelectedItem("Đồng");
+        dcbbRank.addAll(listCbbRank);
         dcbb.addAll(listCombobox);
         dcbb.setSelectedItem("Họ tên");
-
         labelNgayBatDau.setVisible(false);
         labelNgayKetThuc.setVisible(false);
         txtNgayBatDau.setVisible(false);
         txtNgayKetThuc.setVisible(false);
         btnTimKiem.setVisible(false);
+        initWebcam();
         FillToTable(listKH);
+    }
+
+    private void initWebcam() {
+        WebcamPanel panel = null;
+        Executor executor = Executors.newSingleThreadExecutor(this);
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0); //0 is default webcam
+        webcam.setViewSize(size);
+        Common.webcam = webcam;
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+        panelWebcam.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 135));
+        executor.execute(this);
     }
 
     private void FillToTable(List<ViewKhachHangRepose> lists) {
@@ -150,17 +207,16 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private boolean checkNgaySinh() {
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
-        Date ngaySinh = java.sql.Date.valueOf(txtNgaySinh.getDate().toString());
-        JDateChooser jdate = new JDateChooser();
-        Date ngayHienTai = java.sql.Date.valueOf(jdate.getDate().toString());
-        c1.setTime(ngaySinh);
-        c2.setTime(ngayHienTai);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String ngaySinh = sdf.format(txtNgaySinh.getDate());
+        String ngayHienTai = sdf.format(new Date());
+        c1.setTime(java.sql.Date.valueOf(ngaySinh));
+        c1.setTime(java.sql.Date.valueOf(ngayHienTai));
         long a = (c1.getTime().getTime()) / (24 * 3600 * 1000);
         long b = (c2.getTime().getTime()) / (24 * 3600 * 1000);
-        if (a > b) {
+        if (a < b) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Ngày sinh phải nhỏ hơn ngày hiện tại");
             return false;
         }
     }
@@ -187,9 +243,17 @@ public class ViewKhachHang extends javax.swing.JPanel {
         labelNgayTao.setText(kh.getNgayTao().toString());
         labelNgayChinhSua.setText(kh.getNgayChinhSua());
         labelNguoiTao.setText(khService.getOneNguoiTao(String.valueOf(kh.getNguoiTao())).getHoTen());
-        labelDiem.setText(String.valueOf(kh.getDiem()));
         tbHienThi.setRowSelectionAllowed(true);
         tbHienThi.setRowSelectionInterval(index, index);
+        if (kh.getDiem() == 2) {
+            CbbRank.setSelectedItem("Sắt");
+        } else if (kh.getDiem() == 3) {
+            CbbRank.setSelectedItem("Bạch kim");
+        } else if (kh.getDiem() == 4) {
+            CbbRank.setSelectedItem("Kim cương");
+        } else {
+            CbbRank.setSelectedItem("Đồng");
+        }
     }
 
     /**
@@ -219,17 +283,17 @@ public class ViewKhachHang extends javax.swing.JPanel {
         txtEmail = new javax.swing.JTextField();
         txtDiaChi = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnLamMoi = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        labelDiem = new javax.swing.JLabel();
         labelNguoiTao = new javax.swing.JLabel();
         labelNgayTao = new javax.swing.JLabel();
         labelNgayChinhSua = new javax.swing.JLabel();
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        CbbRank = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
@@ -252,6 +316,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbHoaDon = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
+        panelWebcam = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        btnClose = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(1086, 682));
         setMinimumSize(new java.awt.Dimension(1086, 682));
@@ -302,8 +369,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
         jLabel13.setText("NguoiTao");
 
-        jLabel1.setText("Điểm");
-
         jPanel5.setAlignmentY(10.0F);
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -340,6 +405,10 @@ public class ViewKhachHang extends javax.swing.JPanel {
         jPanel5.add(jButton1);
 
         txtNgaySinh.setDateFormatString("dd-MM-yyyy");
+
+        jLabel12.setText("Rank");
+
+        CbbRank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -379,24 +448,26 @@ public class ViewKhachHang extends javax.swing.JPanel {
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                             .addComponent(labelNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel1))
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(labelNguoiTao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                            .addComponent(labelDiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12)))
+                .addGap(57, 57, 57)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(labelNguoiTao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(CbbRank, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -432,16 +503,16 @@ public class ViewKhachHang extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -638,15 +709,46 @@ public class ViewKhachHang extends javax.swing.JPanel {
                 .addGap(0, 26, Short.MAX_VALUE))
         );
 
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        panelWebcam.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setText("QR Code Scan");
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(panelWebcam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelWebcam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnClose)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -656,16 +758,18 @@ public class ViewKhachHang extends javax.swing.JPanel {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(7, 7, 7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -724,13 +828,27 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        ViewKhachHangRepose vkhachHan = null;
+        try {
+            vkhachHan = khService.getOneSdt(txtSDT.getText());
+        } catch (Exception e) {
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String ngayHienTai = sdf.format(new Date());
         if (!radioNam.isSelected() && !radioNu.isSelected()) {
             JOptionPane.showMessageDialog(this, "Giới tính chưa chọn");
-        } else {
+        } //        else if (checkNgaySinh()) {
+        //            JOptionPane.showMessageDialog(this, "Ngày sinh phải nhỏ hơn ngày hiện tại");
+        //        }
+        else if (vkhachHan != null) {
+            JOptionPane.showMessageDialog(this, "Sdt đã tồn tại trong hệ thống");
+        } //        else if (khService.getOneEmail(txtEmail.getText()) != null) {
+        //            JOptionPane.showMessageDialog(this, "Email đã có trong dữ liệu");
+        //        } 
+        else {
             UUID id = null;
             String ma = khService.genMaHD() + "";
             String ten = txtTenKhachHang.getText();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String ngaySinh = sdf.format(txtNgaySinh.getDate());
             boolean isGioiTinh = radioNam.isSelected();
             boolean gioiTinh;
@@ -779,7 +897,6 @@ public class ViewKhachHang extends javax.swing.JPanel {
         // TODO add your handling code here:
         index--;
         fillIndex();
-
     }//GEN-LAST:event_btnVeActionPerformed
 
     private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
@@ -850,6 +967,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
                 txtNgayBatDau.setVisible(true);
                 txtNgayKetThuc.setVisible(false);
                 btnTimKiem.setVisible(true);
+            }
+            if (cbbSearch.getSelectedItem().equals("Email")) {
+                txtTimKiem.setVisible(true);
+                labelNgayBatDau.setVisible(false);
+                labelNgayKetThuc.setVisible(false);
+                txtNgayBatDau.setVisible(false);
+                txtNgayKetThuc.setVisible(false);
+                btnTimKiem.setVisible(false);
             }
         }
     }//GEN-LAST:event_cbbSearchItemStateChanged
@@ -949,14 +1074,14 @@ public class ViewKhachHang extends javax.swing.JPanel {
             List<ViewKhachHangRepose> listSearch = khService.searchByPhone(listKH, searchPhone);
             FillToTable(listSearch);
         }
-        if (cbbSearch.getSelectedItem().equals("Email")) {
-            String search = txtTimKiem.getText();
-            List<ViewKhachHangRepose> listSearch = khService.searchByEmail(listKH, search);
-            FillToTable(listSearch);
-        }
         if (cbbSearch.getSelectedItem().equals("Địa chỉ")) {
             String search = txtTimKiem.getText();
             List<ViewKhachHangRepose> listSearch = khService.searchByDiaChi(listKH, search);
+            FillToTable(listSearch);
+        }
+        if (cbbSearch.getSelectedItem().equals("Email")) {
+            String search = txtTimKiem.getText();
+            List<ViewKhachHangRepose> listSearch = khService.seachByEmail(search);
             FillToTable(listSearch);
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
@@ -982,8 +1107,15 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        webcam.close();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CbbRank;
+    private javax.swing.JButton btnClose;
     private javax.swing.JButton btnCuoi;
     private javax.swing.JButton btnDau;
     private javax.swing.JButton btnLamMoi;
@@ -995,8 +1127,9 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbSearch;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1017,12 +1150,12 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel labelDiem;
     private javax.swing.JLabel labelNgayBatDau;
     private javax.swing.JLabel labelNgayChinhSua;
     private javax.swing.JLabel labelNgayKetThuc;
     private javax.swing.JLabel labelNgayTao;
     private javax.swing.JLabel labelNguoiTao;
+    private javax.swing.JPanel panelWebcam;
     private javax.swing.JRadioButton radioNam;
     private javax.swing.JRadioButton radioNu;
     private javax.swing.JTable tbHienThi;
@@ -1036,4 +1169,63 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtTenKhachHang;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+//                e.printStackTrace();
+            }
+
+            Result result = null;
+            BufferedImage image = null;
+
+            if (webcam.isOpen()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+            try {
+                LuminanceSource source = new BufferedImageLuminanceSource(image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (Exception e) {
+            }
+            if (result != null) {
+                try {
+                    List<String> listt = new ArrayList<>();
+                    System.out.println(result);
+                    String chuoiCCCd = result.toString();
+                    chuoiCCCd = chuoiCCCd.replace("||", " ");
+                    chuoiCCCd = chuoiCCCd.replace("|", " ");
+                    String[] b = chuoiCCCd.split(" ");
+                    String ngaySinh = b[4].substring(0, 2) + "-" + b[4].substring(2, 4) + "-" + b[4].substring(4, 8);
+                    txtTenKhachHang.setText(b[1] + " " + b[2] + " " + b[3]);
+                    txtDiaChi.setText(b[13] + " " + b[14]);
+                    if (b[5].equalsIgnoreCase("Nam")) {
+                        radioNam.setSelected(true);
+                    } else {
+                        radioNu.setSelected(true);
+                    }
+                    try {
+                        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
+                        txtNgaySinh.setDate(date);
+                    } catch (Exception e) {
+                        e.printStackTrace(System.out);
+                    }
+                    JOptionPane.showMessageDialog(this, "Quét qr thành công");
+                } catch (Exception e) {
+                }
+            }
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
 }

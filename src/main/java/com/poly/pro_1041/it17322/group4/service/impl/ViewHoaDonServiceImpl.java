@@ -96,7 +96,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewHoaDonResponse getOneHDByMa(String ma) {
         return new ViewHoaDonResponse(hdr.getOne(ma));
     }
-    
+
     @Override
     public List<ViewHoaDonResponse> getList(int idTT) {
         List<ViewHoaDonResponse> list = new ArrayList<>();
@@ -406,4 +406,12 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         return list;
     }
 
+    @Override
+    public List<ViewHoaDonResponse> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien) {
+        List<ViewHoaDonResponse> list = new ArrayList<>();
+        for (HoaDon hd : hdr.getOneHDKHAndTongTien(id, tongTien)) {
+            list.add(new ViewHoaDonResponse(hd));
+        }
+        return list;
+    }
 }

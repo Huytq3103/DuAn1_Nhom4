@@ -37,11 +37,15 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> searchByDiaChi(List<ViewKhachHangRepose> lists, String diaChi);
 
-    List<ViewKhachHangRepose> searchByEmail(List<ViewKhachHangRepose> lists, String email);
-
     List<ViewKhachHangRepose> seachKhoangNgay(String ngayBatDau, String ngayKetThuc);
 
     List<ViewKhachHangRepose> seachKhoangNgaySinh(String ngaySinh);
 
+    List<ViewKhachHangRepose> seachByEmail(String email);
+
     int genMaHD();
+
+    ViewKhachHangRepose getOneSdt(String sdt);
+
+    List<ViewKhachHangRepose> getOneEmail(String email);
 }
