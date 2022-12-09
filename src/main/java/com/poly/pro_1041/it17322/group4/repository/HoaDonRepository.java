@@ -6,6 +6,9 @@ package com.poly.pro_1041.it17322.group4.repository;
 
 import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
+import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.hibernate.Session;
@@ -37,6 +40,8 @@ public class HoaDonRepository {
         return hoadons;
     }
 
+<<<<<<< HEAD
+=======
     public List<HoaDon> getAllByDaTT() {
         String sql = fromTable + " WHERE IdTT = 1 ORDER BY NgayThanhToan DESC";
         Session session = HibernateUtil.getFACTORY().openSession();
@@ -79,6 +84,7 @@ public class HoaDonRepository {
         return hoadons;
     }
 
+>>>>>>> develop
     public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";
@@ -102,6 +108,16 @@ public class HoaDonRepository {
         Session session = HibernateUtil.getFACTORY().openSession();
         javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
         query.setParameter("Id", id);
+        List<HoaDon> listHD = query.getResultList();
+        return listHD;
+    }
+
+    public List<HoaDon> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien) {
+        String sql = fromTable + "WHERE IdKH =: Id AND tongTien = :tongTien";
+        Session session = HibernateUtil.getFACTORY().openSession();
+        javax.persistence.Query query = session.createQuery(sql, HoaDon.class);
+        query.setParameter("Id", id);
+        query.setParameter("tongTien", tongTien);
         List<HoaDon> listHD = query.getResultList();
         return listHD;
     }

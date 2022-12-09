@@ -8,10 +8,25 @@ import com.poly.pro_1041.it17322.group4.config.HibernateUtil;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
@@ -41,6 +56,24 @@ public class KhachHangRepository {
         return kh;
     }
 
+    public KhachHang getOneSdt(String sdt) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " WHERE sdt = :sdt";
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("sdt", sdt);
+        KhachHang khachHang =(KhachHang) query.getSingleResult();
+        return khachHang;
+    }
+
+    public List<KhachHang> getOneEmail(String email) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " WHERE email = :email";
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("email", email);
+        List<KhachHang> lists = query.getResultList();
+        return lists;
+    }
+
     public List<KhachHang> seachKhoangNgay(String ngayBatDau, String ngayKetThuc) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromtable + " WHERE NgayTao BETWEEN :ngayBatDau AND :ngayKetThuc";
@@ -56,6 +89,15 @@ public class KhachHangRepository {
         String sql = fromtable + " WHERE NgaySinh = :ngaySinh";
         Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("ngaySinh", ngaySinh);
+        List<KhachHang> lists = query.getResultList();
+        return lists;
+    }
+
+    public List<KhachHang> seachByEmail(String email) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " WHERE email = :email";
+        Query query = session.createQuery(sql, KhachHang.class);
+        query.setParameter("email", email);
         List<KhachHang> lists = query.getResultList();
         return lists;
     }

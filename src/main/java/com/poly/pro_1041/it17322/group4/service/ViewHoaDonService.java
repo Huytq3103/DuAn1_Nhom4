@@ -73,6 +73,9 @@ public interface ViewHoaDonService {
 
     List<ViewKhachHangRepose> getAllKH();
 
+<<<<<<< HEAD
+    List<ViewHoaDonResponse> getOneHDKHAndTongTien(UUID id, BigDecimal tongTien);
+=======
     public List<ViewHoaDonResponse> getAllHDByChuaTT();
 
     public List<ViewHoaDonResponse> getAllHDByDaTT();
@@ -88,4 +91,5 @@ public interface ViewHoaDonService {
     String add(ViewKhachHangRepose vkhr);
 
     ViewCTSPResponse getOneSP(String ma);
+>>>>>>> develop
 }

@@ -26,7 +26,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String add(ViewKhachHangRepose vkhr) {
-         if (vkhr.getHoTen().trim().isEmpty()) {
+        if (vkhr.getHoTen().trim().isEmpty()) {
             return "Họ tên đang trống";
         } else if (!vkhr.getHoTen().matches("[a-z A-Z]+")) {
             return "Họ tên là chữ";
@@ -59,11 +59,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public String update(ViewKhachHangRepose vkhr) {
-        if (vkhr.getMa().trim().isEmpty()) {
-            return "Mã đang trống";
-        } else if (!vkhr.getMa().substring(0, 2).equalsIgnoreCase("KH")) {
-            return "Mã bắt đầu bằng KH";
-        } else if (vkhr.getHoTen().trim().isEmpty()) {
+        if (vkhr.getHoTen().trim().isEmpty()) {
             return "Họ tên đang trống";
         } else if (!vkhr.getHoTen().matches("[a-z A-Z]+")) {
             return "Họ tên là chữ";
@@ -131,7 +127,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
 
     @Override
     public List<ViewKhachHangRepose> getOne(UUID id) {
-        return null;
+        return (List<ViewKhachHangRepose>) khRepository.getOne(id);
     }
 
     public static void main(String[] args) {
@@ -161,17 +157,6 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     }
 
     @Override
-    public List<ViewKhachHangRepose> searchByEmail(List<ViewKhachHangRepose> lists, String email) {
-        List<ViewKhachHangRepose> list = new ArrayList<>();
-        for (ViewKhachHangRepose vkh : lists) {
-            if (vkh.getSdt().equalsIgnoreCase(email)) {
-                list.add(vkh);
-            }
-        }
-        return list;
-    }
-
-    @Override
     public List<ViewKhachHangRepose> seachKhoangNgay(String ngayBatDau, String ngayKetThuc) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (KhachHang khachHang : khRepository.seachKhoangNgay(ngayBatDau, ngayKetThuc)) {
@@ -194,4 +179,24 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
         return khRepository.genMaKH();
     }
 
+    @Override
+    public List<ViewKhachHangRepose> seachByEmail(String email) {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+        for (KhachHang khachHang : khRepository.seachByEmail(email)) {
+            list.add(new ViewKhachHangRepose(khachHang));
+        }
+        return list;
+    }
+
+    @Override
+    public ViewKhachHangRepose getOneSdt(String sdt) {
+        return new ViewKhachHangRepose(khRepository.getOneSdt(sdt));
+    }
+
+    @Override
+    public List<ViewKhachHangRepose> getOneEmail(String email) {
+        List<ViewKhachHangRepose> list = new ArrayList<>();
+
+        return list;
+    }
 }
