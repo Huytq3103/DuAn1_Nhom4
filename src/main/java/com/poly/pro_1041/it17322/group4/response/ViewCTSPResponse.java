@@ -38,10 +38,12 @@ public class ViewCTSPResponse {
     private MauSac mauSac;
     private ChatLieu chatLieu;
     private String ngayNhap;
+    private String ngayChinhSua;
     private int soLuongTon;
     private BigDecimal gia;
     private KhuyenMai km;
     private int trangThai;
+    private String Hinh;
 
     public ViewCTSPResponse() {
     }
@@ -118,7 +120,7 @@ public class ViewCTSPResponse {
     }
 
     public Object[] toDataRow1() {
-        return new Object[]{"SP" + ma, ten, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia};
+        return new Object[]{"SP" + ma, ten, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia,km.getTen()};
     }
 
     public static void main(String[] args) {

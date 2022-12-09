@@ -17,28 +17,28 @@ import java.util.UUID;
  * @author Lenovo
  */
 public interface ViewKhuyenMaiService {
-    
+
     List<ViewKhuyenMaiResponse> getAllKM();
-    
+
     List<ViewKhuyenMaiResponse> getOneMaKM(String maKM);
-    
+
     List<ViewLoaiKMResponse> getAllLKM();
-    
+
     List<ViewTrangThaiKMResponse> getAllTTKM();
-    
+
     List<ViewCTSPResponse> getAllSP();
-    
- 
-    
+
     List<ViewKhuyenMaiResponse> Search(String loaiKM);
-    
+
     List<ViewCTSPResponse> SearchSP(String tenSP);
-    
+
     boolean updateCTSP(ViewCTSPResponse ctspr);
-    
+
     String addKhuyenMai(ViewKhuyenMaiResponse vkmr);
-    
+
     boolean updateTTKhuyenMai(ViewKhuyenMaiResponse vkmr);
-    
+
     boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr);
+
+    public boolean updateCTSPKM(ViewCTSPResponse ctspr);
 }

@@ -84,7 +84,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtNgayNhap.disable();
         tbThuocTinh.setModel(dtm1);
         tbSanPham.setModel(dtm);
-        String[] headerSanPham = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá"};
+        String[] headerSanPham = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá","Khuyến mại"};
         String[] headerThuocTinh = {"STT", "Mã", "Tên"};
         String[] headerSanPhamAn = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá"};
         dtm1.setColumnIdentifiers(headerThuocTinh);
@@ -103,24 +103,28 @@ public class ViewSanPham extends javax.swing.JPanel {
             cbb2.addElement(ms.getTen());
         }
     }
+
     private void cbbLoai(List<Loai> list) {
         cbb3.removeAllElements();
         for (Loai l : list) {
             cbb3.addElement(l.getTen());
         }
     }
+
     private void cbbChatLieu(List<ChatLieu> list) {
         cbb6.removeAllElements();
         for (ChatLieu cl : list) {
             cbb6.addElement(cl.getTen());
         }
     }
+
     private void cbbHang(List<Hang> list) {
         cbb5.removeAllElements();
         for (Hang h : list) {
             cbb5.addElement(h.getTen());
         }
     }
+
     private void cbbKC(List<KichCo> list) {
         cbb4.removeAllElements();
         for (KichCo kc : list) {
