@@ -168,10 +168,9 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                 }
             }
 
-            LuminanceSource source = new BufferedImageLuminanceSource(image);
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
             try {
+                LuminanceSource source = new BufferedImageLuminanceSource(image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
                 result = new MultiFormatReader().decode(bitmap);
             } catch (NotFoundException e) {
                 //No result...
@@ -430,6 +429,7 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
         radioAll = new javax.swing.JRadioButton();
         jPanel15 = new javax.swing.JPanel();
         panelWebCam = new javax.swing.JPanel();
+        btnCloseWebcam = new javax.swing.JButton();
 
         ViewKhachHang.setBackground(new java.awt.Color(255, 255, 255));
         ViewKhachHang.setMinimumSize(new java.awt.Dimension(536, 538));
@@ -735,7 +735,7 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1389,9 +1389,9 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
             }
         });
 
-        jPanel15.setMaximumSize(new java.awt.Dimension(220, 190));
-        jPanel15.setMinimumSize(new java.awt.Dimension(220, 190));
-        jPanel15.setPreferredSize(new java.awt.Dimension(220, 190));
+        jPanel15.setMaximumSize(new java.awt.Dimension(180, 160));
+        jPanel15.setMinimumSize(new java.awt.Dimension(180, 160));
+        jPanel15.setPreferredSize(new java.awt.Dimension(180, 160));
 
         panelWebCam.setBackground(new java.awt.Color(250, 250, 250));
         panelWebCam.setBorder(new javax.swing.border.MatteBorder(null));
@@ -1402,15 +1402,21 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(panelWebCam, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(panelWebCam, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(panelWebCam, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelWebCam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        btnCloseWebcam.setText("Close");
+        btnCloseWebcam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseWebcamActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1434,8 +1440,13 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                                 .addComponent(radioDangGiao)
                                 .addGap(18, 18, 18)
                                 .addComponent(radioDaGiao)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(63, 63, 63)
+                                .addComponent(btnCloseWebcam)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1459,7 +1470,10 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                                     .addComponent(radioDaGiao))
                                 .addGap(13, 13, 13)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCloseWebcam)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1950,6 +1964,11 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
+    private void btnCloseWebcamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseWebcamActionPerformed
+        // TODO add your handling code here:
+        webcam.close();
+    }//GEN-LAST:event_btnCloseWebcamActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane TBPaneHD;
@@ -1957,6 +1976,7 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
     private javax.swing.JButton btnChon;
     private javax.swing.JButton btnChonKH;
     private javax.swing.JButton btnChonKHShip;
+    private javax.swing.JButton btnCloseWebcam;
     private javax.swing.JButton btnDaGiao;
     private javax.swing.JButton btnGiaoHang;
     private javax.swing.JButton btnHuy;

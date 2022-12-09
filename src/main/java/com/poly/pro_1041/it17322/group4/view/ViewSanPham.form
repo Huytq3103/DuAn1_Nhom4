@@ -457,7 +457,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="88" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel23" min="-2" pref="71" max="-2" attributes="0"/>
                                       <Component id="jLabel22" min="-2" pref="71" max="-2" attributes="0"/>
@@ -481,7 +481,7 @@
                                               <Component id="txtGiaBan" min="-2" pref="160" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="txtSoLuong" min="-2" pref="160" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="36" max="32767" attributes="0"/>
                                                   <Component id="jLabel28" min="-2" pref="28" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
