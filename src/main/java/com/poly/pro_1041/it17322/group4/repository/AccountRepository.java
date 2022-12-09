@@ -76,6 +76,7 @@ public class AccountRepository {
         transaction = (Transaction) session.beginTransaction();
         session.saveOrUpdate(account);
         transaction.commit();
+        session.close();
         return true;
     }
 
