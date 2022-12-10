@@ -98,4 +98,18 @@ public class HangSPRepository {
         int ma = Integer.valueOf(maH);
         return ++ma;
     }
+
+    public Hang findHangByTen(String ten) {
+        Hang hang = new Hang();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromtable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            hang = (Hang) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return hang;
+    }
 }

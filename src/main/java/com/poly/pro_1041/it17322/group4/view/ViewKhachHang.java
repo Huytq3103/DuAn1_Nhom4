@@ -1055,7 +1055,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                 cell.setCellValue(listKH.get(i).getDiem());
             }
 
-            File file = new File("D:\\DanhsachKhachHang.xlsx");
+            File file = new File("C:\\Users\\Huy PC\\Desktop\\anh\\DanhsachKhachHang.xlsx");
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 workbook.write(fos);

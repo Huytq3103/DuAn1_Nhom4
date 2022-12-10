@@ -1344,7 +1344,7 @@ public class ViewSanPham extends javax.swing.JPanel {
                 cell = rows.createCell(9, CellType.STRING);
                 cell.setCellValue(listVCTSP.get(i).getGia().toPlainString());
             }
-            File file = new java.io.File("D:\\danhsach.xlsx");
+            File file = new java.io.File("C:\\Users\\Huy PC\\Desktop\\anh\\danhsachxuat.xlsx");
             try {
                 file.getParentFile().mkdir();
                 if (!file.exists()) {

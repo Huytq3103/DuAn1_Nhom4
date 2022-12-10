@@ -28,6 +28,15 @@ public class ViewAccountServiceImpl implements ViewAccountService {
         }
         return listAcc;
     }
+    @Override
+    public List<ViewAccountReponse> getAllAn() {
+        List<ViewAccountReponse> listAcc = new ArrayList<>();
+        List<Account> lists = accrp.getAllAn();
+        for (Account x : lists) {
+            listAcc.add(new ViewAccountReponse(x));
+        }
+        return listAcc;
+    }
 
     public static void main(String[] args) {
         List<Account> lists = new AccountRepository().getAll();

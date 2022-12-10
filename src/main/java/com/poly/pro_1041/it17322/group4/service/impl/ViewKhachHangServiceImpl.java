@@ -118,7 +118,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     public List<ViewKhachHangRepose> searchByName(List<ViewKhachHangRepose> lists, String hoTen) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (ViewKhachHangRepose vkh : lists) {
-            if (vkh.getHoTen().equalsIgnoreCase(hoTen)) {
+            if (vkh.getHoTen().contains(hoTen)) {
                 list.add(vkh);
             }
         }
@@ -138,7 +138,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     public List<ViewKhachHangRepose> searchByPhone(List<ViewKhachHangRepose> lists, String sdt) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (ViewKhachHangRepose vkh : lists) {
-            if (vkh.getSdt().equalsIgnoreCase(sdt)) {
+            if (vkh.getSdt().contains(sdt)) {
                 list.add(vkh);
             }
         }

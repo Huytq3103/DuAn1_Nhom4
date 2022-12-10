@@ -99,4 +99,17 @@ public class MauSacRepository {
         int ma = Integer.valueOf(maMS);
         return ++ma;
     }
+    public MauSac findMauSacByTen(String ten) {
+        MauSac ms = new MauSac();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromtable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            ms = (MauSac) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return ms;
+    }
 }
