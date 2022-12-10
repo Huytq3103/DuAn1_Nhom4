@@ -451,7 +451,6 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         return list;
     }
 
-
     public List<ViewKhachHangRepose> searchSDT(String SDT) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (KhachHang kh : khr.getAll()) {
@@ -502,6 +501,20 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
     public ViewCTSPResponse getOneSP(String ma) {
         ViewCTSPResponse vctspr = new ViewCTSPResponse(ctspr.getOneMa(ma));
         return vctspr;
+    }
+
+    public BigDecimal getTongTien(UUID idKH) {
+        return hdr.getTongTien(idKH);
+    }
+
+    public String updateKH(ViewKhachHangRepose vkhr) {
+        KhachHang kh = new KhachHang(vkhr.getId(), vkhr.getMa(), vkhr.getHoTen(), vkhr.getNgaySinh(), vkhr.isGioiTinh(), vkhr.getSdt(), vkhr.getDiaChi(), vkhr.getEmail(), vkhr.getNgayTao(), vkhr.getNguoiTao(), vkhr.getNguoiChinhSua(), vkhr.getNgayChinhSua(), vkhr.getDiem());
+            boolean update = khr.update(kh);
+            if (update) {
+                return "Update thanh cong";
+            } else {
+                return "Update that bai";
+            }
     }
 
 }

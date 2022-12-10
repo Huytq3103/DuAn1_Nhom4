@@ -137,8 +137,7 @@
                       <Component id="jScrollPane1" min="-2" pref="1024" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="txtTimKiem" min="-2" pref="264" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnTimKiem" min="-2" pref="90" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -148,10 +147,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtTimKiem" linkSize="6" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="btnTimKiem" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="txtTimKiem" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="184" max="32767" attributes="0"/>
               </Group>
@@ -251,14 +247,6 @@
         <Component class="javax.swing.JTextField" name="txtTimKiem">
           <Events>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnTimKiem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

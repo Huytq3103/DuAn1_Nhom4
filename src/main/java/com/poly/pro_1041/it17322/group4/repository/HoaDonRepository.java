@@ -82,7 +82,6 @@ public class HoaDonRepository {
         return hoadons;
     }
 
-
     public List<HoaDon> getList(int idTT) {
         Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE IdTT =: idTT";
@@ -175,6 +174,16 @@ public class HoaDonRepository {
         for (HoaDon x : lists) {
             System.out.println(x.toString());
         }
+    }
+
+    public BigDecimal getTongTien(UUID idKH) {
+        BigDecimal tongTien;
+        session = HibernateUtil.getSession();
+        String sql = "SELECT SUM(TongTien) FROM HoaDon WHERE IDKH=:idkh";
+        Query query = session.createNativeQuery(sql);
+        query.setParameter("idkh", idKH);
+        tongTien = (BigDecimal) query.getSingleResult();
+        return tongTien;
     }
 
 }

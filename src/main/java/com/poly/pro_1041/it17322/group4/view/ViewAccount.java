@@ -126,7 +126,6 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
         txtTimKiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
@@ -203,13 +202,6 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
             }
         });
 
-        btnTimKiem.setText("Tìm kiếm");
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -220,21 +212,16 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(108, 108, 108)))
                 .addGap(20, 20, 20))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem))
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnTimKiem, txtTimKiem});
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Quản lí nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -639,14 +626,23 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
         }
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String ngaySinh = sdf.format(dpNgaySinh.getDate());
         ViewAccountReponse viewacc = getFormData();
         ViewAccountReponse var = listVAcc.get(index);
         viewacc.setId(var.getId());
-        viewacc.setNgayChinhSua(viewacc.getNgayTao());
-        viewacc.setNgayTao(var.getNgayTao());
+        viewacc.setNgaySinh(ngaySinh);
+        viewacc.setNgayChinhSua(getDate());
         viewacc.setNguoiTao(var.getNguoiTao());
         viewacc.setNguoiChinhSua(account.getId());
+        viewacc.setHoTen(txtTen.getText());
+        viewacc.setSdt(txtSdt.getText());
+        viewacc.setDiaChi(txtDiaChi.getText());
+        if(cboChucVu.getSelectedIndex() == 0){
+            viewacc.setCvac(new ChucVuAccount(1, null, null));
+        }else{
+            viewacc.setCvac(new ChucVuAccount(2, null, null));
+        }
 
         String update = vaccsv.update(viewacc);
         JOptionPane.showMessageDialog(this, update);
@@ -726,12 +722,6 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
             JOptionPane.showMessageDialog(this, "Không di chuyển đc");
         }
     }//GEN-LAST:event_btnSauActionPerformed
-
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        String search = txtTimKiem.getText();
-        List<ViewAccountReponse> listSearch = vaccsv.searchByName(listVAcc, search);
-        fillToTable(listSearch);
-    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         String search = txtTimKiem.getText();
@@ -841,7 +831,6 @@ public class ViewAccount extends javax.swing.JPanel implements Runnable, ThreadF
     private javax.swing.JButton btnSau;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnTruoc;
     private javax.swing.JButton btnXuatExcel;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1014,24 +1003,44 @@ private String getDate() {
                     List<String> listt = new ArrayList<>();
                     System.out.println(result);
                     String chuoiCCCd = result.toString();
-                    String ten = chuoiCCCd.substring(21, 25);
-                    String ngaySinh = chuoiCCCd.substring(26, 28) + "-" + chuoiCCCd.substring(28, 30) + "-" + chuoiCCCd.substring(30, 34);
-                    String gioiTinh = chuoiCCCd.substring(35, 38);
-                    String diaChi = chuoiCCCd.substring(76, 85);
-                    txtTen.setText(ten);
-                    txtDiaChi.setText(diaChi.toString());
-                    if (gioiTinh.equalsIgnoreCase("Nam")) {
-                        rdoNam.setSelected(true);
+                    if (chuoiCCCd.contains("||")) {
+                        chuoiCCCd = chuoiCCCd.replace("||", " ");
+                        chuoiCCCd = chuoiCCCd.replace("|", " ");
+                        String[] b = chuoiCCCd.split(" ");
+                        String ngaySinh = b[4].substring(0, 2) + "-" + b[4].substring(2, 4) + "-" + b[4].substring(4, 8);
+                        txtTen.setText(b[1] + " " + b[2] + " " + b[3]);
+                        txtDiaChi.setText(b[13] + " " + b[14]);
+                        if (b[5].equalsIgnoreCase("Nam")) {
+                            rdoNam.setSelected(true);
+                        } else {
+                            rdoNu.setSelected(true);
+                        }
+                        try {
+                            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
+                            dpNgaySinh.setDate(date);
+                        } catch (Exception e) {
+                            e.printStackTrace(System.out);
+                        }
+                        JOptionPane.showMessageDialog(this, "Quét qr thành công");
                     } else {
-                        rdoNu.setSelected(true);
+                        chuoiCCCd = chuoiCCCd.replace("|", " ");
+                        String[] chuoi = chuoiCCCd.split(" ");
+                        String ngaySinh = chuoi[5].substring(0, 2) + "-" + chuoi[5].substring(2, 4) + "-" + chuoi[5].substring(4, 8);
+                        txtTen.setText(chuoi[2] + " " + chuoi[3] + " " + chuoi[4]);
+                        txtDiaChi.setText(chuoi[16] + " " + chuoi[17]);
+                        if (chuoi[6].equalsIgnoreCase("Nam")) {
+                            rdoNam.setSelected(true);
+                        } else {
+                            rdoNu.setSelected(true);
+                        }
+                        try {
+                            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
+                            dpNgaySinh.setDate(date);
+                        } catch (Exception e) {
+                            e.printStackTrace(System.out);
+                        }
+                        JOptionPane.showMessageDialog(this, "Quét qr thành công");
                     }
-//                    try {
-//                        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
-//                        dpNgaySinh.setDate(date);
-//                    } catch (Exception e) {
-//                        e.printStackTrace(System.out);
-//                    }
-                    JOptionPane.showMessageDialog(this, "Quét qr thành công");
                 } catch (Exception e) {
                 }
             }
