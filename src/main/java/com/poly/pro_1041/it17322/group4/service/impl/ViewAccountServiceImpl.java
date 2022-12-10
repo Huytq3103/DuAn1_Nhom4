@@ -71,7 +71,7 @@ public class ViewAccountServiceImpl implements ViewAccountService {
     public List<ViewAccountReponse> searchByName(List<ViewAccountReponse> lists, String hoTen) {
         List<ViewAccountReponse> list = new ArrayList<>();
         for (ViewAccountReponse vacc : lists) {
-            if (vacc.getHoTen().equalsIgnoreCase(hoTen)) {
+            if (vacc.getHoTen().contains(hoTen)) {
                 list.add(vacc);
             }
         }

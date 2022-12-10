@@ -231,6 +231,7 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
         btnHuy.setEnabled(true);
         btnHuyDonShip.setEnabled(true);
         tbHDCT.setEnabled(true);
+        tbSanPham.setEnabled(true);
 
         lbTongTien.setText(tongTienHoaDon());
         if (vhdr.getTto().getId() == 2) {
@@ -257,6 +258,7 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
             btnRemoveAll.setEnabled(false);
             btnDaGiao.setEnabled(false);
             tbHDCT.setEnabled(false);
+            tbSanPham.setEnabled(false);
         }
         if (vhdr.getTto().getId() == 3) {
             btnHuy.setEnabled(false);
@@ -319,6 +321,23 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
             }
         } else {
             JOptionPane.showMessageDialog(TBPaneHD, "Hãy chọn hóa đơn bạn cần thêm sản phẩm");
+        }
+    }
+
+    private int updateRank(Double tongTien) {
+        if (tongTien > 20000000.0) {
+            return 5;
+        }
+        if (tongTien > 10000000.0) {
+            return 4;
+        }
+        if (tongTien > 7000000.0) {
+            return 3;
+        }
+        if (tongTien > 5000000.0) {
+            return 2;
+        } else {
+            return 1;
         }
     }
 
@@ -848,6 +867,8 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTabbedPane1.setMaximumSize(new java.awt.Dimension(333, 596));
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(333, 596));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1518,19 +1539,16 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(63, 63, 63)
                                 .addComponent(btnCloseWebcam)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1548,7 +1566,8 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(558, 558, 558))
         );
 
@@ -1740,10 +1759,12 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                 ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
                 vhdr.setNgayThanhToan(getDate());
                 vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
-                UUID idKH = listKH.get(cbbKhachHang.getSelectedIndex()).getId();
-                KhachHang kh = new KhachHang();
-                kh.setId(idKH);
-                vhdr.setKhachHang(kh);
+                if (cbbKHShip.getSelectedItem() != " ") {
+                    UUID idKH = listKH.get(cbbKhachHang.getSelectedIndex()).getId();
+                    KhachHang kh = new KhachHang();
+                    kh.setId(idKH);
+                    vhdr.setKhachHang(kh);
+                }
                 if (Double.valueOf(lbTongTienDonShip.getText()) <= Double.valueOf(txtTienKhachDuaShip.getText()) + Double.valueOf(txtTienTaiKhoanShip.getText())) {
                     vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(lbTongTienDonShip.getText())));
                     TrangThaiOrder tto = new TrangThaiOrder(4, null, null);
@@ -1843,10 +1864,10 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                 } else if (vkhr.getDiem() == 4) {
                     lbRank.setText("VVIP");
                     lbKMRank.setText("10");
-                } else if(vkhr.getDiem() == 5){
+                } else if (vkhr.getDiem() == 5) {
                     lbRank.setText("S-VIP");
                     lbKMRank.setText("15");
-                }else{
+                } else {
                     lbRank.setText("");
                     lbKMRank.setText("0");
                 }
@@ -1879,18 +1900,25 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
         if (tbHoaDon.getSelectedRow() > -1) {
+            int rankKH = 0;
             ViewHoaDonResponse vhdr = listHD.get(tbHoaDon.getSelectedRow());
             vhdr.setNgayThanhToan(getDate());
             vhdr.setTongTien(BigDecimal.valueOf(Double.valueOf(tongTienHoaDon())));
             if (cbbModelKhachHang.getSelectedItem() != " ") {
-                UUID idKH = listKH.get(cbbKhachHang.getSelectedIndex()).getId();
+                ViewKhachHangRepose vkhr = listKH.get(cbbKhachHang.getSelectedIndex());
                 KhachHang kh = new KhachHang();
-                kh.setId(idKH);
+                kh.setId(vkhr.getId());
                 vhdr.setKhachHang(kh);
+//                rankKH = updateRank(Double.valueOf(tongTienHoaDon() + Double.valueOf(String.valueOf(vhds.getTongTien(vkhr.getId())))));
             }
             if (txtTienKhachDua.getText().matches(regexInt) && txtTienTaiKhoan.getText().matches(regexInt)) {
                 if (Double.valueOf(tongTienHoaDon()) <= Double.valueOf(txtTienKhachDua.getText()) + Double.valueOf(txtTienTaiKhoan.getText())) {
                     JOptionPane.showMessageDialog(TBPaneHD, vhds.thanhToan(vhdr));
+//                    if (cbbModelKhachHang.getSelectedItem() != " ") {
+//                        ViewKhachHangRepose vkhr = listKH.get(cbbKhachHang.getSelectedIndex());
+//                        vkhr.setDiem(rankKH);
+//                        vhds.updateKH(vkhr);
+//                    }
                     cbbModelKhachHang.setSelectedItem(" ");
                     listHD = vhds.getAllHD();
                     showDataTableHoaDon(listHD);
@@ -1949,10 +1977,10 @@ public class ViewHoaDon extends javax.swing.JPanel implements Runnable, ThreadFa
                 } else if (vkhr.getDiem() == 4) {
                     lbRank.setText("VVIP");
                     lbKMRank1.setText("10");
-                } else if(vkhr.getDiem() == 5){
+                } else if (vkhr.getDiem() == 5) {
                     lbRank.setText("S-VIP");
                     lbKMRank1.setText("15");
-                }else{
+                } else {
                     lbRank1.setText("");
                     lbKMRank1.setText("0");
                 }

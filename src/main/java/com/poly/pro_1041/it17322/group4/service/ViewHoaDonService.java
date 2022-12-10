@@ -88,4 +88,8 @@ public interface ViewHoaDonService {
     String add(ViewKhachHangRepose vkhr);
 
     ViewCTSPResponse getOneSP(String ma);
+
+    BigDecimal getTongTien(UUID idKH);
+
+    String updateKH(ViewKhachHangRepose vkhr);
 }
