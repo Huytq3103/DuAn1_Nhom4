@@ -152,24 +152,28 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtEmail" max="32767" attributes="0"/>
-                                  <Component id="txtDiaChi" pref="143" max="32767" attributes="0"/>
-                                  <Component id="labelNgayTao" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtEmail" max="32767" attributes="0"/>
+                                          <Component id="txtDiaChi" pref="143" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="labelNgayChinhSua" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="CbbRank" min="-2" pref="102" max="-2" attributes="0"/>
+                                  <Component id="labelNguoiTao" min="-2" pref="102" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="labelNgayChinhSua" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="CbbRank" min="-2" pref="102" max="-2" attributes="0"/>
-                          <Component id="labelNguoiTao" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="labelNgayTao" min="-2" pref="143" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -213,7 +217,7 @@
                                   <Component id="txtNgaySinh" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jLabel8" min="-2" pref="22" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -230,7 +234,7 @@
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="labelNgayTao" min="-2" pref="16" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="labelNgayChinhSua" min="-2" pref="16" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -388,8 +392,6 @@
             </Container>
             <Component class="javax.swing.JLabel" name="labelNguoiTao">
             </Component>
-            <Component class="javax.swing.JLabel" name="labelNgayTao">
-            </Component>
             <Component class="javax.swing.JLabel" name="labelNgayChinhSua">
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="txtNgaySinh">
@@ -416,6 +418,8 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelNgayTao">
             </Component>
           </SubComponents>
         </Container>
@@ -520,7 +524,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cbbSearch" alignment="0" pref="46" max="32767" attributes="0"/>
+                                  <Component id="cbbSearch" alignment="1" min="-2" pref="28" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -531,7 +535,7 @@
                                       <Component id="btnTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace pref="25" max="32767" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="159" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
