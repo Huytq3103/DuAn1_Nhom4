@@ -37,7 +37,7 @@ import org.hibernate.query.NativeQuery;
  */
 public class KhachHangRepository {
 
-    private String fromtable = " FROM KhachHang ";
+    private String fromtable = " FROM KhachHang order by convert(int,Ma) desc ";
     private String fromtableDesc = " from KhachHang order by Ma desc ";
     private String fromtableHD = "FROM HoaDon";
 
