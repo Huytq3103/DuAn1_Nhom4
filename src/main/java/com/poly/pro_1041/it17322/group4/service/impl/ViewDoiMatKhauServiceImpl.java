@@ -31,7 +31,7 @@ public class ViewDoiMatKhauServiceImpl implements ViewDoiMatKhauService {
     }
 
     public Boolean update(Account acc) {
-        if (accountRepository.update(acc)) {
+        if (accountRepository.updateDMK(acc)) {
             return true;
         } else {
             return false;

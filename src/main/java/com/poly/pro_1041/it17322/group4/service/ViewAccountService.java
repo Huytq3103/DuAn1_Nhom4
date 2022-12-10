@@ -14,6 +14,8 @@ import java.util.List;
 public interface ViewAccountService {
 
     List<ViewAccountReponse> getAll();
+    
+    List<ViewAccountReponse> getAllAn();
 
     String add(ViewAccountReponse vaccr);
 

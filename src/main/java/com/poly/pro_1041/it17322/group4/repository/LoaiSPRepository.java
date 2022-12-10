@@ -93,7 +93,7 @@ public class LoaiSPRepository {
         }
         return null;
     }
-    
+
     public int genMaLoai() {
         String maLoai = "";
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
@@ -107,5 +107,19 @@ public class LoaiSPRepository {
         }
         int ma = Integer.valueOf(maLoai);
         return ++ma;
+    }
+
+    public Loai findLoaiByTen(String ten) {
+        Loai l = new Loai();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromtable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            l = (Loai) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return l;
     }
 }

@@ -808,7 +808,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         for (ViewCTSPResponse view : list) {
 //            tbsp.addRow(view.toDataRowKM());
             boolean chon = false;
-            tbsp.addRow(new Object[]{view.getTen(), "SP" + view.getMa(), view.getGia(), view.getKm().getTen(), chon});
+            tbsp.addRow(new Object[]{view.getTen(), "SP" + view.getMa(), view.getGia(), view.getKm() == null ? "" : view.getKm().getTen(), chon});
         }
     }
 

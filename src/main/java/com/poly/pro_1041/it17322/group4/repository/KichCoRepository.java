@@ -101,6 +101,20 @@ public class KichCoRepository {
         return ++ma;
     }
 
+    public KichCo findKichCoByTen(String ten) {
+        KichCo kc = new KichCo();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromTable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            kc = (KichCo) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return kc;
+    }
+
     public static void main(String[] args) {
 //        List<KichCo> lists = new KichCoRepository().getAll();
 //        for (KichCo kc : lists) {

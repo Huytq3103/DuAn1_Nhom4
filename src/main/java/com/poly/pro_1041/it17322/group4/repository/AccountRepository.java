@@ -23,8 +23,15 @@ public class AccountRepository {
     private Session session;
 
     public List<Account> getAll() {
-        session = HibernateUtil.getSession();
-        org.hibernate.query.Query query = session.createQuery(fromTable, Account.class);
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromTable + " WHERE IDTT = 1", Account.class);
+        List<Account> accs = query.getResultList();
+        return accs;
+    }
+
+    public List<Account> getAllAn() {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromTable + " WHERE IDTT = 2", Account.class);
         List<Account> accs = query.getResultList();
         return accs;
     }
@@ -68,11 +75,25 @@ public class AccountRepository {
 
     public Boolean update(Account account) {
         Transaction transaction = null;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(account);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Boolean updateDMK(Account account) {
+        Transaction transaction = null;
         session = HibernateUtil.getSession();
         transaction = (Transaction) session.beginTransaction();
         session.saveOrUpdate(account);
         transaction.commit();
         return true;
+
     }
 
     public static void main(String[] args) {

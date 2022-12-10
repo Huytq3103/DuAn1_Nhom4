@@ -120,7 +120,7 @@ public class ViewCTSPResponse {
     }
 
     public Object[] toDataRow1() {
-        return new Object[]{"SP" + ma, ten, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia,km.getTen()};
+        return new Object[]{"SP" + ma, ten, mauSac.getTen(), hang.getTen(), kichCo.getTen(), chatLieu.getTen(), loai.getTen(), ngayNhap, soLuongTon, gia, km == null ? " " : km.getTen()};
     }
 
     public static void main(String[] args) {

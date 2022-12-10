@@ -97,6 +97,20 @@ public class ChatLieuRepository {
         return ++ma;
     }
 
+    public ChatLieu findChatLieuByTen(String ten) {
+        ChatLieu cl = new ChatLieu();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromTable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            cl = (ChatLieu) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return cl;
+    }
+
     public static void main(String[] args) {
 //        List<ChatLieu> lists = new ChatLieuRepository().getAll();
 //        for (ChatLieu cl : lists) {

@@ -8,6 +8,7 @@ package com.poly.pro_1041.it17322.group4.view;
  *
  * @author Huy PC
  */
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.service.ViewLoginService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewLoginServiceImpl;
 import javax.swing.ImageIcon;
@@ -169,10 +170,13 @@ public class ViewLogin extends javax.swing.JFrame {
         String validate = vls.validateLogin(txtUsername, txtPass);
         if (validate == " ") {
             try {
-                if ((vls.getOne(txtUsername.getText(), txtPass.getText()).getId() != null)) {
+                Account account = vls.getOne(txtUsername.getText(), txtPass.getText());
+                if ((account.getId() != null && account.getTrangThaiAccount().getId() == 1)) {
                     this.dispose();
-                    TrangChu tc = new TrangChu(vls.getOne(txtUsername.getText(), txtPass.getText()));
+                    TrangChu tc = new TrangChu(account);
                     tc.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Tài khoản của bạn đang bị khóa");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "Tài khoản hoặc mật khẩu không chính xác");
