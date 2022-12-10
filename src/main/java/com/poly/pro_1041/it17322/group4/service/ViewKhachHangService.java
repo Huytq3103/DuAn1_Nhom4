@@ -41,7 +41,7 @@ public interface ViewKhachHangService {
 
     List<ViewKhachHangRepose> seachKhoangNgaySinh(String ngaySinh);
 
-    List<ViewKhachHangRepose> seachByEmail(String email);
+    List<ViewKhachHangRepose> seachByEmail(List<ViewKhachHangRepose>lists,String email);
 
     int genMaHD();
 
