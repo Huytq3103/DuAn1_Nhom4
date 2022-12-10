@@ -149,7 +149,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     public List<ViewKhachHangRepose> searchByDiaChi(List<ViewKhachHangRepose> lists, String diaChi) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
         for (ViewKhachHangRepose vkh : lists) {
-            if (vkh.getSdt().equalsIgnoreCase(diaChi)) {
+            if (vkh.getSdt().contains(diaChi)) {
                 list.add(vkh);
             }
         }
@@ -180,10 +180,12 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
     }
 
     @Override
-    public List<ViewKhachHangRepose> seachByEmail(String email) {
+    public List<ViewKhachHangRepose> seachByEmail(List<ViewKhachHangRepose> lists, String email) {
         List<ViewKhachHangRepose> list = new ArrayList<>();
-        for (KhachHang khachHang : khRepository.seachByEmail(email)) {
-            list.add(new ViewKhachHangRepose(khachHang));
+        for (ViewKhachHangRepose vkh : lists) {
+            if (vkh.getSdt().contains(email)) {
+                list.add(vkh);
+            }
         }
         return list;
     }

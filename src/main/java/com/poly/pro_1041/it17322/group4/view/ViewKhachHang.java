@@ -10,36 +10,25 @@ import com.github.sarxos.webcam.WebcamResolution;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Reader;
 import com.google.zxing.Result;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.Common;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
-import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
-import com.poly.pro_1041.it17322.group4.domainmodel.XDate;
 import com.poly.pro_1041.it17322.group4.response.ViewHDCTResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewHoaDonResponse;
 import com.poly.pro_1041.it17322.group4.response.ViewKhachHangRepose;
 import com.poly.pro_1041.it17322.group4.service.ViewKhachHangService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewHoaDonServiceImpl;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewKhachHangServiceImpl;
-import com.toedter.calendar.JDateChooser;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,21 +37,14 @@ import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -107,10 +89,10 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         listCombobox.add("Email");
         CbbRank.setModel(dcbbRank);
         // add dữ liệu cbb rank
-        listCbbRank.add("Đồng");
-        listCbbRank.add("Sắt");
-        listCbbRank.add("Bạch kim");
-        listCbbRank.add("Kim cương");
+        listCbbRank.add("Thường");
+        listCbbRank.add("VIP");
+        listCbbRank.add("VVIP");
+        listCbbRank.add("S-VIP");
         dcbbRank.setSelectedItem("Đồng");
         dcbbRank.addAll(listCbbRank);
         dcbb.addAll(listCombobox);
@@ -161,6 +143,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         tbHienThi.setRowSelectionAllowed(false);
         labelNgayTao.setText("");
         labelNgayChinhSua.setText("");
+        labelNguoiTao.setText("");
     }
 
     public Date getDate(String ngay) {
@@ -206,21 +189,41 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         }
     }
 
-    private boolean checkNgaySinh() {
+    public boolean checkNgaySinh() {
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String ngaySinh = sdf.format(txtNgaySinh.getDate());
-        String ngayHienTai = sdf.format(new Date());
-        c1.setTime(java.sql.Date.valueOf(ngaySinh));
-        c1.setTime(java.sql.Date.valueOf(ngayHienTai));
+        Date ngaySinhCheck = (txtNgaySinh.getDate());
+        String ngayHienTaiCheck = LocalDate.now().toString();
+        c1.setTime(ngaySinhCheck);
+        c2.setTime(java.sql.Date.valueOf(ngayHienTaiCheck));
         long a = (c1.getTime().getTime()) / (24 * 3600 * 1000);
         long b = (c2.getTime().getTime()) / (24 * 3600 * 1000);
-        if (a < b) {
+        if (a > b) {
             return true;
         } else {
+//            JOptionPane.showMessageDialog(this,"Ngày sinh không được lớn hơn ngày hiện tại");
             return false;
         }
+    }
+
+    private boolean checkSdt() {
+        for (ViewKhachHangRepose x : listKH) {
+            if (x.getSdt().equalsIgnoreCase(txtSDT.getText())) {
+                JOptionPane.showMessageDialog(this, "SDT đã có trong dữ liệu");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkEmail() {
+        for (ViewKhachHangRepose x : listKH) {
+            if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email đã có trong dữ liệu");
+                return false;
+            }
+        }
+        return true;
     }
 
     private void fillIndex() {
@@ -248,13 +251,15 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         tbHienThi.setRowSelectionAllowed(true);
         tbHienThi.setRowSelectionInterval(index, index);
         if (kh.getDiem() == 2) {
-            CbbRank.setSelectedItem("Sắt");
+            CbbRank.setSelectedItem("Vip");
         } else if (kh.getDiem() == 3) {
-            CbbRank.setSelectedItem("Bạch kim");
+            CbbRank.setSelectedItem("VVIP");
         } else if (kh.getDiem() == 4) {
-            CbbRank.setSelectedItem("Kim cương");
+            CbbRank.setSelectedItem("SVIP");
+        } else if (kh.getDiem() == 1) {
+            CbbRank.setSelectedItem("Thường");
         } else {
-            CbbRank.setSelectedItem("Đồng");
+            CbbRank.setSelectedItem("Thường");
         }
     }
 
@@ -302,10 +307,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         jScrollPane1 = new javax.swing.JScrollPane();
         tbHienThi = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        btnDau = new javax.swing.JButton();
-        btnVe = new javax.swing.JButton();
-        btnTien = new javax.swing.JButton();
-        btnCuoi = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         cbbSearch = new javax.swing.JComboBox<>();
@@ -450,26 +451,34 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                             .addComponent(labelNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel13))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12)))
-                .addGap(57, 57, 57)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(labelNguoiTao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(CbbRank, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)))
+                    .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13))
+                            .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -478,9 +487,11 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel6))
+                                .addComponent(jLabel6)
+                                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12))
                             .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -496,25 +507,8 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                                .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -545,38 +539,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         jScrollPane1.setViewportView(tbHienThi);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        btnDau.setText("<=");
-        btnDau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDauActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnDau);
-
-        btnVe.setText("<<");
-        btnVe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVeActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnVe);
-
-        btnTien.setText(">>");
-        btnTien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTienActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnTien);
-
-        btnCuoi.setText("=>");
-        btnCuoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCuoiActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnCuoi);
 
         jLabel10.setText("Tìm kiếm");
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -643,7 +605,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbbSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addComponent(cbbSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -739,7 +701,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(45, 45, 45)
                                 .addComponent(jLabel11)))
-                        .addGap(0, 37, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(panelWebcam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -799,9 +761,11 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         // TODO add your handling code here:
         if (!radioNam.isSelected() && !radioNu.isSelected()) {
             JOptionPane.showMessageDialog(this, "Giới tính chưa chọn");
+        } else if (checkNgaySinh()) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh nhỏ hơn ngày hiện tại");
         } else {
             UUID id = listKH.get(tbHienThi.getSelectedRow()).getId();
-            String ma = khService.genMaHD() + "";
+            String ma = listKH.get(tbHienThi.getSelectedRow()).getMa();
             String ten = txtTenKhachHang.getText();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String ngaySinh = sdf.format(txtNgaySinh.getDate());
@@ -834,25 +798,17 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        String sdtCheck = " ";
-        try {
-            sdtCheck = khService.getOneSdt(txtSDT.getText()).getSdt();
-        } catch (Exception e) {
-            sdtCheck = null;
-        }
+//        ViewKhachHangRepose vkhre = listKH.get(tbHienThi.getSelectedRow());
+//        String sdtCheck = String.valueOf(khService.getOneSdt(vkhre.getSdt()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ngayHienTai = sdf.format(new Date());
+        Date dateHT = new Date();
         if (!radioNam.isSelected() && !radioNu.isSelected()) {
             JOptionPane.showMessageDialog(this, "Giới tính chưa chọn");
-        } //        else if (checkNgaySinh()) {
-        //            JOptionPane.showMessageDialog(this, "Ngày sinh phải nhỏ hơn ngày hiện tại");
-        //        }
-        else if (sdtCheck != null) {
-            JOptionPane.showMessageDialog(this, "Sdt đã tồn tại trong hệ thống");
-        } //        else if (khService.getOneEmail(txtEmail.getText()) != null) {
-        //            JOptionPane.showMessageDialog(this, "Email đã có trong dữ liệu");
-        //        } 
-        else {
+        } else if (checkNgaySinh()) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh nhỏ hơn ngày hiện tại");
+        } else if (!checkSdt()) {
+        } else if (!checkEmail()) {
+        } else {
             UUID id = null;
             String ma = khService.genMaHD() + "";
             String ten = txtTenKhachHang.getText();
@@ -880,6 +836,8 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
             JOptionPane.showMessageDialog(this, add);
             listKH = khService.getAll();
             FillToTable(listKH);
+            index = listKH.size() - 1;
+            fillIndex();
     }//GEN-LAST:event_btnThemActionPerformed
 
     }
@@ -887,30 +845,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         // TODO add your handling code here:
         clearForm();
     }//GEN-LAST:event_btnLamMoiActionPerformed
-
-    private void btnTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTienActionPerformed
-        // TODO add your handling code here:
-        index++;
-        fillIndex();
-    }//GEN-LAST:event_btnTienActionPerformed
-
-    private void btnDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDauActionPerformed
-        // TODO add your handling code here:
-        index = 0;
-        fillIndex();
-    }//GEN-LAST:event_btnDauActionPerformed
-
-    private void btnVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVeActionPerformed
-        // TODO add your handling code here:
-        index--;
-        fillIndex();
-    }//GEN-LAST:event_btnVeActionPerformed
-
-    private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
-        // TODO add your handling code here:
-        index = listKH.size() - 1;
-        fillIndex();
-    }//GEN-LAST:event_btnCuoiActionPerformed
 
     private void tbHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiMouseClicked
         // TODO add your handling code here:
@@ -1111,7 +1045,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         } else {
             JOptionPane.showMessageDialog(this, "Tìm thất bại");
         }
-
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
@@ -1123,14 +1056,10 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbbRank;
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnCuoi;
-    private javax.swing.JButton btnDau;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTien;
     private javax.swing.JButton btnTimKiem;
-    private javax.swing.JButton btnVe;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbSearch;
     private javax.swing.JButton jButton1;
@@ -1205,24 +1134,44 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                     List<String> listt = new ArrayList<>();
                     System.out.println(result);
                     String chuoiCCCd = result.toString();
-                    chuoiCCCd = chuoiCCCd.replace("||", " ");
-                    chuoiCCCd = chuoiCCCd.replace("|", " ");
-                    String[] b = chuoiCCCd.split(" ");
-                    String ngaySinh = b[4].substring(0, 2) + "-" + b[4].substring(2, 4) + "-" + b[4].substring(4, 8);
-                    txtTenKhachHang.setText(b[1] + " " + b[2] + " " + b[3]);
-                    txtDiaChi.setText(b[13] + " " + b[14]);
-                    if (b[5].equalsIgnoreCase("Nam")) {
-                        radioNam.setSelected(true);
+                    if (chuoiCCCd.contains("||")) {
+                        chuoiCCCd = chuoiCCCd.replace("||", " ");
+                        chuoiCCCd = chuoiCCCd.replace("|", " ");
+                        String[] b = chuoiCCCd.split(" ");
+                        String ngaySinh = b[4].substring(0, 2) + "-" + b[4].substring(2, 4) + "-" + b[4].substring(4, 8);
+                        txtTenKhachHang.setText(b[1] + " " + b[2] + " " + b[3]);
+                        txtDiaChi.setText(b[13] + " " + b[14]);
+                        if (b[5].equalsIgnoreCase("Nam")) {
+                            radioNam.setSelected(true);
+                        } else {
+                            radioNu.setSelected(true);
+                        }
+                        try {
+                            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
+                            txtNgaySinh.setDate(date);
+                        } catch (Exception e) {
+                            e.printStackTrace(System.out);
+                        }
+                        JOptionPane.showMessageDialog(this, "Quét qr thành công");
                     } else {
-                        radioNu.setSelected(true);
+                        chuoiCCCd = chuoiCCCd.replace("|", " ");
+                        String[] chuoi = chuoiCCCd.split(" ");
+                        String ngaySinh = chuoi[5].substring(0, 2) + "-" + chuoi[5].substring(2, 4) + "-" + chuoi[5].substring(4, 8);
+                        txtTenKhachHang.setText(chuoi[2] + " " + chuoi[3] + " " + chuoi[4]);
+                        txtDiaChi.setText(chuoi[16] + " " + chuoi[17]);
+                        if (chuoi[6].equalsIgnoreCase("Nam")) {
+                            radioNam.setSelected(true);
+                        } else {
+                            radioNu.setSelected(true);
+                        }
+                        try {
+                            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
+                            txtNgaySinh.setDate(date);
+                        } catch (Exception e) {
+                            e.printStackTrace(System.out);
+                        }
+                        JOptionPane.showMessageDialog(this, "Quét qr thành công");
                     }
-                    try {
-                        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(ngaySinh);
-                        txtNgaySinh.setDate(date);
-                    } catch (Exception e) {
-                        e.printStackTrace(System.out);
-                    }
-                    JOptionPane.showMessageDialog(this, "Quét qr thành công");
                 } catch (Exception e) {
                 }
             }
