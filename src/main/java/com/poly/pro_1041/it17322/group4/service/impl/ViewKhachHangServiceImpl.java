@@ -40,7 +40,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
             return "Sdt có 10 chữ số";
         } else if (vkhr.getEmail().trim().isEmpty()) {
             return "Email đang trống";
-        } else if (!vkhr.getEmail().matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+        } else if (!vkhr.getEmail().matches("\\w+@\\w+\\.\\w+")) {
             return "Email không đúng định dạng";
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";
@@ -73,7 +73,7 @@ public class ViewKhachHangServiceImpl implements ViewKhachHangService {
             return "Sdt có 10 chữ số";
         } else if (vkhr.getEmail().trim().isEmpty()) {
             return "Email đang trống";
-        } else if (!vkhr.getEmail().matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+        } else if (!vkhr.getEmail().matches("\\w+@\\w+\\.\\w+")) {
             return "Email không đúng định dạng";
         } else if (vkhr.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ đang trống";

@@ -75,15 +75,11 @@ public class AccountRepository {
 
     public Boolean update(Account account) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(account);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(account);
+        transaction.commit();
+        return true;
     }
 
     public Boolean updateDMK(Account account) {

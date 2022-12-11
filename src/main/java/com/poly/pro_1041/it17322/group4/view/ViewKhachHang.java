@@ -76,7 +76,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         initComponents();
         this.account = a;
         tbHienThi.setModel(dtm);
-        String headers[] = {"STT", "Mã", "Họ tên", "Ngày sinh", "Giới tính", "Sdt", "Email", "Địa chỉ", "Ngày tạo", "Ngày chỉnh sửa", "Điểm"};
+        String headers[] = {"STT", "Mã", "Họ tên", "Ngày sinh", "Giới tính", "Sdt", "Email", "Địa chỉ", "Ngày tạo", "Ngày chỉnh sửa"};
         dtm.setColumnIdentifiers(headers);
         listKH = khService.getAll();
         // add dữ liệu vô cbb search
@@ -87,7 +87,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         listCombobox.add("Ngày tạo");
         listCombobox.add("Ngày sinh");
         listCombobox.add("Email");
-        CbbRank.setModel(dcbbRank);
         // add dữ liệu cbb rank
         listCbbRank.add("Thường");
         listCbbRank.add("Quen");
@@ -103,7 +102,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         txtNgayBatDau.setVisible(false);
         txtNgayKetThuc.setVisible(false);
         btnTimKiem.setVisible(false);
-        CbbRank.setEnabled(false);
         initWebcam();
         FillToTable(listKH);
     }
@@ -130,7 +128,7 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
         int i = 1;
         for (ViewKhachHangRepose x : lists) {
-            dtm.addRow(new Object[]{i, "KH" + x.getMa(), x.getHoTen(), (x.getNgaySinh()), x.isGioiTinh() == true ? "Nam" : "Nữ", x.getSdt(), x.getEmail(), x.getDiaChi(), (x.getNgayTao()), (x.getNgayChinhSua()), x.getDiem()});
+            dtm.addRow(new Object[]{i, "KH" + x.getMa(), x.getHoTen(), (x.getNgaySinh()), x.isGioiTinh() == true ? "Nam" : "Nữ", x.getSdt(), x.getEmail(), x.getDiaChi(), (x.getNgayTao()), (x.getNgayChinhSua())});
             i++;
         }
     }
@@ -236,10 +234,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
             int row = tbHienThi.getSelectedRow();
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(kh.getNgaySinh());
             txtNgaySinh.setDate(date);
-            Date dateNgayTao = new SimpleDateFormat("yyyy-MM-dd").parse(kh.getNgayTao());
-            txtNgaySinh.setDate(dateNgayTao);
-            Date dateNgayChinhSua = new SimpleDateFormat("yyyy-MM-dd").parse(kh.getNgayChinhSua());
-            txtNgaySinh.setDate(dateNgayChinhSua);
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -257,17 +251,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         labelNguoiTao.setText(khService.getOneNguoiTao(String.valueOf(kh.getNguoiTao())).getHoTen());
         tbHienThi.setRowSelectionAllowed(true);
         tbHienThi.setRowSelectionInterval(index, index);
-        if (kh.getDiem() == 2) {
-            CbbRank.setSelectedItem("Vip");
-        } else if (kh.getDiem() == 3) {
-            CbbRank.setSelectedItem("VVIP");
-        } else if (kh.getDiem() == 4) {
-            CbbRank.setSelectedItem("SVIP");
-        } else if (kh.getDiem() == 1) {
-            CbbRank.setSelectedItem("Quen");
-        } else {
-            CbbRank.setSelectedItem("Thường");
-        }
     }
 
     /**
@@ -305,8 +288,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         labelNguoiTao = new javax.swing.JLabel();
         labelNgayChinhSua = new javax.swing.JLabel();
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
-        jLabel12 = new javax.swing.JLabel();
-        CbbRank = new javax.swing.JComboBox<>();
         labelNgayTao = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -416,10 +397,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
 
         txtNgaySinh.setDateFormatString("dd-MM-yyyy");
 
-        jLabel12.setText("Rank");
-
-        CbbRank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -452,23 +429,22 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(449, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtEmail)
+                                .addComponent(txtDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel13)
+                            .addGap(18, 18, 18)
+                            .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)))
-                            .addComponent(labelNgayChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(labelNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(labelNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -477,29 +453,26 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel13))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel6)
+                                        .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel6)
-                                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12))
-                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1059,7 +1032,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CbbRank;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnSua;
@@ -1070,7 +1042,6 @@ public class ViewKhachHang extends javax.swing.JPanel implements Runnable, Threa
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

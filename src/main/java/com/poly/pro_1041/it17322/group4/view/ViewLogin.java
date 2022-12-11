@@ -175,7 +175,7 @@ public class ViewLogin extends javax.swing.JFrame {
                     this.dispose();
                     TrangChu tc = new TrangChu(account);
                     tc.setVisible(true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(rootPane, "Tài khoản của bạn đang bị khóa");
                 }
             } catch (Exception e) {

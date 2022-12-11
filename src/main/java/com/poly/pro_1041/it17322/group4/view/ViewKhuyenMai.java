@@ -5,6 +5,7 @@
 package com.poly.pro_1041.it17322.group4.view;
 
 import com.poly.pro_1041.it17322.group4.domainmodel.Account;
+import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
@@ -82,7 +83,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         for (ViewLoaiKMResponse viewLoaiKMResponse : listVLKM) {
             dcbmLoaiKM.addElement(viewLoaiKMResponse.getTen());
         }
-
+        rdoNgungHoatDong.setEnabled(false);
     }
 
     /**
@@ -614,10 +615,23 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             }
             index = tbKhuyenMai.getSelectedRow();
             boolean check = true;
-
+//            List<ChiTietSanPham> list = vkms.
             int ttkm = 2;
             ViewKhuyenMaiResponse vkmr = listVKM.get(index);
             TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm, null, null);
+            List<ViewCTSPResponse> list = vkms.getAllSPUpdateNgungKM(vkmr.getId());
+            for (ViewCTSPResponse vctspr : list) {
+                if (vkmr.getLoaiKM().getId() == 1) {
+                    Double giaCu = Double.valueOf(String.valueOf(vctspr.getGia()));
+                    Double giaMoi = (Double.valueOf(vkmr.getGiaKM()) * 100 / (100 - Double.valueOf(vkmr.getGiaKM())) + 100) * giaCu / 100;
+                    vctspr.setGia(BigDecimal.valueOf(giaMoi));
+                } else {
+                    Double giaCu = Double.valueOf(String.valueOf(vctspr.getGia()));
+                    vctspr.setGia(BigDecimal.valueOf(giaCu + Double.valueOf(vkmr.getGiaKM())));
+                }
+                vctspr.setKm(null);
+                vkms.updateCTSPKM(vctspr);
+            }
             vkmr = new ViewKhuyenMaiResponse(vkmr.getId(), trangThaiKM, vkmr.getLoaiKM(), vkmr.getMa(), vkmr.getTen(), vkmr.getNgayBatDau(), vkmr.getNgayKetThuc(), vkmr.getGiaKM());
 
             check = vkms.updateKhuyenMai(vkmr);
@@ -632,6 +646,8 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             txtBatDau.setCalendar(null);
             txtKetThuc.setCalendar(null);
             JOptionPane.showMessageDialog(this, "Tắt KM thành công");
+            listSanPham = vkms.getAllSP();
+            showDataTableSanPham(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -654,9 +670,9 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         }
         int lkm;
         if (cbbLoaiKM.getSelectedIndex() == 0) {
-            lkm = 2;
-        } else {
             lkm = 1;
+        } else {
+            lkm = 2;
         }
         TrangThaiKM trangThaiKM = new TrangThaiKM(ttkm, null, null);
         LoaiKM loaiKM = new LoaiKM(lkm, null, null);

@@ -342,7 +342,7 @@ public class ViewHoaDonServiceImpl implements ViewHoaDonService {
         twoColTable3.addCell(getCell10fLeft("Seller", true));
         twoColTable3.addCell(getCell10fLeft("Ship date", true));
         twoColTable3.addCell(getCell10fLeft(hd.getAccount().getHoTen(), false));
-        twoColTable3.addCell(getCell10fLeft(hd.getNgayShip().toString() != null ? hd.getNgayShip().toString() : " ", false));
+        twoColTable3.addCell(getCell10fLeft(hd.getNgayShip() != null ? hd.getNgayShip().toString() : " ", false));
         document.add(twoColTable3);
 
         Table twoColTable4 = new Table(twoColumnWidth);

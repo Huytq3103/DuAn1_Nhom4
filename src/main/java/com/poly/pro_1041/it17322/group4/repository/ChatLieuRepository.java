@@ -49,15 +49,11 @@ public class ChatLieuRepository {
 
     public Boolean add(ChatLieu chatLieu) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(chatLieu);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = session.beginTransaction();
+        session.save(chatLieu);
+        transaction.commit();
+        return true;
     }
 
     public Boolean update(ChatLieu chatLieu) {
@@ -71,15 +67,12 @@ public class ChatLieuRepository {
 
     public Boolean delete(ChatLieu chatLieu) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.delete(chatLieu);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = session.beginTransaction();
+        session.delete(chatLieu);
+        transaction.commit();
+        return true;
+
     }
 
     public int genMaChatLieu() {

@@ -115,7 +115,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         }
         radioNam.setSelected(true);
         showDataTableCTSP();
-//        bieuDo_Nam();
+        bieuDo_Nam();
         phanQuyen();
     }
 
