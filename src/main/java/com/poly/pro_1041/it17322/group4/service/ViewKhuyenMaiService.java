@@ -41,4 +41,6 @@ public interface ViewKhuyenMaiService {
     boolean updateKhuyenMai(ViewKhuyenMaiResponse vkmr);
 
     public boolean updateCTSPKM(ViewCTSPResponse ctspr);
+
+    List<ViewCTSPResponse> getAllSPUpdateNgungKM(UUID id);
 }

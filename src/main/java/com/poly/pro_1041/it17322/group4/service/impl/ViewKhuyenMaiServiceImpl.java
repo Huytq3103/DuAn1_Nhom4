@@ -143,6 +143,7 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         }
         return tsp;
     }
+
     @Override
     public boolean updateCTSPKM(ViewCTSPResponse ctspr) {
         if (ctsprp.updatetableKM(new ChiTietSanPham(ctspr.getId(), ctspr.getMauSac(), ctspr.getHang(), ctspr.getKichCo(), ctspr.getChatLieu(), ctspr.getLoai(), ctspr.getKm(), ctspr.getMa(), ctspr.getTen(), ctspr.getSoLuongTon(), ctspr.getGia(), ctspr.getNgayNhap(), null, null, ctspr.getTrangThai()))) {
@@ -150,6 +151,15 @@ public class ViewKhuyenMaiServiceImpl implements ViewKhuyenMaiService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<ViewCTSPResponse> getAllSPUpdateNgungKM(UUID id) {
+        List<ViewCTSPResponse> list = new ArrayList<>();
+        for (ChiTietSanPham ctsp : ctsprp.getOneUpdateKhuyenMai(id)) {
+            list.add(new ViewCTSPResponse(ctsp));
+        }
+        return list;
     }
 
 }

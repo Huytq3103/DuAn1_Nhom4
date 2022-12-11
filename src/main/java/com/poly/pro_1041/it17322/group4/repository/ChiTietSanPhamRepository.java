@@ -67,6 +67,15 @@ public class ChiTietSanPhamRepository {
         return ctsp;
     }
 
+    public List<ChiTietSanPham> getOneUpdateKhuyenMai(UUID id) {
+        session = HibernateUtil.getSession();
+        String sql = fromTable + "Where idKM=:id";
+        Query query = session.createQuery(sql, ChiTietSanPham.class);
+        query.setParameter("id", id);
+        List<ChiTietSanPham> ctsp =  query.getResultList();
+        return ctsp;
+    }
+
     public ChiTietSanPham getOneMa(String ma) {
         session = HibernateUtil.getSession();
         String sql = fromTable + "Where ma=:ma";
@@ -88,11 +97,15 @@ public class ChiTietSanPhamRepository {
 
     public Boolean update(ChiTietSanPham chitietsanPham) {
         Transaction transaction = null;
-        session = HibernateUtil.getSession();
-        transaction = (Transaction) session.beginTransaction();
-        session.saveOrUpdate(chitietsanPham);
-        transaction.commit();
-        return true;
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.saveOrUpdate(chitietsanPham);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
 
     }
 

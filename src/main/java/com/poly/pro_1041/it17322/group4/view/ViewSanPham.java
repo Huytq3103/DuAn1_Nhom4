@@ -84,7 +84,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         txtNgayNhap.disable();
         tbThuocTinh.setModel(dtm1);
         tbSanPham.setModel(dtm);
-        String[] headerSanPham = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá","Khuyến mại"};
+        String[] headerSanPham = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá", "Khuyến mại"};
         String[] headerThuocTinh = {"STT", "Mã", "Tên"};
         String[] headerSanPhamAn = {"Mã", "Tên", "Màu sắc", "Hãng", "Kích cỡ", "Chất liệu", "Loại", "Ngày nhập", "Số Lượng tồn", "Giá"};
         dtm1.setColumnIdentifiers(headerThuocTinh);
@@ -1385,7 +1385,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa!");
             return;
-        } else if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
+        } else if (txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {
@@ -1416,7 +1416,7 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaChiTietSanPhamActionPerformed
 
     private void btnThemChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemChiTietSanPhamActionPerformed
-        if (txtMa.getText().isEmpty() || txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
+        if (txtGiaBan.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtTenSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(PanelDSSP, "không được để trống");
 
         } else if (Double.valueOf(String.valueOf(txtGiaBan.getText())) <= 0) {

@@ -147,7 +147,7 @@ public class HoaDonRepository {
         Transaction transaction = null;
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(hd);
+            session.merge(hd);
             transaction.commit();
             return true;
         } catch (Exception e) {
