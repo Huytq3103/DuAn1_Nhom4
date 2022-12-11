@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 /**
@@ -22,12 +23,14 @@ public class ChatLieuRepository {
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<ChatLieu> getAll() {
-        Query query = session.createQuery(fromTable, ChatLieu.class);
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC", ChatLieu.class);
         List<ChatLieu> listChatLieu = query.getResultList();
         return listChatLieu;
     }
 
     public ChatLieu getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + "WHERE id =: id";
         Query query = session.createQuery(sql, ChatLieu.class);
         query.setParameter("id", id);
@@ -35,43 +38,70 @@ public class ChatLieuRepository {
         return chatLieu;
     }
 
+    public ChatLieu getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + "WHERE ma =: ma";
+        Query query = session.createQuery(sql, ChatLieu.class);
+        query.setParameter("ma", ma);
+        ChatLieu chatLieu = (ChatLieu) query.getSingleResult();
+        return chatLieu;
+    }
+
     public Boolean add(ChatLieu chatLieu) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(chatLieu);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = session.beginTransaction();
+        session.save(chatLieu);
+        transaction.commit();
+        return true;
     }
 
     public Boolean update(ChatLieu chatLieu) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(chatLieu);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
+        session = HibernateUtil.getSession();
+        transaction = (Transaction) session.beginTransaction();
+        session.saveOrUpdate(chatLieu);
+        transaction.commit();
+        return true;
     }
 
     public Boolean delete(ChatLieu chatLieu) {
         Transaction transaction = null;
+        session = HibernateUtil.getSession();
+        transaction = session.beginTransaction();
+        session.delete(chatLieu);
+        transaction.commit();
+        return true;
+
+    }
+
+    public int genMaChatLieu() {
+        String maCL = "";
         try ( Session session = HibernateUtil.getFACTORY().openSession()) {
-            transaction = session.beginTransaction();
-            session.delete(chatLieu);
-            transaction.commit();
-            return true;
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM ChatLieu");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maCL = query.getSingleResult().toString();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        return null;
+        int ma = Integer.valueOf(maCL);
+        return ++ma;
+    }
+
+    public ChatLieu findChatLieuByTen(String ten) {
+        ChatLieu cl = new ChatLieu();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromTable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            cl = (ChatLieu) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return cl;
     }
 
     public static void main(String[] args) {

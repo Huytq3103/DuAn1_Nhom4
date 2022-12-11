@@ -8,24 +8,20 @@ import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChatLieu;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChiTietSanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.ChucVuAccount;
-import com.poly.pro_1041.it17322.group4.domainmodel.GioHang;
-import com.poly.pro_1041.it17322.group4.domainmodel.GioHangChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.Hang;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonChiTiet;
-import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonTra;
-import com.poly.pro_1041.it17322.group4.domainmodel.HoaDonTraChiTiet;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhuyenMai;
 import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import com.poly.pro_1041.it17322.group4.domainmodel.Loai;
 import com.poly.pro_1041.it17322.group4.domainmodel.LoaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.MauSac;
-import com.poly.pro_1041.it17322.group4.domainmodel.SanPham;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiAccount;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiKM;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import java.util.Properties;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -39,6 +35,7 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 
     private static final SessionFactory FACTORY;
+    private static Session SESSION;
 
     static {
         Configuration conf = new Configuration();
@@ -63,14 +60,10 @@ public class HibernateUtil {
         conf.addAnnotatedClass(Loai.class);
         conf.addAnnotatedClass(LoaiKM.class);
         conf.addAnnotatedClass(MauSac.class);
-        conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(TrangThaiAccount.class);
         conf.addAnnotatedClass(TrangThaiKM.class);
         conf.addAnnotatedClass(TrangThaiOrder.class);
-        conf.addAnnotatedClass(GioHang.class);
-        conf.addAnnotatedClass(GioHangChiTiet.class);
-        conf.addAnnotatedClass(HoaDonTra.class);
-        conf.addAnnotatedClass(HoaDonTraChiTiet.class);
+
         conf.setProperties(properties);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
@@ -80,6 +73,13 @@ public class HibernateUtil {
 
     public static SessionFactory getFACTORY() {
         return FACTORY;
+    }
+
+    public static Session getSession() {
+        if (SESSION == null || !SESSION.isConnected()) {
+            SESSION = FACTORY.openSession();
+        }
+        return SESSION;
     }
 
     public static void main(String[] args) {

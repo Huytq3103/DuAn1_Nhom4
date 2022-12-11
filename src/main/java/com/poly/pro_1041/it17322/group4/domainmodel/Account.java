@@ -72,6 +72,12 @@ public class Account {
     @Column(name = "NgayTao")
     private String ngayTao;
 
+    @Column(name = "NguoiTao")
+    private UUID nguoiTao;
+
+    @Column(name = "NguoiChinhSua")
+    private UUID nguoiChinhSua;
+
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;
 }

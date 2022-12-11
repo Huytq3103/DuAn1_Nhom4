@@ -2,24 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.poly.pro_1041.it17322.group4.view; 
+package com.poly.pro_1041.it17322.group4.view;
 
 /**
  *
  * @author Huy PC
  */
+import com.poly.pro_1041.it17322.group4.domainmodel.Account;
 import com.poly.pro_1041.it17322.group4.service.ViewLoginService;
 import com.poly.pro_1041.it17322.group4.service.impl.ViewLoginServiceImpl;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 public class ViewLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewLogin
      */
     private ViewLoginService vls = new ViewLoginServiceImpl();
+
     public ViewLogin() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -52,7 +57,7 @@ public class ViewLogin extends javax.swing.JFrame {
         jPanel2.setMinimumSize(new java.awt.Dimension(700, 400));
         jPanel2.setPreferredSize(new java.awt.Dimension(700, 400));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setMaximumSize(new java.awt.Dimension(300, 400));
         jPanel1.setMinimumSize(new java.awt.Dimension(300, 400));
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 400));
@@ -87,6 +92,11 @@ public class ViewLogin extends javax.swing.JFrame {
 
         lbQuenMK.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbQuenMK.setText("Quên mật khẩu ?");
+        lbQuenMK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbQuenMKMouseClicked(evt);
+            }
+        });
 
         btnLogin.setText("Đăng nhập");
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -157,12 +167,30 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         // TODO add your handling code here:
-        if(vls.getOne(txtUsername.getText(), txtPass.getText()).getId() != null){
-            this.dispose();
-            TrangChu tc = new TrangChu();
-            tc.setVisible(true);
+        String validate = vls.validateLogin(txtUsername, txtPass);
+        if (validate == " ") {
+            try {
+                Account account = vls.getOne(txtUsername.getText(), txtPass.getText());
+                if ((account.getId() != null && account.getTrangThaiAccount().getId() == 1)) {
+                    this.dispose();
+                    TrangChu tc = new TrangChu(account);
+                    tc.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Tài khoản của bạn đang bị khóa");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Tài khoản hoặc mật khẩu không chính xác");
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, validate);
         }
     }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void lbQuenMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuenMKMouseClicked
+        ViewQuenMatKhau quenMK = new ViewQuenMatKhau();
+        quenMK.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbQuenMKMouseClicked
 
     /**
      * @param args the command line arguments

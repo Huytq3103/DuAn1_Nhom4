@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 /**
  *
@@ -17,19 +18,39 @@ import org.hibernate.Transaction;
  */
 public class LoaiSPRepository {
 
-    private String fromtable = " FROM Loai";
+    private String fromtable = " FROM Loai ";
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<Loai> getAll() {
-        Query query = session.createQuery(fromtable, Loai.class);
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromtable + " ORDER BY CONVERT(INT,Ma) DESC", Loai.class);
         List<Loai> listLoai = query.getResultList();
         return listLoai;
     }
 
     public Loai getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+
         String sql = fromtable + " Where id = :id";
         Query query = session.createQuery(sql, Loai.class);
         query.setParameter("id", id);
+        Loai loai = (Loai) query.getSingleResult();
+        return loai;
+    }
+
+    public Loai getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromtable + " Where ma = :ma";
+        Query query = session.createQuery(sql, Loai.class);
+        query.setParameter("ma", ma);
+        Loai loai = (Loai) query.getSingleResult();
+        return loai;
+    }
+
+    public Loai getOneTen(String ten) {
+        String sql = fromtable + " Where Ten = :ten";
+        Query query = session.createQuery(sql, Loai.class);
+        query.setParameter("Ten", ten);
         Loai loai = (Loai) query.getSingleResult();
         return loai;
     }
@@ -71,5 +92,34 @@ public class LoaiSPRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int genMaLoai() {
+        String maLoai = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM Loai");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maLoai = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maLoai);
+        return ++ma;
+    }
+
+    public Loai findLoaiByTen(String ten) {
+        Loai l = new Loai();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromtable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            l = (Loai) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return l;
     }
 }

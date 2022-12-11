@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.KichCo;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 /**
@@ -22,15 +23,26 @@ public class KichCoRepository {
     private Session session = HibernateUtil.getFACTORY().openSession();
 
     public List<KichCo> getAll() {
-        Query query = session.createQuery(fromTable, KichCo.class);
+        Session session = HibernateUtil.getFACTORY().openSession();
+        Query query = session.createQuery(fromTable + " ORDER BY CONVERT(INT,Ma) DESC", KichCo.class);
         List<KichCo> listKichCo = query.getResultList();
         return listKichCo;
     }
 
     public KichCo getOne(int id) {
+        Session session = HibernateUtil.getFACTORY().openSession();
         String sql = fromTable + " WHERE id =: id";
         Query query = session.createQuery(sql, KichCo.class);
         query.setParameter("id", id);
+        KichCo kichCo = (KichCo) query.getSingleResult();
+        return kichCo;
+    }
+
+    public KichCo getOneMa(String ma) {
+        Session session = HibernateUtil.getFACTORY().openSession();
+        String sql = fromTable + " WHERE ma =: ma";
+        Query query = session.createQuery(sql, KichCo.class);
+        query.setParameter("ma", ma);
         KichCo kichCo = (KichCo) query.getSingleResult();
         return kichCo;
     }
@@ -72,6 +84,35 @@ public class KichCoRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int genMaKichCo() {
+        String maKC = "";
+        try ( Session session = HibernateUtil.getFACTORY().openSession()) {
+            NativeQuery query = session.createNativeQuery("SELECT MAX(CONVERT(INT, ma)) FROM KichCo");
+            if (query.getSingleResult() == null) {
+                return 1;
+            }
+            maKC = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        int ma = Integer.valueOf(maKC);
+        return ++ma;
+    }
+
+    public KichCo findKichCoByTen(String ten) {
+        KichCo kc = new KichCo();
+        try {
+            Session session = HibernateUtil.getFACTORY().openSession();
+            String sql = fromTable + " Where ten= :ten";
+            Query query = session.createQuery(sql);
+            query.setParameter("ten", ten);
+            kc = (KichCo) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return kc;
     }
 
     public static void main(String[] args) {

@@ -4,6 +4,7 @@
  */
 package com.poly.pro_1041.it17322.group4.domainmodel;
 
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,9 @@ public class KhachHang {
     @Column(name = "Id")
     private UUID id;
 
+    @Column(name = "Ma")
+    private String maKH;
+
     @Column(name = "HoTen")
     private String hoTen;
 
@@ -55,6 +59,15 @@ public class KhachHang {
     @Column(name = "NgayTao")
     private String ngayTao;
 
-    @Column(name = "NgayCapNhat")
-    private String ngayCapNhat;
+    @Column(name = "NguoiTao")
+    private UUID nguoiTao;
+
+    @Column(name = "NguoiChinhSua")
+    private UUID nguoiChinhSua;
+
+    @Column(name = "NgayChinhSua")
+    private String ngayChinhSua;
+
+    @Column(name = "Diem")
+    private int Diem;
 }

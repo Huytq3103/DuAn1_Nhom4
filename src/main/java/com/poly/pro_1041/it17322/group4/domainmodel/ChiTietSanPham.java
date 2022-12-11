@@ -39,10 +39,6 @@ public class ChiTietSanPham {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IdSP", referencedColumnName = "Id")
-    private SanPham sanPham;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdMauSac", referencedColumnName = "Id")
     private MauSac mauSac;
 
@@ -66,6 +62,12 @@ public class ChiTietSanPham {
     @JoinColumn(name = "IdKM", referencedColumnName = "Id")
     private KhuyenMai khuyenMai;
 
+    @Column(name = "ma")
+    private String ma;
+
+    @Column(name = "Ten")
+    private String ten;
+
     @Column(name = "SoLuongTon")
     private int soLuongTon;
 
@@ -77,7 +79,11 @@ public class ChiTietSanPham {
 
     @Column(name = "NgayChinhSua")
     private String ngayChinhSua;
-    
+
     @Column(name = "Hinh")
     private String Hinh;
+
+
+    @Column(name = "TrangThaiSP")
+    private int trangThai;
 }

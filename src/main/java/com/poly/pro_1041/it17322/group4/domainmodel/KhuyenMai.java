@@ -4,6 +4,8 @@
  */
 package com.poly.pro_1041.it17322.group4.domainmodel;
 
+import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -33,10 +34,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class KhuyenMai {
 
     @Id
-    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue
     @Column(name = "Id")
-    private String id;
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdTT", referencedColumnName = "Id")
@@ -53,14 +53,12 @@ public class KhuyenMai {
     private String ten;
 
     @Column(name = "NgayBatDau")
-    private String ngayBatDau;
+    private Date ngayBatDau;
 
     @Column(name = "NgayKetThuc")
-    private String ngayKetThuc;
+    private Date ngayKetThuc;
 
     @Column(name = "GiaKM")
     private Float giaKM;
 
-    @Column(name = "LoaiSanPham")
-    private int loaiSanPham;
 }

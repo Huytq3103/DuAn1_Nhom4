@@ -9,6 +9,7 @@ import com.poly.pro_1041.it17322.group4.domainmodel.HoaDon;
 import com.poly.pro_1041.it17322.group4.domainmodel.KhachHang;
 import com.poly.pro_1041.it17322.group4.domainmodel.TrangThaiOrder;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +28,11 @@ public class ViewHoaDonResponse {
     private Account account;
     private KhachHang khachHang;
     private TrangThaiOrder tto;
-    private String ngaoTao;
-    private String ngayThanhToan;
+    private String ma;
+    private Date ngaoTao;
+    private Date ngayThanhToan;
+    private Date ngayShip;
+    private Date ngayNhan;
     private BigDecimal TongTien;
 
     public ViewHoaDonResponse() {
@@ -39,13 +43,52 @@ public class ViewHoaDonResponse {
         this.account = hd.getAccount();
         this.khachHang = hd.getKhachHang();
         this.tto = hd.getTrangThaiOrder();
+        this.ma = hd.getMa();
         this.ngaoTao = hd.getNgayTao();
         this.ngayThanhToan = hd.getNgayThanhToan();
         this.TongTien = hd.getTongTien();
     }
 
-    public Object[] toDataRow() {
-        return new Object[]{account.getHoTen(), " ", tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, String ma, Date ngaoTao, Date ngayThanhToan, BigDecimal TongTien) {
+        this.id = id;
+        this.account = account;
+        this.khachHang = khachHang;
+        this.tto = tto;
+        this.ma = ma;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.TongTien = TongTien;
     }
 
+    public ViewHoaDonResponse(UUID id, Account account, KhachHang khachHang, TrangThaiOrder tto, Date ngaoTao, Date ngayThanhToan, BigDecimal TongTien) {
+        this.id = id;
+        this.account = account;
+        this.khachHang = khachHang;
+        this.tto = tto;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.TongTien = TongTien;
+    }
+
+    public ViewHoaDonResponse(Account account, String ten, Date ngaoTao, Date ngayThanhToan, Date ngayShip, Date ngayNhan, BigDecimal TongTien) {
+        this.account = account;
+        this.ma = ten;
+        this.ngaoTao = ngaoTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.ngayShip = ngayShip;
+        this.ngayNhan = ngayNhan;
+        this.TongTien = TongTien;
+    }
+
+    public Object[] toDataRow() {
+        return new Object[]{account.getHoTen(), khachHang == null ? " " : khachHang.getHoTen(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+    }
+
+    public Object[] toDataRowLS(int k) {
+        return new Object[]{k + 1, account.getHoTen(), khachHang == null ? " " : khachHang.getHoTen(), ma, tto.getTen(), ngaoTao, ngayThanhToan, TongTien};
+    }
+
+    public Object[] toDataRowHD(int stt) {
+        return new Object[]{stt, ma, ngaoTao, ngayThanhToan, ngayShip, ngayNhan, TongTien};
+    }
 }
